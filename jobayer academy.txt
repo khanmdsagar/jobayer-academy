@@ -1,0 +1,72 @@
+exonhost->
+mail: jobayer.rahman87@gmail.com
+pass: tejr43#000
+linode: tejr43#000T
+IP: 170.187.238.100
+
+Dear Jobayer Rahman, 
+Your account Password has been Updated successfully.
+Login id: tejr43
+New Passwd: QTEYFSTS
+Login url : https://bulksmsbd.net
+Regards
+BULKSMSBD.COM
+
+
+cloudflare.com
+jobayeracademy@gmail.com
+Raiyan12#
+
+SELECT * FROM `student` WHERE `student_number` = 01937477099
+
+
+
+
+1. Paste this code as high in the <head> of the page as possible: 
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-T5ZVWPBG');</script>
+<!-- End Google Tag Manager -->
+
+2. Paste this code immediately after the opening <body> tag: 
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T5ZVWPBG"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+
+১। এনরোলড স্টুডেন্ট লিষ্ট দেখতে ও ডাউনলোড করতে চাই। ফোন নম্বর দিয়ে সার্চ করে স্টুডেন্ট খুজে বের করা যাবে ও এডমিন যে কোন তথ্য ইডিট করতে পারবেন। কোর্স অনুসারে ফিল্টার করা যাবে।
+
+২। ইউজার লিষ্ট দেখতে ও ডাউনলোড করতে চাই। কারা কারা এনলোডলড তা মার্ক থাকবে। ফোন নম্বর দিয়ে সার্চ করে স্টুডেন্ট খুজে বের করা যাবে ও এডমিন যে কোন তথ্য ইডিট করতে পারবেন।
+
+৩। কোর্স লিষ্ট ও কোন কোর্স এ কতজন ষ্টুডেন্ট রয়েছে তা দেখা যাবে।
+
+৪। মেনুয়্যাল ষ্টুডেন্ট এনরোল ও ইউজার এড করা যাবে। ষ্টুডেন্ট সম্পর্কে নোট রাখা যাবে। অর্থাৎ ডিউ আছে কিনা, পরিচিত কিনা এসব লিখে রাখা যাবে। শুধু এডমিন দেখবে।
+
+৫। দিনে, মাসে বা বছরে কত টাকার কোর্স সেল হয়েছে তা দেখা যাবে। 
+
+৬। ষ্টুডেন্ট তথ্য নিয়ে পাই চার্ট দেখা যাবে। কোন জেলা, কোন বয়স, থেকে কতজন ষ্টুডেন্ট আছে। 
+
+৭। কতজন পরীক্ষা দিলো, কত জন সার্টিফিকেট জেনারেট করলো সেই তথ্য পাওয়া যাবে। 
+
+৮। পরীক্ষার প্রশ্ন জেনারেট করার অপশন থাকবে। কোর্স ক্রিয়েট বা ইডিট করার সময় এই প্রশ্ন সিলেক্ট করে দেয়া যাবে। 
+
+৯। সাইটের ব্যাকআপ জেনারেট অপশন থাকবে। সোর্স ফাইল সহ ডাটাবেজ ডাউনলোড হবে।
+
+১০। সাইটে কি পরিমান ভিজিটর আসে, কোন লিংক এ কি পরিমান ভিউ হয় তা বার চার্ট হিসেবে দেখা যাবে। এনালাইটিকস্ থেকে ডাটা আসবে। 
+
+১১। কোর্স ক্রিয়েট করা যাবে। কয়েকটি কোর্স নিয়ে বান্ডেল ক্রিয়েট করা যাবে।
+
+১২। এনাউন্সমেন্ট দেয়া যাবে। যাতে সকল ষ্টুডেন্ট নোটিস পায়।
+
+১৩। ষ্টুডেন্টরা যে সকল প্রশ্ন করে তার লিষ্ট পাওয়া যাবে। এখান থেকেই উত্তর দেয়া যাবে। 
+
+১৪। ব্লগ লেখা যাবে। 
+
+১৫। ষ্টুডেন্ট রিভিউ এপ্রোভাল নোটিস আসবে।
