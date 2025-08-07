@@ -46,7 +46,7 @@
 
         <div class="as-modal-child">
             <div class="as-mt-10px">
-                <span><b>কোর্স</b></span><br>
+                <div class="as-mb-5px"><b>কোর্স</b></div>
                 <select id="course" class="as-select">
                     <option hidden value="" disabled selected>কোর্স নির্বাচন করুন</option>
                     <option value="enrolled">এনরোল্ড</option>
@@ -59,7 +59,7 @@
 
         </div>
         <div class="as-mt-20px as-text-right">
-            <button class="as-btn as-app-cursor as-bg-cancel as-mr-10px" onclick="hideModal('student-filter')">বাতিল করুন</button>
+            <button class="as-btn as-app-cursor as-bg-cancel" onclick="hideModal('student-filter')">বাতিল করুন</button>
             <button id="filter-button" class="as-btn as-app-cursor" onclick="filterStudent()">ফিল্টার করুন</button>
         </div>
     </div>
@@ -75,19 +75,19 @@
 
         <div class="as-modal-child as-p-10px">
             <div class="as-mt-10px">
-                <span><b>পুরোনাম</b></span><br>
+                <div class="as-mb-5px"><b>পুরোনাম</b></div>
                 <input id="fullname" class="as-input" type="text">
             </div>
             <div class="as-mt-10px">
-                <span><b>ই-মেইল</b></span><br>
+                <div class="as-mb-5px"><b>ই-মেইল</b></div>
                 <input id="email" class="as-input" type="email">
             </div>
             <div class="as-mt-10px">
-                <span><b>ফোন নাম্বর</b></span><br>
+                <div class="as-mb-5px"><b>ফোন নাম্বর</b></div>
                 <input id="number" class="as-input" type="number">
             </div>
             <div class="as-mt-10px">
-                <span><b>জন্মতারিখ</b></span><br>
+                <div class="as-mb-5px"><b>জন্মতারিখ</b></div>
                 <div class="as-flex">
                     <select id="daySelect" class="as-select as-mr-10px">
                         <option hidden value="" disabled selected>দিন</option>
@@ -101,7 +101,7 @@
                 </div>
             </div>
             <div class="as-mt-10px">
-                <span><b>পেশা</b></span><br>
+                <div class="as-mb-5px"><b>পেশা</b></div>
                 <select id="profession" class="as-select">
                     <option hidden value="" disabled selected>পেশা নির্বাচন করুন</option>
                     <option>সরকারি চাকরি</option>
@@ -113,23 +113,23 @@
                 </select>
             </div>
             <div class="as-mt-10px">
-                <span><b>ফেসবুক প্রফাইল ইউআরএল</b></span><br>
+                <div class="as-mb-5px"><b>ফেসবুক প্রফাইল ইউআরএল</b></div>
                 <input id="fb-profile-url" class="as-input" type="text">
             </div>
             <div class="as-mt-10px">
-                <span><b>ফেসবুক পেজ ইউআরএল</b></span><br>
+                <div class="as-mb-5px"><b>ফেসবুক পেজ ইউআরএল</b></div>
                 <input id="fb-page-url" class="as-input" type="text">
             </div>
             <div class="as-mt-10px">
-                <span><b>ঠিকানা</b></span><br>
+                <div class="as-mb-5px"><b>ঠিকানা</b></div>
                 <input id="address" class="as-input" type="text">
             </div>
             <div class="as-mt-10px">
-                <span><b>নোট</b></span><br>
+                <div class="as-mb-5px"><b>নোট</b></div>
                 <input id="note" class="as-input" type="text">
             </div>
             <div class="as-mt-10px">
-                <span><b>বিভাগ</b></span><br>
+                <div class="as-mb-5px"><b>বিভাগ</b></div>
                 <select id="division" class="as-select">
                     <option hidden value="" disabled selected>বিভাগ নির্বাচন করুন</option>
                     <option value="Dhaka">ঢাকা</option>
@@ -143,7 +143,7 @@
                 </select>
             </div>
             <div class="as-mt-10px">
-                <span><b>জেলা</b></span><br>
+                <div class="as-mb-5px"><b>জেলা</b></div>
                 <select id="district" class="as-select">
                     <option hidden value="" disabled selected>জেলা নির্বাচন করুন</option>
                     <div id="district-div">
@@ -153,7 +153,7 @@
             </div>
         </div>
         <div class="as-mt-20px as-text-right">
-            <button class="as-btn as-app-cursor as-bg-cancel as-mr-10px" onclick="hideModal('student-info')">বাতিল করুন</button>
+            <button class="as-btn as-app-cursor as-bg-cancel" onclick="hideModal('student-info')">বাতিল করুন</button>
             <button id="add-info-button" class="as-btn as-app-cursor" onclick="addStudentInfo()">যুক্ত করুন</button>
         </div>
     </div>

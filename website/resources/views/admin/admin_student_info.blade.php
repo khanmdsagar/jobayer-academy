@@ -72,7 +72,7 @@
 
         <div class="as-modal-child as-p-10px">
             <div class="as-mt-10px">
-                <span><b>কোর্স</b></span><br>
+                <div class="as-mb-5px"><b>কোর্স</b></div>
                 <select id="course" class="as-select">
                     <option hidden value="" disabled selected>কোর্স নির্বাচন করুন</option>
                     @foreach($site_course as $course)
@@ -82,7 +82,7 @@
             </div>
         </div>
         <div class="as-mt-20px as-text-right">
-            <button class="as-btn as-app-cursor as-bg-cancel as-mr-10px" onclick="hideModal('enroll-student')">বাতিল করুন</button>
+            <button class="as-btn as-app-cursor as-bg-cancel" onclick="hideModal('enroll-student')">বাতিল করুন</button>
             <button id="add-info-button" class="as-btn as-app-cursor" onclick="enrollStudent({{$student_data->id}})">ভর্তি করুন</button>
         </div>
     </div>
@@ -108,7 +108,6 @@
                     alert(response.data.message);
 
                     if(response.data.status == 200){
-                        hideModal('enroll-student');
                         location.reload();
                     }
                     else{

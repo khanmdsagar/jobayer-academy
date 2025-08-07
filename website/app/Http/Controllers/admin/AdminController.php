@@ -8,9 +8,57 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\EnrolledCourse;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
+    function add_category(Request $request){
+        $category_name = strip_tags(trim($request->input('category_name')));
+
+        $result = DB::table('course_category')->insert([
+            'category_name'  => $category_name,
+            'category_slug'  => Str::slug($category_name),
+            'category_image' => '',
+            'created_at'     => Carbon::now(),
+        ]);
+
+        if($result){
+            return response()->json(['status' => 200, "message" => 'ক্যাটাগরি যুক্ত করা হয়েছে']);
+        }
+        else{
+            return response()->json(['status' => 404, "message" => 'ক্যাটাগরি যুক্ত করা যায়নি']);
+        }
+    }
+
+    function get_category_data(){
+        return DB::table('course_category')->get();
+    }
+
+    function delete_category(Request $request){
+        $category_id = strip_tags(trim($request->input('category_id')));
+        $result = DB::table('course_category')->where('id', $category_id)->delete();
+    }
+
+    function edit_category(Request $request){
+        $category_id   = strip_tags(trim($request->input('category_id')));
+        $category_name = strip_tags(trim($request->input('category_name')));
+        $category_slug = Str::slug($category_name);
+
+        $result = DB::table('course_category')->where('id', $category_id)->update([
+            'category_name'  => $category_name,
+            'category_slug'  => $category_slug,
+            'category_image' => '',
+            'updated_at'     => Carbon::now(),
+        ]);
+
+        if($result){
+            return response()->json(['status' => 200, "message" => 'ক্যাটাগরি সম্পাদন করা হয়েছে']);
+        }
+        else{
+            return response()->json(['status' => 404, "message" => 'ক্যাটাগরি সম্পাদন করা যায়নি']);
+        }
+    }
+
     function get_student_data() {
         $student_data = DB::table('student')->orderBy('id', 'desc')->get();
         return response()->json($student_data);
