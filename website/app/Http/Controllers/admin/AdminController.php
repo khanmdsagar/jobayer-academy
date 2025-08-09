@@ -14,19 +14,25 @@ class AdminController extends Controller
 {
     function add_category(Request $request){
         $category_name = strip_tags(trim($request->input('category_name')));
+        $is_category   = DB::table('course_category')->where('category_name', $category_name)->count();
 
-        $result = DB::table('course_category')->insert([
-            'category_name'  => $category_name,
-            'category_slug'  => Str::slug($category_name),
-            'category_image' => '',
-            'created_at'     => Carbon::now(),
-        ]);
-
-        if($result){
-            return response()->json(['status' => 200, "message" => 'ক্যাটাগরি যুক্ত করা হয়েছে']);
+        if($is_category > 0){
+            return response()->json(['status' => 404, "message" => 'ক্যাটাগরি ইতিমধ্যে রয়েছে']);
         }
         else{
-            return response()->json(['status' => 404, "message" => 'ক্যাটাগরি যুক্ত করা যায়নি']);
+            $result = DB::table('course_category')->insert([
+                'category_name'  => $category_name,
+                'category_slug'  => Str::slug($category_name),
+                'category_image' => '',
+                'created_at'     => Carbon::now(),
+            ]);
+
+            if($result){
+                return response()->json(['status' => 200, "message" => 'ক্যাটাগরি যুক্ত করা হয়েছে']);
+            }
+            else{
+                return response()->json(['status' => 404, "message" => 'ক্যাটাগরি যুক্ত করা যায়নি']);
+            }
         }
     }
 
@@ -37,6 +43,13 @@ class AdminController extends Controller
     function delete_category(Request $request){
         $category_id = strip_tags(trim($request->input('category_id')));
         $result = DB::table('course_category')->where('id', $category_id)->delete();
+
+        if($result){
+            return response()->json(['status' => 200, "message" => 'ক্যাটাগরি মুছে ফেলা হয়েছে']);
+        }
+        else{
+            return response()->json(['status' => 404, "message" => 'ক্যাটাগরি মুছে ফেলা যায়নি']);
+        }
     }
 
     function edit_category(Request $request){
@@ -48,7 +61,6 @@ class AdminController extends Controller
             'category_name'  => $category_name,
             'category_slug'  => $category_slug,
             'category_image' => '',
-            'updated_at'     => Carbon::now(),
         ]);
 
         if($result){
