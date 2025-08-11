@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('course_duration');
             $table->string('course_level');
 
-            $table->text('course_image');
+            $table->text('course_thumbnail');
             $table->longText('course_description');
             $table->boolean('course_status');
 

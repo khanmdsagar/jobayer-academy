@@ -10,10 +10,16 @@
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
     <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/splide.min.css') }}"/>
+    <!-- Quill Styles -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
     
     <link rel="icon" href="{{ url('image/icon/favicon.png') }}" type="image/png">
 
     <style>
+        #course-editor{
+            height: 300px;
+        }
+
         #admin-sidebar {
             transition: all 0.3s;
             overflow: hidden;
@@ -62,6 +68,27 @@
     <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/videojs-youtube/dist/Youtube.min.js"></script>
     <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+
+    <!-- Quill Script -->
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+
+    <script>
+        const quill = new Quill('#course-editor', {
+            theme: 'snow',
+            placeholder: 'কোর্সের বিস্তারিত',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'header': 1 }, { 'header': 2 }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    ['link', 'image'],
+                    ['clean']
+                ]
+            }
+        });
+    </script>
+
+
     <script src="{{ asset('js/axios.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="{{ asset('js/splide.min.js') }}"></script>

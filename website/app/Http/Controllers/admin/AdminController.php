@@ -12,6 +12,78 @@ use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
+    //course operations
+    function add_course(Request $request){
+        $course_name = strip_tags(trim($request->input('course_name')));
+        $course_thumbnail = strip_tags(trim($request->input('course_thumbnail')));
+        $course_slug = strip_tags(trim($request->input('course_slug')));
+        $course_tagline = strip_tags(trim($request->input('course_tagline')));
+        $course_regular_fee = strip_tags(trim($request->input('course_regular_fee')));
+        $course_selling_fee = strip_tags(trim($request->input('course_selling_fee')));
+        $course_duration = strip_tags(trim($request->input('course_duration')));
+        $course_level = strip_tags(trim($request->input('course_level')));
+        $course_status = strip_tags(trim($request->input('course_status')));
+        $course_category = strip_tags(trim($request->input('course_category')));
+        $course_instructor = strip_tags(trim($request->input('course_instructor')));
+        $course_description = strip_tags(trim($request->input('course_description')));
+
+        $is_course = DB::table('course')->where('course_name', $course_name)->count();
+
+        if($is_course > 0){
+            return response()->json(['status' => 404, "message" => 'কোর্স ইতিমধ্যে রয়েছে']);
+        }
+        else{
+            try{
+                $result = DB::table('course')->insert([
+                    'course_name' => $course_name,
+                    'course_slug' => $course_slug,
+                    'course_status' => $course_status,
+                    'category_id' => $course_category,
+                    'instructor_id' => $course_instructor,
+                    'course_description' => $course_description,
+                    'course_thumbnail' => $course_thumbnail,
+                    'course_tagline' => $course_tagline,
+                    'course_fee' => $course_regular_fee,
+                    'course_selling_fee' => $course_selling_fee,
+                    'course_duration' => $course_duration,
+                    'course_level' => $course_level,
+                    'created_at' => Carbon::now(),
+                ]);
+                if($result){
+                    return response()->json(['status' => 200, "message" => 'কোর্স যুক্ত করা হয়েছে']);
+                }
+                else{
+                    return response()->json(['status' => 404, "message" => 'কোর্স যুক্ত করা যায়নি']);
+                }
+            }
+            catch(\Exception $e){
+                return response()->json(['status' => 404, "message" => $e->getMessage()]);
+            }
+        }
+    }
+
+    function get_course_data2(){
+        return DB::table('course')->get();
+    }
+
+    function delete_course(Request $request){
+        $course_id = strip_tags(trim($request->input('course_id')));
+        $result = DB::table('course')->where('id', $course_id)->delete();
+    }
+
+    function edit_course(Request $request){
+        $course_id = strip_tags(trim($request->input('course_id')));
+        $course_name = strip_tags(trim($request->input('course_name')));
+        $course_slug = Str::slug($course_name);
+        $result = DB::table('course')->where('id', $course_id)->update(['course_name' => $course_name, 'course_slug' => $course_slug]);
+    }
+
+    //instructor operations
+    function get_instructor_data(){
+        return DB::table('instructor')->get();
+    }
+
+    //category operations
     function add_category(Request $request){
         $category_name = strip_tags(trim($request->input('category_name')));
         $is_category   = DB::table('course_category')->where('category_name', $category_name)->count();
@@ -71,6 +143,7 @@ class AdminController extends Controller
         }
     }
 
+    //student operations
     function get_student_data() {
         $student_data = DB::table('student')->orderBy('id', 'desc')->get();
         return response()->json($student_data);
@@ -96,7 +169,6 @@ class AdminController extends Controller
         return view('admin.admin_student_info', compact('student_data', 'enrolled_course', 'site_course'));
     }
 
-    //filter student
     function filter_student($course_value){
         if($course_value == 'enrolled'){
             return DB::table('student')->where('student_enrolled_course', '!=', 0)->get();
@@ -109,6 +181,7 @@ class AdminController extends Controller
         }
     }
 
+    //download student data
     function download_course_student_data($course_id){
         $data = EnrolledCourse::with('student')->where('course_id', $course_id)->get();
 
@@ -323,6 +396,7 @@ class AdminController extends Controller
         return Response::stream($callback, 200, $headers);
     }
 
+    //enroll student
     function enroll_student(Request $request){
         $student_id = strip_tags(trim($request->input('student_id')));
         $course_id  = strip_tags(trim($request->input('course_id')));

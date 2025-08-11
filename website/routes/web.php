@@ -172,7 +172,7 @@ Route::post('/admin/register', [AdminAuthController::class, 'admin_register']);
 Route::middleware([AdminAuthMiddleware::class])->group(function(){
     Route::get('/admin/dashboard', function () {
         return view('admin.admin_dashboard');
-    });
+    })->name('admin.dashboard');
 
     Route::get('/admin/student', function () {
         return view('admin.admin_student');
@@ -206,6 +206,22 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
     Route::get('/admin/category/data', [AdminController::class, 'get_category_data']);
     Route::post('/admin/category/delete', [AdminController::class, 'delete_category']);
     Route::post('/admin/category/edit', [AdminController::class, 'edit_category']);
+
+    Route::get('/admin/instructor', function () {
+        return view('admin.admin_instructor');
+    });
+    Route::get('/admin/instructor/get', [AdminController::class, 'get_instructor_data']);
+    Route::post('/admin/instructor/add', [AdminController::class, 'add_instructor']);
+    Route::post('/admin/instructor/delete', [AdminController::class, 'delete_instructor']);
+    Route::post('/admin/instructor/edit', [AdminController::class, 'edit_instructor']);
+
+    Route::get('/admin/course', function () {
+        return view('admin.admin_course');
+    });
+    Route::post('/admin/course/add', [AdminController::class, 'add_course']);
+    Route::get('/admin/course/get', [AdminController::class, 'get_course_data2']);
+    Route::post('/admin/course/delete', [AdminController::class, 'delete_course']);
+    Route::post('/admin/course/edit', [AdminController::class, 'edit_course']);
 
 
     Route::get('/admin/logout', function (Request $request) {

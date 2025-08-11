@@ -97,7 +97,7 @@
                         courseField.innerHTML += `
                             <div class="dashboard-course-card as-responsive-card">
                                 <div class="dashboard-course-image">
-                                    <img onclick="window.location.href = '/tutorial/${course.course.id}/${course.course.course_slug}'" class="image as-app-cursor" src="/image/course/${course.course.course_image}" alt="image">
+                                    <img onclick="window.location.href = '/tutorial/${course.course.id}/${course.course.course_slug}'" class="image as-app-cursor" src="/image/course/${course.course.course_thumbnail}" alt="image">
                                 </div>
                                 <div class="dashboard-course-info">
                                     <div class="as-ml-10px">

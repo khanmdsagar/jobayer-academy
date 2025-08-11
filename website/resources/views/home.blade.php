@@ -41,7 +41,7 @@
                             <div class="as-responsive-card">
                                 <div>
                                     <a style="display: inline-block" href="/course/{{$item->course_slug}}" class="as-app-cursor">
-                                        <img class="image as-w-400px as-brr-5px as-image-fit" src="/image/course/{{$item->course_image}}" alt="image">
+                                        <img class="image as-w-400px as-brr-5px as-image-fit" src="/image/course/{{$item->course_thumbnail}}" alt="image">
                                     </a>
                                 </div>
                                 <div class="as-p-10px as-flex as-flex-col as-space-between as-w-100">
@@ -84,7 +84,7 @@
                             <div class="as-card">
                                 <div>
                                     <a style="display: inline-block" href="/course/{{$item->course_slug}}" class="as-app-cursor">
-                                        <img class="image as-w-100 as-brr-5px as-image-fit" src="/image/course/{{$item->course_image}}" alt="Course Image">
+                                        <img class="image as-w-100 as-brr-5px as-image-fit" src="/image/course/{{$item->course_thumbnail}}" alt="Course Image">
                                     </a>
                                 </div>
                                 <div class="as-p-10px as-flex as-flex-col as-space-between as-w-100">
