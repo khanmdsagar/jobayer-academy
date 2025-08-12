@@ -126,23 +126,24 @@
             .then(function(response){
                 response.data.forEach(function(instructor){
                     document.getElementById('course-instructor').innerHTML += `<option value="${instructor.id}">${instructor.instructor_name}</option>`;
+                    document.getElementById('edited-course-instructor').innerHTML += `<option value="${instructor.id}">${instructor.instructor_name}</option>`;
                 })
             });
     }
 
     function addCourse(){
-        var courseThumbnail = document.getElementById('course-thumbnail').value;
-        var courseName = document.getElementById('course-name').value;
-        var courseSlug = document.getElementById('course-slug').value;
-        var courseTagline = document.getElementById('course-tagline').value;
-        var courseRegularFee = document.getElementById('course-regular-fee').value;
-        var courseSellingFee = document.getElementById('course-selling-fee').value;
-        var courseDuration = document.getElementById('course-duration').value;
-        var courseLevel = document.getElementById('course-level').value;
-        var courseStatus = document.getElementById('course-status').value;
-        var courseCategory = document.getElementById('course-category').value;
-        var courseInstructor = document.getElementById('course-instructor').value;
-        var courseDescription = quill.root.innerHTML;
+        var courseThumbnail     = document.getElementById('course-thumbnail').value;
+        var courseName          = document.getElementById('course-name').value;
+        var courseSlug          = document.getElementById('course-slug').value;
+        var courseTagline       = document.getElementById('course-tagline').value;
+        var courseRegularFee    = document.getElementById('course-regular-fee').value;
+        var courseSellingFee    = document.getElementById('course-selling-fee').value;
+        var courseDuration      = document.getElementById('course-duration').value;
+        var courseLevel         = document.getElementById('course-level').value;
+        var courseStatus        = document.getElementById('course-status').value;
+        var courseCategory      = document.getElementById('course-category').value;
+        var courseInstructor    = document.getElementById('course-instructor').value;
+        var courseDescription   = quill.root.innerHTML;
 
         if(courseThumbnail == ''){
             alert('কোর্সের থাম্বনেল দিন');
@@ -221,7 +222,7 @@
                         <div class="as-card as-mb-10px as-flex as-space-between as-p-10px">
                             <div class="as-flex as-align-center">${course.course_name}</div>
                             <div>
-                                <span><i onclick="showEditCourseModal('${course.id}', '${course.course_name}')" class="fa-solid fa-edit as-app-cursor as-p-10px"></i></span>
+                                <span><i id="dec${course.id}" data-description="${course.course_description}" onclick="showEditCourseModal('${course.id}', '${course.course_thumbnail}', '${course.course_name}', '${course.course_slug}', '${course.course_tagline}', '${course.course_fee}', '${course.course_selling_fee}', '${course.course_duration}', '${course.course_level}', '${course.course_status}', '${course.category_id}', '${course.course_category.category_name}', '${course.instructor_id}', '${course.instructor.instructor_name}')" class="fa-solid fa-edit as-app-cursor as-p-10px"></i></span>
                                 <span><i onclick="deleteCourse(${course.id})" class="fa-solid fa-trash as-app-cursor as-p-10px"></i></span>
                             </div>
                         </div>
@@ -231,29 +232,178 @@
             });
     }
 
-    function showEditCourseModal(courseId, courseName){
+    function showEditCourseModal(courseId, courseThumbnail, courseName, courseSlug, courseTagline, courseRegularFee, courseSellingFee, courseDuration, courseLevel, courseStatus, courseCategory, courseCategoryName, courseInstructor,courseInstructorName ){
         var body = document.getElementsByTagName('body');
-        body[0].innerHTML += `<div class="as-modal" id="edit-course" style="display: none">
+        body[0].innerHTML += 
+        `<div class="as-modal" id="edit-course" style="display: none">
             <div class="info-section as-bg-white as-shadow-lw as-p-20px as-w-50 md:as-w-90 as-mt-10px as-brr-5px">
+
+                <div class="as-text-center">
+                    <h2>কোর্সের তথ্য</h2>
+                </div>
 
                 <div class="as-modal-child as-p-10px">
                     <div class="as-mt-10px">
-                        <div class="as-mb-5px"><b>কোর্সের নাম</b></div>
-                        <input type="text" id="edited-course-name" class="as-input" value="${courseName}">
+                        <div class="as-mb-5px"><b>থাম্বনেল</b></div>
+                        <input value="${courseThumbnail}" type="text" id="edited-course-thumbnail" class="as-input" placeholder="কোর্সের থাম্বনেল">
+                    </div>
+                    <div class="as-mt-10px">
+                        <div class="as-mb-5px"><b>নাম</b></div>
+                        <input value="${courseName}" type="text" id="edited-course-name" class="as-input" placeholder="কোর্সের নাম">
+                    </div>
+                    <div class="as-mt-10px">
+                        <div class="as-mb-5px"><b>স্লাগ</b></div>
+                        <input value="${courseSlug}" type="text" id="edited-course-slug" class="as-input" placeholder="কোর্সের স্লাগ">
+                    </div>
+                    <div class="as-mt-10px">
+                        <div class="as-mb-5px"><b>বিস্তারিত</b></div>
+                        <div id="edited-course-editor"></div>
+                    </div>
+                    <div class="as-mt-10px">
+                        <div class="as-mb-5px"><b>ট্যাগলাইন</b></div>
+                        <input value="${courseTagline}" type="text" id="edited-course-tagline" class="as-input" placeholder="কোর্সের ট্যাগলাইন">
+                    </div>
+                    <div class="as-mt-10px">
+                        <div class="as-mb-5px"><b>রেগুলার ফি</b></div>
+                        <input value="${courseRegularFee}" type="number" id="edited-course-regular-fee" class="as-input" placeholder="কোর্সের রেগুলার ফি">
+                    </div>
+                    <div class="as-mt-10px">
+                        <div class="as-mb-5px"><b>সেলিং ফি</b></div>
+                        <input value="${courseSellingFee}" type="number" id="edited-course-selling-fee" class="as-input" placeholder="কোর্সের সেলিং ফি">
+                    </div>
+                    <div class="as-mt-10px">
+                        <div class="as-mb-5px"><b>ডিউরেশন</b></div>
+                        <input value="${courseDuration}" type="text" id="edited-course-duration" class="as-input" placeholder="কোর্সের ডিউরেশন">
+                    </div>
+                    <div class="as-mt-10px">
+                        <div class="as-mb-5px"><b>লেভেল</b></div>
+                        <select id="edited-course-level" class="as-select">
+                            <option value="Beginner">বিগিনার</option>
+                            <option value="Intermediate">ইন্টারমিডিয়েট</option>
+                            <option value="Advance">এডভান্স</option>
+                        </select>
+                    </div>
+                    <div class="as-mt-10px">
+                        <div class="as-mb-5px"><b>স্ট্যাটাস</b></div>
+                        <select id="edited-course-status" class="as-select">
+                            <option value="${courseStatus}" selected hidden>${courseStatus}</option>
+                            <option value="1">পাবলিশড</option>
+                            <option value="0">আনপাবলিশড</option>
+                        </select>
+                    </div>
+                    <div class="as-mt-10px">
+                        <div class="as-mb-5px"><b>ক্যাটাগরি</b></div>
+                        <select class="as-select">
+                            <option value="${courseCategory}" selected hidden>${courseCategoryName}</option>
+                            <div id="edited-course-category"></div>
+                        </select>
+                    </div>
+                    <div class="as-mt-10px">
+                        <div class="as-mb-5px"><b>ইনসট্রাক্টর</b></div>
+                        <select class="as-select">
+                            <option value="${courseInstructor}" selected hidden>${courseInstructorName}</option>
+                            <div id="edited-course-instructor"></div>
+                        </select>
                     </div>
                 </div>
                 <div class="as-mt-10px as-text-right">
                     <button class="as-btn as-app-cursor as-bg-cancel" onclick="hideModal('edit-course')">বাতিল করুন</button>
-                    <button class="as-btn as-app-cursor" onclick="editCourse(${courseId})">সম্পাদনা করুন</button>
+                    <button class="as-btn as-app-cursor" onclick="editCourse(${courseId})">সম্পাদন করুন</button>
                 </div>
             </div>
         </div>`
+        
+        var el = document.getElementById('dec'+courseId);
+        var description = el.dataset.description;
 
+        document.getElementById('edited-course-editor').innerHTML = description;
+
+
+        var courseLevel2 = document.getElementById('edited-course-level');
+        var selectedValue = courseLevel2.value;
+
+        var option = document.createElement('option');
+        option.value = selectedValue;
+        option.selected = true;
+        option.hidden = true;
+
+        if (selectedValue === 'Beginner') {
+            option.textContent = 'বিগিনার';
+        } 
+        else if (selectedValue === 'Intermediate') {
+            option.textContent = 'ইন্টারমিডিয়েট';
+        } 
+        else {
+            option.textContent = 'এডভান্স';
+        }
+
+        courseLevel2.appendChild(option);
+
+        
+        var courseStatusEl = document.getElementById('edited-course-status');
+        var selectedStatus = courseStatusEl.value;
+
+        var option = document.createElement('option');
+        option.value = selectedStatus;
+        option.selected = true;
+        option.hidden = true;
+
+        if (selectedStatus === '1') {
+            option.textContent = 'পাবলিশড';
+        } 
+        else if (selectedStatus === '0') {
+            option.textContent = 'আনপাবলিশড';
+        } 
+        else {
+            option.textContent = selectedStatus;
+        }
+
+        courseStatusEl.appendChild(option);
+
+
+        axios.get('/admin/category/data')
+            .then(function(response){
+                response.data.forEach(function(category){
+                    document.getElementById('edited-course-category').innerHTML += `<option value="${category.id}">${category.category_name}</option>`;
+                })
+            });
+
+        axios.get('/admin/instructor/get')
+            .then(function(response){
+                response.data.forEach(function(instructor){
+                    document.getElementById('edited-course-instructor').innerHTML += `<option value="${instructor.id}">${instructor.instructor_name}</option>`;
+                })
+            });
+
+        const quill2 = new Quill('#edited-course-editor', {
+            theme: 'snow',
+            placeholder: 'কোর্সের বিস্তারিত',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'header': 1 }, { 'header': 2 }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    ['link', 'image'],
+                    ['clean']
+                ]
+            }
+        });
         showModal('edit-course');
     }
 
     function editCourse(courseId){
-        var editedCourseName = document.getElementById('edited-course-name').value;
+        var editedCourseThumbnail   = document.getElementById('edited-course-thumbnail').value;
+        var editedCourseName        = document.getElementById('edited-course-name').value;
+        var editedCourseSlug        = document.getElementById('edited-course-slug').value;
+        var editedCourseTagline     = document.getElementById('edited-course-tagline').value;
+        var editedCourseDescription = document.getElementById('edited-course-editor').innerHTML;
+        var editedCourseRegularFee  = document.getElementById('edited-course-regular-fee').value;
+        var editedCourseSellingFee  = document.getElementById('edited-course-selling-fee').value;
+        var editedCourseDuration    = document.getElementById('edited-course-duration').value;
+        var editedCourseLevel       = document.getElementById('edited-course-level').value;
+        var editedCourseStatus      = document.getElementById('edited-course-status').value;
+        var editedCourseCategory    = document.getElementById('edited-course-category').value;
+        var editedCourseInstructor  = document.getElementById('edited-course-instructor').value;
 
         if(editedCourseName == ''){
             alert('কোর্সের নাম দিন');
@@ -273,14 +423,14 @@
         }
     }
 
-    function deleteCourse(course_id){
+    function deleteCourse(courseId){
         var confirm = window.confirm('কোর্স মুছে ফেলবেন কি?');
 
         if(confirm){
-            axios.post('/admin/category/delete', {category_id: category_id})
+            axios.post('/admin/course/delete', {course_id: courseId})
                 .then(function(response){
                     alert(response.data.message);
-                    getCategoryData();
+                    getCourseData();
                 });
         }
     }

@@ -1,5 +1,5 @@
 <div class="as-p-15px">
-    <a href="/"><img width="138px" src="/image/icon/{{$site_data[0]->site_logo}}" alt="{{$site_data[0]->site_name}}"></a>
+    <a href="/admin/dashboard"><img width="138px" src="/image/icon/{{$site_data[0]->site_logo}}" alt="{{$site_data[0]->site_name}}"></a>
 </div>
 
 <diV style="line-height: 1;" class=" as-p-15px">

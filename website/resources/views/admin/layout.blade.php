@@ -16,8 +16,8 @@
     <link rel="icon" href="{{ url('image/icon/favicon.png') }}" type="image/png">
 
     <style>
-        #course-editor{
-            height: 300px;
+        #course-editor, #edited-course-editor{
+            height: 250px;
         }
 
         #admin-sidebar {
@@ -86,6 +86,7 @@
                 ]
             }
         });
+
     </script>
 
 

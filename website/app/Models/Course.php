@@ -38,6 +38,10 @@ class Course extends Model
         return $this->belongsTo(Instructor::class);
     }
 
+    public function course_category(){
+        return $this->belongsTo(CourseCategory::class, 'category_id', 'id');
+    }
+
     public function course_review()
     {
         return $this->hasMany(CourseReview::class, 'course_id');

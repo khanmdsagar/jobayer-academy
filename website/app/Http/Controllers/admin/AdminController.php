@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\EnrolledCourse;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
+use App\Models\Course;
 
 class AdminController extends Controller
 {
@@ -63,12 +64,19 @@ class AdminController extends Controller
     }
 
     function get_course_data2(){
-        return DB::table('course')->get();
+        return Course::with('course_category')->with('instructor')->get();
     }
 
     function delete_course(Request $request){
         $course_id = strip_tags(trim($request->input('course_id')));
         $result = DB::table('course')->where('id', $course_id)->delete();
+
+        if($result){
+            return response()->json(['status' => 200, "message" => 'কোর্স মুছে ফেলা হয়েছে']);
+        }
+        else{
+            return response()->json(['status' => 404, "message" => 'কোর্স মুছে ফেলা যায়নি']);
+        }
     }
 
     function edit_course(Request $request){
