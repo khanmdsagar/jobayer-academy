@@ -174,9 +174,7 @@
                                 জেলা নির্বাচন করুন
                             @endif
                         </option>
-                        <div id="district-div2">
-
-                        </div>
+                        <optgroup id="district2"></optgroup>
                     </select>
                 </div>
 
@@ -355,12 +353,13 @@ function updateInfo(){
 
 //district on division select
 var studentDivision = document.getElementById('division');
+
 studentDivision.addEventListener('change', function() {
-    var districtDiv2 = document.getElementById('district-div2');
-    districtDiv2.innerHTML = ``;
+    var district2 = document.getElementById('district2');
+    district2.innerHTML = ``;
 
     if(studentDivision.value == 'Dhaka') {
-        districtDiv2.innerHTML = `<option value="Dhaka">ঢাকা</option>
+        district2.innerHTML = `<option value="Dhaka">ঢাকা</option>
         <option value="Gazipur">গাজীপুর</option>
         <option value="Narayanganj">নারায়ণগঞ্জ</option>
         <option value="Tangail">টাঙ্গাইল</option>
@@ -376,7 +375,7 @@ studentDivision.addEventListener('change', function() {
         `;
     }
     else if(studentDivision.value == 'Chittagong') {
-        districtDiv2.innerHTML = `<option value="Chittagong">চট্টগ্রাম</option>
+        district2.innerHTML = `<option value="Chittagong">চট্টগ্রাম</option>
         <option value="CoxsBazar">কক্সবাজার</option>
         <option value="Comilla">কুমিল্লা</option>
         <option value="Feni">ফেনী</option>
@@ -390,7 +389,7 @@ studentDivision.addEventListener('change', function() {
         `;
     }
     else if(studentDivision.value == 'Khulna') {
-        districtDiv2.innerHTML = `<option value="Khulna">খুলনা</option>
+        district2.innerHTML = `<option value="Khulna">খুলনা</option>
         <option value="Bagerhat">বাগেরহাট</option>
         <option value="Satkhira">সাতক্ষীরা</option>
         <option value="Jessore">যশোর</option>
@@ -403,7 +402,7 @@ studentDivision.addEventListener('change', function() {
         `;
     }
     else if(studentDivision.value == 'Rajshahi') {
-        districtDiv2.innerHTML = `<option value="Rajshahi">রাজশাহী</option>
+        district2.innerHTML = `<option value="Rajshahi">রাজশাহী</option>
         <option value="Pabna">পাবনা</option>
         <option value="Bogra">বগুড়া</option>
         <option value="Joypurhat">জয়পুরহাট</option>
@@ -414,7 +413,7 @@ studentDivision.addEventListener('change', function() {
         `;
     }
     else if(studentDivision.value == 'Barishal') {
-        districtDiv2.innerHTML = `<option value="Barisal">বরিশাল</option>
+        district2.innerHTML = `<option value="Barisal">বরিশাল</option>
         <option value="Patuakhali">পটুয়াখালী</option>
         <option value="Bhola">ভোলা</option>
         <option value="Pirojpur">পিরোজপুর</option>
@@ -423,14 +422,14 @@ studentDivision.addEventListener('change', function() {
         `;
     }
     else if(studentDivision.value == 'Sylhet') {
-        districtDiv2.innerHTML = `<option value="Sylhet">সিলেট</option>
+        district2.innerHTML = `<option value="Sylhet">সিলেট</option>
         <option value="Moulvibazar">মৌলভীবাজার</option>
         <option value="Habiganj">হবিগঞ্জ</option>
         <option value="Sunamganj">সুনামগঞ্জ</option>
         `;
     }
     else if(studentDivision.value == 'Rangpur') {
-        districtDiv2.innerHTML = `<option value="Rangpur">রংপুর</option>
+        district2.innerHTML = `<option value="Rangpur">রংপুর</option>
         <option value="Dinajpur">দিনাজপুর</option>
         <option value="Kurigram">কুড়িগ্রাম</option>
         <option value="Lalmonirhat">লালমনিরহাট</option>
@@ -441,7 +440,7 @@ studentDivision.addEventListener('change', function() {
         `;
     }
     else if(studentDivision.value == 'Mymensingh') {
-        districtDiv2.innerHTML = `<option value="Mymensingh">ময়মনসিংহ</option>
+        district2.innerHTML = `<option value="Mymensingh">ময়মনসিংহ</option>
         <option value="Jamalpur">জামালপুর</option>
         <option value="Netrokona">নেত্রকোনা</option>
         <option value="Sherpur">শেরপুর</option>
@@ -450,11 +449,11 @@ studentDivision.addEventListener('change', function() {
 });
 
 if(`{{$division}}` != ''){
-    var districtDiv2 = document.getElementById('district-div2');
-    districtDiv2.innerHTML = ``;
+    var district2 = document.getElementById('district2');
+    district2.innerHTML = ``;
 
     if(`{{$division}}` == 'Dhaka') {
-        districtDiv2.innerHTML = `<option value="Dhaka">ঢাকা</option>
+        district2.innerHTML = `<option value="Dhaka">ঢাকা</option>
         <option value="Gazipur">গাজীপুর</option>
         <option value="Narayanganj">নারায়ণগঞ্জ</option>
         <option value="Tangail">টাঙ্গাইল</option>
@@ -470,7 +469,7 @@ if(`{{$division}}` != ''){
         `;
     }
     else if(`{{$division}}` == 'Chittagong') {
-        districtDiv2.innerHTML = `<option value="Chittagong">চট্টগ্রাম</option>
+        district2.innerHTML = `<option value="Chittagong">চট্টগ্রাম</option>
         <option value="CoxsBazar">কক্সবাজার</option>
         <option value="Comilla">কুমিল্লা</option>
         <option value="Feni">ফেনী</option>
@@ -484,7 +483,7 @@ if(`{{$division}}` != ''){
         `;
     }
     else if(`{{$division}}` == 'Khulna') {
-        districtDiv2.innerHTML = `<option value="Khulna">খুলনা</option>
+        district2.innerHTML = `<option value="Khulna">খুলনা</option>
         <option value="Bagerhat">বাগেরহাট</option>
         <option value="Satkhira">সাতক্ষীরা</option>
         <option value="Jessore">যশোর</option>
@@ -497,7 +496,7 @@ if(`{{$division}}` != ''){
         `;
     }
     else if(`{{$division}}` == 'Rajshahi') {
-        districtDiv2.innerHTML = `<option value="Rajshahi">রাজশাহী</option>
+        district2.innerHTML = `<option value="Rajshahi">রাজশাহী</option>
         <option value="Pabna">পাবনা</option>
         <option value="Bogra">বগুড়া</option>
         <option value="Joypurhat">জয়পুরহাট</option>
@@ -508,7 +507,7 @@ if(`{{$division}}` != ''){
         `;
     }
     else if(`{{$division}}` == 'Barishal') {
-        districtDiv2.innerHTML = `<option value="Barisal">বরিশাল</option>
+        district2.innerHTML = `<option value="Barisal">বরিশাল</option>
         <option value="Patuakhali">পটুয়াখালী</option>
         <option value="Bhola">ভোলা</option>
         <option value="Pirojpur">পিরোজপুর</option>
@@ -517,14 +516,14 @@ if(`{{$division}}` != ''){
         `;
     }
     else if(`{{$division}}` == 'Sylhet') {
-        districtDiv2.innerHTML = `<option value="Sylhet">সিলেট</option>
+        district2.innerHTML = `<option value="Sylhet">সিলেট</option>
         <option value="Moulvibazar">মৌলভীবাজার</option>
         <option value="Habiganj">হবিগঞ্জ</option>
         <option value="Sunamganj">সুনামগঞ্জ</option>
         `;
     }
     else if(`{{$division}}` == 'Rangpur') {
-        districtDiv2.innerHTML = `<option value="Rangpur">রংপুর</option>
+        district2.innerHTML = `<option value="Rangpur">রংপুর</option>
         <option value="Dinajpur">দিনাজপুর</option>
         <option value="Kurigram">কুড়িগ্রাম</option>
         <option value="Lalmonirhat">লালমনিরহাট</option>
@@ -535,7 +534,7 @@ if(`{{$division}}` != ''){
         `;
     }
     else if(`{{$division}}` == 'Mymensingh') {
-        districtDiv2.innerHTML = `<option value="Mymensingh">ময়মনসিংহ</option>
+        district2.innerHTML = `<option value="Mymensingh">ময়মনসিংহ</option>
         <option value="Jamalpur">জামালপুর</option>
         <option value="Netrokona">নেত্রকোনা</option>
         <option value="Sherpur">শেরপুর</option>

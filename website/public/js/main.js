@@ -27,7 +27,10 @@ function showModal(id) {
 }
 
 function hideModal(id) {
-    //document.getElementById(id).style.display = 'none';
+    document.getElementById(id).style.display = 'none';
+}
+
+function removeModal(id) {
     const el = document.getElementById(id);
     if (el) {
         el.remove();

@@ -80,10 +80,47 @@ class AdminController extends Controller
     }
 
     function edit_course(Request $request){
-        $course_id = strip_tags(trim($request->input('course_id')));
-        $course_name = strip_tags(trim($request->input('course_name')));
-        $course_slug = Str::slug($course_name);
-        $result = DB::table('course')->where('id', $course_id)->update(['course_name' => $course_name, 'course_slug' => $course_slug]);
+        $course_id          = strip_tags(trim($request->input('course_id')));
+        $course_name        = strip_tags(trim($request->input('edited_course_name')));
+        $course_slug        = strip_tags(trim($request->input('edited_course_slug')));
+        $course_thumbnail   = strip_tags(trim($request->input('edited_course_thumbnail')));
+        $course_tagline     = strip_tags(trim($request->input('edited_course_tagline')));
+        $course_description = strip_tags(trim($request->input('edited_course_description')));
+        $course_regular_fee = strip_tags(trim($request->input('edited_course_regular_fee')));
+        $course_selling_fee = strip_tags(trim($request->input('edited_course_selling_fee')));
+        $course_duration    = strip_tags(trim($request->input('edited_course_duration')));
+        $course_level       = strip_tags(trim($request->input('edited_course_level')));
+        $course_status      = strip_tags(trim($request->input('edited_course_status')));
+        $course_category    = strip_tags(trim($request->input('edited_course_category')));
+        $course_instructor  = strip_tags(trim($request->input('edited_course_instructor')));
+
+        try{
+            $result = DB::table('course')->where('id', $course_id)->update([
+                'course_name'        => $course_name, 
+                'course_slug'        => $course_slug, 
+                'course_thumbnail'   => $course_thumbnail, 
+                'course_tagline'     => $course_tagline, 
+                'course_description' => $course_description, 
+                'course_fee'         => $course_regular_fee, 
+                'course_selling_fee' => $course_selling_fee, 
+                'course_duration'    => $course_duration, 
+                'course_level'       => $course_level, 
+                'course_status'      => $course_status, 
+                'category_id'        => $course_category, 
+                'instructor_id'      => $course_instructor,
+                'created_at'         => Carbon::now(),
+            ]);
+
+            if($result){
+                return response()->json(['status' => 200, "message" => 'কোর্স সম্পাদন করা হয়েছে']);
+            }
+            else{
+                return response()->json(['status' => 404, "message" => 'কোর্স সম্পাদন করা যায়নি']);
+            }
+        }
+        catch(\Exception $e){
+            return response()->json(['status' => 404, "message" => $e->getMessage()]);
+        }
     }
 
     //instructor operations

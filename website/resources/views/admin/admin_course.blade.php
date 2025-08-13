@@ -232,6 +232,8 @@
             });
     }
 
+    let quill2;
+
     function showEditCourseModal(courseId, courseThumbnail, courseName, courseSlug, courseTagline, courseRegularFee, courseSellingFee, courseDuration, courseLevel, courseStatus, courseCategory, courseCategoryName, courseInstructor,courseInstructorName ){
         var body = document.getElementsByTagName('body');
         body[0].innerHTML += 
@@ -278,6 +280,7 @@
                     <div class="as-mt-10px">
                         <div class="as-mb-5px"><b>লেভেল</b></div>
                         <select id="edited-course-level" class="as-select">
+                            <option value="${courseLevel}" selected hidden>${courseLevel}</option>
                             <option value="Beginner">বিগিনার</option>
                             <option value="Intermediate">ইন্টারমিডিয়েট</option>
                             <option value="Advance">এডভান্স</option>
@@ -293,40 +296,37 @@
                     </div>
                     <div class="as-mt-10px">
                         <div class="as-mb-5px"><b>ক্যাটাগরি</b></div>
-                        <select class="as-select">
+                        <select class="as-select" id="edited-course-category">
                             <option value="${courseCategory}" selected hidden>${courseCategoryName}</option>
-                            <div id="edited-course-category"></div>
+                            <optgroup id="edited-course-category2"></optgroup>
                         </select>
                     </div>
                     <div class="as-mt-10px">
                         <div class="as-mb-5px"><b>ইনসট্রাক্টর</b></div>
-                        <select class="as-select">
+                        <select class="as-select" id="edited-course-instructor">
                             <option value="${courseInstructor}" selected hidden>${courseInstructorName}</option>
-                            <div id="edited-course-instructor"></div>
+                            <optgroup  id="edited-course-instructor2"></optgroup>
                         </select>
                     </div>
                 </div>
                 <div class="as-mt-10px as-text-right">
-                    <button class="as-btn as-app-cursor as-bg-cancel" onclick="hideModal('edit-course')">বাতিল করুন</button>
-                    <button class="as-btn as-app-cursor" onclick="editCourse(${courseId})">সম্পাদন করুন</button>
+                    <button class="as-btn as-app-cursor as-bg-cancel" onclick="removeModal('edit-course')">বাতিল করুন</button>
+                    <button id="edit-course-btn" class="as-btn as-app-cursor" onclick="editCourse(${courseId})">সম্পাদন করুন</button>
                 </div>
             </div>
         </div>`
         
         var el = document.getElementById('dec'+courseId);
         var description = el.dataset.description;
-
         document.getElementById('edited-course-editor').innerHTML = description;
 
 
         var courseLevel2 = document.getElementById('edited-course-level');
         var selectedValue = courseLevel2.value;
-
         var option = document.createElement('option');
         option.value = selectedValue;
         option.selected = true;
         option.hidden = true;
-
         if (selectedValue === 'Beginner') {
             option.textContent = 'বিগিনার';
         } 
@@ -336,18 +336,15 @@
         else {
             option.textContent = 'এডভান্স';
         }
-
         courseLevel2.appendChild(option);
 
         
         var courseStatusEl = document.getElementById('edited-course-status');
         var selectedStatus = courseStatusEl.value;
-
         var option = document.createElement('option');
         option.value = selectedStatus;
         option.selected = true;
         option.hidden = true;
-
         if (selectedStatus === '1') {
             option.textContent = 'পাবলিশড';
         } 
@@ -357,25 +354,24 @@
         else {
             option.textContent = selectedStatus;
         }
-
         courseStatusEl.appendChild(option);
 
 
         axios.get('/admin/category/data')
             .then(function(response){
                 response.data.forEach(function(category){
-                    document.getElementById('edited-course-category').innerHTML += `<option value="${category.id}">${category.category_name}</option>`;
+                    document.getElementById('edited-course-category2').innerHTML += `<option value="${category.id}">${category.category_name}</option>`;
                 })
             });
 
         axios.get('/admin/instructor/get')
             .then(function(response){
                 response.data.forEach(function(instructor){
-                    document.getElementById('edited-course-instructor').innerHTML += `<option value="${instructor.id}">${instructor.instructor_name}</option>`;
+                    document.getElementById('edited-course-instructor2').innerHTML += `<option value="${instructor.id}">${instructor.instructor_name}</option>`;
                 })
             });
 
-        const quill2 = new Quill('#edited-course-editor', {
+        quill2 = new Quill('#edited-course-editor', {
             theme: 'snow',
             placeholder: 'কোর্সের বিস্তারিত',
             modules: {
@@ -396,20 +392,61 @@
         var editedCourseName        = document.getElementById('edited-course-name').value;
         var editedCourseSlug        = document.getElementById('edited-course-slug').value;
         var editedCourseTagline     = document.getElementById('edited-course-tagline').value;
-        var editedCourseDescription = document.getElementById('edited-course-editor').innerHTML;
+        var editedCourseDescription = quill2.root.innerHTML;
         var editedCourseRegularFee  = document.getElementById('edited-course-regular-fee').value;
         var editedCourseSellingFee  = document.getElementById('edited-course-selling-fee').value;
         var editedCourseDuration    = document.getElementById('edited-course-duration').value;
         var editedCourseLevel       = document.getElementById('edited-course-level').value;
-        var editedCourseStatus      = document.getElementById('edited-course-status').value;
-        var editedCourseCategory    = document.getElementById('edited-course-category').value;
-        var editedCourseInstructor  = document.getElementById('edited-course-instructor').value;
+        var editedCourseStatus      = parseInt(document.getElementById('edited-course-status').value);
+        var editedCourseCategory    = parseInt(document.getElementById('edited-course-category').value);
+        var editedCourseInstructor  = parseInt(document.getElementById('edited-course-instructor').value);
 
-        if(editedCourseName == ''){
+        if(editedCourseThumbnail == ''){
+            alert('কোর্সের থাম্বনেল দিন');
+        }
+        else if(editedCourseName == ''){
             alert('কোর্সের নাম দিন');
         }
+        else if(editedCourseSlug == ''){
+            alert('কোর্সের স্লাগ দিন');
+        }
+        else if(editedCourseDescription == '<p><br></p>'){
+            alert('কোর্সের বিস্তারিত দিন');
+        }
+        else if(editedCourseTagline == ''){
+            alert('কোর্সের ট্যাগলাইন দিন');
+        }
+        else if(editedCourseRegularFee == ''){
+            alert('কোর্সের রেগুলার ফি দিন');
+        }
+        else if(editedCourseSellingFee == ''){
+            alert('কোর্সের সেলিং ফি দিন');
+        }
+        else if(editedCourseDuration == ''){
+            alert('কোর্সের ডিউরেশন দিন');
+        }
         else{
-            axios.post('/admin/course/edit', {course_id: courseId, course_name: editedCourseName})
+            var editCourseBtn = document.getElementById('edit-course-btn');
+            editCourseBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            editCourseBtn.disabled = true;
+
+            var data = {
+                course_id                 : courseId, 
+                edited_course_thumbnail   : editedCourseThumbnail, 
+                edited_course_name        : editedCourseName, 
+                edited_course_slug        : editedCourseSlug, 
+                edited_course_tagline     : editedCourseTagline, 
+                edited_course_description : editedCourseDescription, 
+                edited_course_regular_fee : editedCourseRegularFee, 
+                edited_course_selling_fee : editedCourseSellingFee, 
+                edited_course_duration    : editedCourseDuration, 
+                edited_course_level       : editedCourseLevel, 
+                edited_course_status      : editedCourseStatus, 
+                edited_course_category    : editedCourseCategory, 
+                edited_course_instructor  : editedCourseInstructor
+            }
+
+            axios.post('/admin/course/edit', data)
                 .then(function(response){
                     alert(response.data.message);
 
@@ -417,6 +454,8 @@
                         location.reload();
                     }
                     else{
+                        editCourseBtn.innerHTML = 'সম্পাদন করুন';
+                        editCourseBtn.disabled = false;
                         hideModal('edit-course');
                     }
                 });
