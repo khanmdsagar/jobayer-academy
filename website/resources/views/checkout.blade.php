@@ -82,7 +82,7 @@
 
             <div class="as-card as-w-28 md:as-w-100 as-brr-5px md:as-mt-15px md:as-mb-15px">
                 <div>
-                    <img class="as-w-100 as-h-200px as-brr-5px" src="/image/course/{{$course_thumbnail}}">
+                    <img class="as-w-100 as-h-200px as-brr-5px" src="/storage/{{$course_thumbnail}}">
                     <div class="as-p-15px">
                         <h3 class="as-mb-15px">{{$course_name}}</h3>
                         <div><i class="fas fa-check"></i> লাইফটাইম অ্যাক্সেস</div>

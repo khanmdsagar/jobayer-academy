@@ -10,10 +10,16 @@ use App\Models\EnrolledCourse;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use App\Models\Course;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
     //course operations
+    function add_course_thumbnail(Request $request){
+        $path = $request->file('course_thumbnail')->store('course', 'public');
+        return $path;
+    }
+
     function add_course(Request $request){
         $course_name = strip_tags(trim($request->input('course_name')));
         $course_thumbnail = strip_tags(trim($request->input('course_thumbnail')));
@@ -68,8 +74,12 @@ class AdminController extends Controller
     }
 
     function delete_course(Request $request){
-        $course_id = strip_tags(trim($request->input('course_id')));
+        $course_id        = strip_tags(trim($request->input('course_id')));
+        $course_thumbnail = strip_tags(trim($request->input('course_thumbnail')));
+
         $result = DB::table('course')->where('id', $course_id)->delete();
+
+        Storage::disk('public')->delete($course_thumbnail);
 
         if($result){
             return response()->json(['status' => 200, "message" => 'কোর্স মুছে ফেলা হয়েছে']);

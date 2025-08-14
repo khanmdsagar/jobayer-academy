@@ -52,9 +52,9 @@ class SiteController extends Controller
     function checkout($course_id, $course_slug){
         $course = Course::with('combo_purchase')->where('id', $course_id)->first();
         $course_name = $course->course_name;
-        $course_image = $course->course_image;
+        $course_thumbnail = $course->course_thumbnail;
 
-        return view('checkout', compact('course', 'course_name', 'course_image'));
+        return view('checkout', compact('course', 'course_name', 'course_thumbnail'));
     }
 
     // enroll course

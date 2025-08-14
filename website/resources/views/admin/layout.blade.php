@@ -16,6 +16,9 @@
     <link rel="icon" href="{{ url('image/icon/favicon.png') }}" type="image/png">
 
     <style>
+        body{
+            background: #f8f9fa;
+        }
         #course-editor, #edited-course-editor{
             height: 250px;
         }

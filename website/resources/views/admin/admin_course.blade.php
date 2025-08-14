@@ -4,7 +4,7 @@
 @section('content')
 <div class="as-flex">
     <!-- sidebar -->
-    <div id="admin-sidebar" class="as-w-250px as-bg-black as-h-100vh">
+    <div id="admin-sidebar" class="as-w-250px as-bg-white as-h-100vh">
         @include('admin.sidebar')
     </div>
 </div>
@@ -31,7 +31,7 @@
 
 <!-- add course modal -->
 <div class="as-modal" id="add-course" style="display: none">
-    <div class="info-section as-bg-white as-shadow-lw as-p-20px as-w-50 md:as-w-90 as-mt-10px as-brr-5px">
+    <div class="info-section as-bg-white as-shadow-lw as-p-15px as-w-50 md:as-w-90 as-mt-10px as-brr-5px">
 
         <div class="as-text-center">
             <h2>কোর্সের তথ্য</h2>
@@ -40,7 +40,7 @@
         <div class="as-modal-child as-p-10px">
             <div class="as-mt-10px">
                 <div class="as-mb-5px"><b>থাম্বনেল</b></div>
-                <input type="text" id="course-thumbnail" class="as-input" placeholder="কোর্সের থাম্বনেল">
+                <input type="file" id="course-thumbnail" class="as-input" placeholder="কোর্সের থাম্বনেল">
             </div>
             <div class="as-mt-10px">
                 <div class="as-mb-5px"><b>নাম</b></div>
@@ -100,7 +100,7 @@
         </div>
         <div class="as-mt-10px as-text-right">
             <button class="as-btn as-app-cursor as-bg-cancel" onclick="hideModal('add-course')">বাতিল করুন</button>
-            <button class="as-btn as-app-cursor" onclick="addCourse()">যুক্ত করুন</button>
+            <button id="add-course-btn" class="as-btn as-app-cursor" onclick="addCourse()">যুক্ত করুন</button>
         </div>
     </div>
 </div>
@@ -132,7 +132,7 @@
     }
 
     function addCourse(){
-        var courseThumbnail     = document.getElementById('course-thumbnail').value;
+        var courseThumbnail     = document.getElementById('course-thumbnail').files[0];
         var courseName          = document.getElementById('course-name').value;
         var courseSlug          = document.getElementById('course-slug').value;
         var courseTagline       = document.getElementById('course-tagline').value;
@@ -145,7 +145,7 @@
         var courseInstructor    = document.getElementById('course-instructor').value;
         var courseDescription   = quill.root.innerHTML;
 
-        if(courseThumbnail == ''){
+        if(courseThumbnail == undefined){
             alert('কোর্সের থাম্বনেল দিন');
         }
         else if(courseName == ''){
@@ -166,6 +166,9 @@
         else if(courseSellingFee == ''){
             alert('কোর্সের সেলিং ফি দিন');
         }
+        else if(courseRegularFee < courseSellingFee){
+            alert('সেলিং ফি রেগুলার ফি অপেক্ষা বেশি হবে না');
+        }
         else if(courseDuration == ''){
             alert('কোর্সের ডিউরেশন দিন');
         }
@@ -182,32 +185,49 @@
             alert('কোর্সের ইনসট্রাক্টর দিন');
         }
         else{
-            var data = {
-                course_thumbnail: courseThumbnail,
-                course_name: courseName,
-                course_slug: courseSlug,
-                course_tagline: courseTagline,
-                course_regular_fee:  parseInt(courseRegularFee),
-                course_selling_fee: parseInt(courseSellingFee),
-                course_duration: courseDuration,
-                course_level: courseLevel,
-                course_status: parseInt(courseStatus),
-                course_category: parseInt(courseCategory),
-                course_instructor: parseInt(courseInstructor),
-                course_description: courseDescription,
-            }
+            document.getElementById('add-course-btn').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+            document.getElementById('add-course-btn').disabled = true;
 
-            axios.post('/admin/course/add', data)
+            var formData = new FormData();
+            formData.append('course_thumbnail', courseThumbnail);
+            var config = {headers: {'content-type': 'multipart/form-data'}}
+
+            axios.post('/admin/course/add/thumbnail', formData, config)
                 .then(function(response){
-                    alert(response.data.message);
+                    if(response.data != ''){
+                        var data = {
+                            course_thumbnail: response.data,
+                            course_name: courseName,
+                            course_slug: courseSlug,
+                            course_tagline: courseTagline,
+                            course_regular_fee:  parseInt(courseRegularFee),
+                            course_selling_fee: parseInt(courseSellingFee),
+                            course_duration: courseDuration,
+                            course_level: courseLevel,
+                            course_status: parseInt(courseStatus),
+                            course_category: parseInt(courseCategory),
+                            course_instructor: parseInt(courseInstructor),
+                            course_description: courseDescription,
+                        }
 
-                    if(response.data.status == 200){
-                        location.reload();
-                    }
-                    else{
-                        hideModal('add-course');
+                        axios.post('/admin/course/add', data)
+                        .then(function(res){
+                            document.getElementById('add-course-btn').innerHTML = 'যুক্ত করুন';
+                            document.getElementById('add-course-btn').disabled = false;
+
+                            alert(res.data.message);
+
+                            if(res.data.status == 200){
+                                location.reload();
+                            }
+                            else{
+                                hideModal('add-course');
+                            }
+                        });
                     }
                 });
+
+           
         }
     }
 
@@ -223,7 +243,7 @@
                             <div class="as-flex as-align-center">${course.course_name}</div>
                             <div>
                                 <span><i id="dec${course.id}" data-description="${course.course_description}" onclick="showEditCourseModal('${course.id}', '${course.course_thumbnail}', '${course.course_name}', '${course.course_slug}', '${course.course_tagline}', '${course.course_fee}', '${course.course_selling_fee}', '${course.course_duration}', '${course.course_level}', '${course.course_status}', '${course.category_id}', '${course.course_category.category_name}', '${course.instructor_id}', '${course.instructor.instructor_name}')" class="fa-solid fa-edit as-app-cursor as-p-10px"></i></span>
-                                <span><i onclick="deleteCourse(${course.id})" class="fa-solid fa-trash as-app-cursor as-p-10px"></i></span>
+                                <span><i onclick="deleteCourse(${course.id}, '${course.course_thumbnail}')" class="fa-solid fa-trash as-app-cursor as-p-10px"></i></span>
                             </div>
                         </div>
                     `;
@@ -462,11 +482,11 @@
         }
     }
 
-    function deleteCourse(courseId){
+    function deleteCourse(courseId, courseThumbnail){
         var confirm = window.confirm('কোর্স মুছে ফেলবেন কি?');
 
         if(confirm){
-            axios.post('/admin/course/delete', {course_id: courseId})
+            axios.post('/admin/course/delete', {course_id: courseId, course_thumbnail: courseThumbnail})
                 .then(function(response){
                     alert(response.data.message);
                     getCourseData();

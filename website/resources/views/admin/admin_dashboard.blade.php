@@ -4,7 +4,7 @@
 @section('content')
 <div class="as-flex">
     <!-- sidebar -->
-    <div id="admin-sidebar" class="as-w-250px as-bg-black as-h-100vh">
+    <div id="admin-sidebar" class="as-w-250px as-bg-white as-h-100vh">
         @include('admin.sidebar')
     </div>
 </div>

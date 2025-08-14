@@ -173,7 +173,7 @@ class DataSeedController extends Controller
                 "course_slug" => "natural-soap-making-course",
                 "course_duration" => "১১ ঘন্টা",
                 "course_level" => "Advanced",
-                "course_image" => "advancedsoapmaking.webp",
+                "course_thumbnail" => "advancedsoapmaking.webp",
                 "course_description" => "লেখাপড়া, চাকরী, সংসার সামলানো কিংবা বেকার জীবনের পাশাপাশি যদি আপনি উদ্যোক্তা হয়ে সফল হতে চান তাহলে এমন পণ্য নিয়ে কাজ করা উচিৎ যার মার্কেটে প্রচুর ডিমান্ড রয়েছে অথচ কম্পিটেশন কম। এমনই একটি পণ্য প্রাকৃতিক সোপ।
                     <br>
                     সোপ মেকিং শিখে আপনাকে কেবল বিজনেস করতে হবে এমন নয়, নিজের পরিবারের চাহিদা মিটবে, ক্ষতিকারক কেমিক্যাল ফ্রি পণ্য ব্যবহারে নিশ্চিন্তে থাকবে পরিবার। সোপ আর্ট মানুষিক চাপ কমায়।
@@ -193,7 +193,7 @@ class DataSeedController extends Controller
                 "course_slug" => "melt-and-pour-soap-making",
                 "course_duration" => "৫১ মিনিট",
                 "course_level" => "Advanced",
-                "course_image" => "melt&poursoapmaking.webp",
+                "course_thumbnail" => "melt&poursoapmaking.webp",
                 "course_description" => "<p>বাংলাদেশে মেল্ট এন্ড পোর সোপ এর চাহিদা ব্যপক। তবে সঠিক প্রশিক্ষণের অভাবে বেশিরভাগ সোপ ঘামতে ও গলতে শুরু করে। ফলে ক্রেতাদের নেগেটিভ রিভিউ আসে। এই সকল সমস্যার সমাধান নিয়ে আমদের মেল্ট এন্ড পোর সোপ মেকিং কোর্স চালু করা হয়েছে।</p>
                     <br>
                     যা যা শেখানো হয়েছে -
@@ -221,7 +221,7 @@ class DataSeedController extends Controller
                 "course_slug" => "e-commerce-management-course",
                 "course_duration" => "৬ ঘন্টা",
                 "course_level" => "Beginner",
-                "course_image" => "ecommerce-management.webp",
+                "course_thumbnail" => "ecommerce-management.webp",
                 "course_description" => "<p>ব্যবসা পরিচালোনা করার জন্য সবচেয়ে জনপ্রিয় মাধ্যম হলো একটি ইকমার্স ওয়েবসাইট। তবে নতুন উদ্দক্তাদের বাজেট প্রবলেম এর কারনে অনেক সময় ওয়েব সাইট করা হয়না। আমাদের এই কোর্সটি এমন ভাবে সাজানো হয়েছে যাতে একজন শিক্ষার্থী ডোমেন হোষ্টিং কেনা থেকে শুরু করে নিজে নিজে কিভাবে সাইট সেটআপ করে নিজেই বিজনেস পরিচালনা করতে পারে। আমাদের বিশ্বাস এই কোর্সটি করার পরে আপনি যে কোন মার্কেট প্লেসে কাজ তো করতেই পারবেন সাথে নিজে নিজের বিজনেস পরিচালনা করতে পারবেন।</p> <p>আরো তথ্য পেতে কল করুন - 01719295000</p>",
                 "course_status" => 1,
                 "category_id" => 2,
@@ -236,7 +236,7 @@ class DataSeedController extends Controller
                 "course_slug" => "b2b-product-sourcing",
                 "course_duration" => "৬ ঘন্টা",
                 "course_level" => "Intermediate",
-                "course_image" => "product-sourcing.webp",
+                "course_thumbnail" => "product-sourcing.webp",
                 "course_description" => "<p>একটা বিজনেসের সবচেয়ে গুরুত্বপূর্ণ বিষয় হলো প্রডাক্ট সোর্সিং। আপনি যদি কিনে জিততে না পারেন তাহলে কখনোই সেল করে প্রফিট করতে পারবেন না। সেই সাথে আপনাকে জানতে হবে একটি পন্যের পরিপূর্ণ কষ্টিং বা দাম নির্ধারন করার ক্ষমতা। পুরাতন ও নতুন উদ্দ্যোক্তাদের কথা মাথায় রেখেই আমাদের বি টু বি প্রডাক্ট সোর্সিং কোর্সটি চালু করেছি। এই কের্সিটিতে আপনি কিভাবে একটি পণ্য খুবই কম দামে দেশিও মার্কেট ও চায়না আলিবাবা থেকে পন্য নিয়ে এসে সঠিক কষ্টিং এর মাধ্যমে একটি লাভবান বিজনেস দাড় করাবেন তার পরিপূর্ণ গাইডলাইন দেখানো হয়েছে। এছাড়াও বাংলাদেশের কোথায় কোন প্রডাক্ট হোলসেল পাওয়া যায় সে সম্পর্কে বিস্তারি আলোচনা ও প্রাকটিক্যাল দেখানো হয়েছে। এই কোর্সটি আপনার ব্যবসার মোড় ঘুরিয়ে দেবে বলে আমরা বিশ্বাস করি। তাই আজই জয়েন করুন।</p> <p>আরো তথ্য পেতে কল করুন - 01719295000</p>",
                 "course_status" => 1,
                 "category_id" => 3,
@@ -256,7 +256,7 @@ class DataSeedController extends Controller
                     'course_slug' => $c['course_slug'],
                     'course_duration' => $c['course_duration'],
                     'course_level' => $c['course_level'],
-                    'course_image' => $c['course_image'],
+                    'course_thumbnail' => $c['course_thumbnail'],
                     'course_description' => $c['course_description'],
                     'course_status' => $c['course_status'],
                     'category_id' => $c['category_id'],
