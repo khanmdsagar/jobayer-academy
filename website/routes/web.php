@@ -224,12 +224,8 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
     Route::post('/admin/course/delete', [AdminController::class, 'delete_course']);
     Route::post('/admin/course/edit', [AdminController::class, 'edit_course']);
 
-
     Route::get('/admin/logout', function (Request $request) {
         Session::forget('admin_id');
         return redirect()->route('admin');
     })->name('admin.logout');
 });
-
-
-

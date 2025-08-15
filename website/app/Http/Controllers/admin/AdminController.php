@@ -70,7 +70,8 @@ class AdminController extends Controller
     }
 
     function get_course_data2(){
-        return Course::with('course_category')->with('instructor')->get();
+        return Course::with('course_category')->with('instructor')->withCount('enrolled_course')->get();
+        //return EnrolledCourse::with('course')->get();
     }
 
     function delete_course(Request $request){

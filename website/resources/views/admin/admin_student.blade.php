@@ -4,7 +4,7 @@
 @section('content')
 <div class="as-flex">
     <!-- sidebar -->
-    <div id="admin-sidebar" class="as-w-250px as-bg-white as-h-100vh">
+    <div id="admin-sidebar" class="as-w-200px as-bg-white as-h-100vh">
         @include('admin.sidebar')
     </div>
 </div>
@@ -20,7 +20,7 @@
         <div class="as-flex as-space-between as-p-10px">
             <div class="as-flex">
                 <input type="text" id="search-student" class="as-input as-mr-10px" placeholder="নাম বা ফোন নাম্বর দিন">
-                <button onclick="getStudentData()" id="search-student-button" class="as-btn as-btn-primary as-app-cursor"><i class="fas fa-search"></i></button>
+                <button onclick="getStudentData()" id="search-student-button" class="as-btn as-btn-primary as-app-cursor as-mr-5px"><i class="fas fa-search"></i></button>
             </div>
             <div class="as-flex">
                 <button id="filter-student-button" class="as-btn as-btn-primary as-app-cursor as-mr-5px" onclick="showModal('student-filter')"><i class="fas fa-filter"></i></button>

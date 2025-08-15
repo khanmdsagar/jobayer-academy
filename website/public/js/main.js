@@ -79,9 +79,3 @@ function adminLogout() {
         return false;
     }
 }
-
-// document.addEventListener('keydown', function(event) {
-//     if (event.key == 'Backspace') {
-//         window.history.back();
-//     }
-// });

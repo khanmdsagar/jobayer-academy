@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Course extends Model 
+class Course extends Model
 {
     protected $table = 'course';
-    
+
     protected $fillable = [
-        'course_name', 
+        'course_name',
         'course_fee',
         'course_discount',
         'course_slug',
@@ -26,19 +26,23 @@ class Course extends Model
         return $this->hasMany(ComboPurchase::class);
     }
 
-    public function enrolled_course(){
-        return $this->hasMany(EnrolledCourse::class);
+    public function enrolled_course()
+    {
+        return $this->hasMany(EnrolledCourse::class, 'course_id');
     }
 
-    public function course_chapter(){
+    public function course_chapter()
+    {
         return $this->hasMany(CourseChapter::class);
     }
 
-    public function instructor(){
+    public function instructor()
+    {
         return $this->belongsTo(Instructor::class);
     }
 
-    public function course_category(){
+    public function course_category()
+    {
         return $this->belongsTo(CourseCategory::class, 'category_id', 'id');
     }
 

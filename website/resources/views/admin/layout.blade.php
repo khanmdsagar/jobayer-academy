@@ -48,7 +48,7 @@
                 width: 0px;
             }
             .collapsed {
-                width: 250px !important;
+                width: 200px !important;
             }
             #add-student-button{
                 position: fixed;
