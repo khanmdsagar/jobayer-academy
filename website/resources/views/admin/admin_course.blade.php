@@ -61,29 +61,29 @@
                 </div>
                 <div class="as-mt-10px">
                     <div class="as-mb-5px"><b>রেগুলার ফি</b></div>
-                    <input type="number" id="course-regular-fee" class="as-input" placeholder="কোর্সের রেগুলার ফি">
+                    <input type="number" id="course-regular-fee" class="as-input" placeholder="কোর্সের রেগুলার ফি" onmousewheel="this.blur()">
                 </div>
                 <div class="as-mt-10px">
                     <div class="as-mb-5px"><b>সেলিং ফি</b></div>
-                    <input type="number" id="course-selling-fee" class="as-input" placeholder="কোর্সের সেলিং ফি">
+                    <input type="number" id="course-selling-fee" class="as-input" placeholder="কোর্সের সেলিং ফি" onmousewheel="this.blur()">
                 </div>
                 <div class="as-mt-10px">
                     <div class="as-mb-5px"><b>ডিউরেশন</b></div>
                     <input type="text" id="course-duration" class="as-input" placeholder="কোর্সের ডিউরেশন">
                 </div>
                 <div class="as-mt-10px">
-                    <div class="as-mb-5px"><b>লেভেল</b></div>
+                    <div class="as-mb-5px"><b>স্তর</b></div>
                     <select id="course-level" class="as-select">
-                        <option value="Beginner">বিগিনার</option>
-                        <option value="Intermediate">ইন্টারমিডিয়েট</option>
-                        <option value="Advance">এডভান্স</option>
+                        <option value="Beginner">শুরুর</option>
+                        <option value="Intermediate">মধ্যবর্তী</option>
+                        <option value="Advance">উচ্চতর</option>
                     </select>
                 </div>
                 <div class="as-mt-10px">
                     <div class="as-mb-5px"><b>স্ট্যাটাস</b></div>
                     <select id="course-status" class="as-select">
-                        <option value="1">পাবলিশড</option>
-                        <option value="0">আনপাবলিশড</option>
+                        <option value="1">প্রকাশিত</option>
+                        <option value="0">অপ্রকাশিত</option>
                     </select>
                 </div>
                 <div class="as-mt-10px">
@@ -93,7 +93,7 @@
                     </select>
                 </div>
                 <div class="as-mt-10px">
-                    <div class="as-mb-5px"><b>ইনসট্রাক্টর</b></div>
+                    <div class="as-mb-5px"><b>প্রশিক্ষক</b></div>
                     <select id="course-instructor" class="as-select">
 
                     </select>
@@ -171,19 +171,19 @@
                 alert('সেলিং ফি রেগুলার ফি অপেক্ষা বেশি হবে না');
             }
             else if (courseDuration == '') {
-                alert('কোর্সের ডিউরেশন দিন');
+                alert('কোর্সের সময়কাল দিন');
             }
             else if (courseLevel == '') {
-                alert('কোর্সের লেভেল দিন');
+                alert('কোর্সের স্তর সিলেক্ট করুন');
             }
             else if (courseStatus == '') {
-                alert('কোর্সের স্ট্যাটাস দিন');
+                alert('কোর্সের স্ট্যাটাস সিলেক্ট করুন');
             }
             else if (courseCategory == '') {
-                alert('কোর্সের ক্যাটাগরি দিন');
+                alert('কোর্সের ক্যাটাগরি সিলেক্ট করুন');
             }
             else if (courseInstructor == '') {
-                alert('কোর্সের ইনসট্রাক্টর দিন');
+                alert('কোর্সের প্রশিক্ষক সিলেক্ট করুন');
             }
             else {
                 document.getElementById('add-course-btn').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
@@ -250,9 +250,12 @@
                                 <div class="as-card as-mb-10px as-flex as-space-between as-p-10px">
                                     <div>
                                         <div class="as-flex as-align-center">${course.course_name}</div>
-                                        <div class="as-f-fade">ভর্তি ${course.enrolled_course_count} জন</div>
+                                        <div class="as-f-fade">ভর্তি: ${course.enrolled_course_count} জন</div>
+                                        <div class="as-f-fade">সেলিং ফি: ৳${course.course_selling_fee}</div>
+                                        <div class="as-f-fade">স্ট্যাটাস: ${course.course_status == 1 ? 'প্রকাশিত' : 'অপ্রকাশিত'}</div>
                                     </div>
                                     <div>
+                                        <div><i onclick="window.location.href = '/admin/course/info/${course.id}'" class="fa-solid fa-eye as-app-cursor as-p-10px"></i></div>
                                         <div><i id="dec${course.id}" data-description="${course.course_description}" onclick="showEditCourseModal('${course.id}', '${course.course_thumbnail}', '${course.course_name}', '${course.course_slug}', '${course.course_tagline}', '${course.course_fee}', '${course.course_selling_fee}', '${course.course_duration}', '${course.course_level}', '${course.course_status}', '${course.category_id}', '${course.course_category.category_name}', '${course.instructor_id}', '${course.instructor.instructor_name}')" class="fa-solid fa-edit as-app-cursor as-p-10px"></i></div>
                                         <div><i onclick="deleteCourse(${course.id}, '${course.course_thumbnail}')" class="fa-solid fa-trash as-app-cursor as-p-10px"></i></div>
                                     </div>
@@ -302,11 +305,11 @@
                             </div>
                             <div class="as-mt-10px">
                                 <div class="as-mb-5px"><b>রেগুলার ফি</b></div>
-                                <input value="${courseRegularFee}" type="number" id="edited-course-regular-fee" class="as-input" placeholder="কোর্সের রেগুলার ফি">
+                                <input value="${courseRegularFee}" type="number" id="edited-course-regular-fee" class="as-input" placeholder="কোর্সের রেগুলার ফি" onmousewheel="this.blur()">
                             </div>
                             <div class="as-mt-10px">
                                 <div class="as-mb-5px"><b>সেলিং ফি</b></div>
-                                <input value="${courseSellingFee}" type="number" id="edited-course-selling-fee" class="as-input" placeholder="কোর্সের সেলিং ফি">
+                                <input value="${courseSellingFee}" type="number" id="edited-course-selling-fee" class="as-input" placeholder="কোর্সের সেলিং ফি" onmousewheel="this.blur()">
                             </div>
                             <div class="as-mt-10px">
                                 <div class="as-mb-5px"><b>ডিউরেশন</b></div>
@@ -421,7 +424,6 @@
             });
             showModal('edit-course');
         }
-
 
         function editCourse(courseId) {
             var editedCourseThumbnail    = document.getElementById('edited-course-thumbnail').value;

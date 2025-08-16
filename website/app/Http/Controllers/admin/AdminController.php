@@ -14,7 +14,43 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
+    //chapter operations
+    function get_chapter($course_id){
+        return DB::table('course_chapter')->where('course_id', $course_id)->get();
+    }
+    function add_chapter(Request $request){
+        $course_id = strip_tags(trim($request->input('course_id')));
+        $chapter_name = strip_tags(trim($request->input('chapter_name')));
+        $is_chapter = DB::table('course_chapter')->where('chapter_name', $chapter_name)->where('course_id', $course_id)->count();
+
+        if($is_chapter > 0){
+            return response()->json(['status' => 404, "message" => 'Chapter already exists']);
+        }
+        else{
+            try{
+                $result = DB::table('course_chapter')->insert([
+                    'chapter_name' => $chapter_name,
+                    'course_id' => $course_id,
+                ]);
+                if($result){
+                    return response()->json(['status' => 200, "message" => 'Chapter added successfully']);
+                }
+                else{
+                    return response()->json(['status' => 404, "message" => 'Chapter could not be added']);
+                }
+            }
+            catch(\Exception $e){
+                return response()->json(['status' => 404, "message" => $e->getMessage()]);
+            }
+        }
+    }
+
     //course operations
+    function course_info($course_id){
+        $course_data = Course::with('course_category')->with('instructor')->where('id', $course_id)->first();
+        return view('admin.admin_course_info', compact('course_data'));
+    }
+
     function add_course_thumbnail(Request $request){
         $path = $request->file('course_thumbnail')->store('course', 'public');
         return $path;

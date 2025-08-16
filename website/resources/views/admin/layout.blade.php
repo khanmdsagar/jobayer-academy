@@ -18,6 +18,7 @@
     <style>
         body{
             background: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
         }
         #course-editor, #edited-course-editor{
             height: 250px;

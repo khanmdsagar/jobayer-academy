@@ -223,6 +223,11 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
     Route::get('/admin/course/get', [AdminController::class, 'get_course_data2']);
     Route::post('/admin/course/delete', [AdminController::class, 'delete_course']);
     Route::post('/admin/course/edit', [AdminController::class, 'edit_course']);
+    Route::get('/admin/course/info/{course_id}', [AdminController::class, 'course_info']);
+
+    Route::post('/admin/chapter/add', [AdminController::class, 'add_chapter']);
+    Route::get('/admin/chapter/get/{course_id}', [AdminController::class, 'get_chapter']);
+    Route::get('/admin/chapter/topic/get/{course_id}/{chapter_id}', [AdminController::class, 'get_chapter']);
 
     Route::get('/admin/logout', function (Request $request) {
         Session::forget('admin_id');
