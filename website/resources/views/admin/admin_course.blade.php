@@ -14,7 +14,7 @@
         <div style="height: 15vh;" class="as-p-10px">
             <div>
                 <i onclick="toggleAdminSidebar()" class="fas fa-bars as-app-cursor as-f-20px as-mr-10px"></i>
-                <span class="as-f-bold as-f-20px">কোর্স</span>
+                <span class="as-f-bold as-f-20px">Course</span>
             </div>
 
             <div class="actions as-flex as-justify-end">
@@ -35,73 +35,73 @@
         <div class="info-section as-bg-white as-shadow-lw as-p-15px as-w-50 md:as-w-90 as-mt-10px as-brr-5px">
 
             <div class="as-text-center">
-                <h2>কোর্সের তথ্য</h2>
+                <h2>Course Info</h2>
             </div>
 
             <div class="as-modal-child as-p-10px">
                 <div class="as-mt-10px">
-                    <div class="as-mb-5px"><b>থাম্বনেল</b></div>
-                    <input type="file" id="course-thumbnail" class="as-input" placeholder="কোর্সের থাম্বনেল">
+                    <div class="as-mb-5px"><b>Thumbnail</b></div>
+                    <input type="file" id="course-thumbnail" class="as-input" placeholder="Enter Thumbnail">
                 </div>
                 <div class="as-mt-10px">
-                    <div class="as-mb-5px"><b>নাম</b></div>
-                    <input type="text" id="course-name" class="as-input" placeholder="কোর্সের নাম">
+                    <div class="as-mb-5px"><b>Title</b></div>
+                    <input type="text" id="course-name" class="as-input" placeholder="Enter Title">
                 </div>
                 <div class="as-mt-10px">
-                    <div class="as-mb-5px"><b>স্লাগ</b></div>
-                    <input type="text" id="course-slug" class="as-input" placeholder="কোর্সের স্লাগ">
+                    <div class="as-mb-5px"><b>Slug</b></div>
+                    <input type="text" id="course-slug" class="as-input" placeholder="Enter Slug">
                 </div>
                 <div class="as-mt-10px">
-                    <div class="as-mb-5px"><b>বিস্তারিত</b></div>
+                    <div class="as-mb-5px"><b>Description</b></div>
                     <div id="course-editor"></div>
                 </div>
                 <div class="as-mt-10px">
-                    <div class="as-mb-5px"><b>ট্যাগলাইন</b></div>
-                    <input type="text" id="course-tagline" class="as-input" placeholder="কোর্সের ট্যাগলাইন">
+                    <div class="as-mb-5px"><b>Tagline</b></div>
+                    <input type="text" id="course-tagline" class="as-input" placeholder="Enter tagline">
                 </div>
                 <div class="as-mt-10px">
-                    <div class="as-mb-5px"><b>রেগুলার ফি</b></div>
-                    <input type="number" id="course-regular-fee" class="as-input" placeholder="কোর্সের রেগুলার ফি" onmousewheel="this.blur()">
+                    <div class="as-mb-5px"><b>Regular fee</b></div>
+                    <input type="number" id="course-regular-fee" class="as-input" placeholder="Enter regular fee" onmousewheel="this.blur()">
                 </div>
                 <div class="as-mt-10px">
-                    <div class="as-mb-5px"><b>সেলিং ফি</b></div>
-                    <input type="number" id="course-selling-fee" class="as-input" placeholder="কোর্সের সেলিং ফি" onmousewheel="this.blur()">
+                    <div class="as-mb-5px"><b>Selling fee</b></div>
+                    <input type="number" id="course-selling-fee" class="as-input" placeholder="Enter selling fee" onmousewheel="this.blur()">
                 </div>
                 <div class="as-mt-10px">
-                    <div class="as-mb-5px"><b>ডিউরেশন</b></div>
-                    <input type="text" id="course-duration" class="as-input" placeholder="কোর্সের ডিউরেশন">
+                    <div class="as-mb-5px"><b>Duration</b></div>
+                    <input type="text" id="course-duration" class="as-input" placeholder="Enter duration">
                 </div>
                 <div class="as-mt-10px">
-                    <div class="as-mb-5px"><b>স্তর</b></div>
+                    <div class="as-mb-5px"><b>Level</b></div>
                     <select id="course-level" class="as-select">
-                        <option value="Beginner">শুরুর</option>
-                        <option value="Intermediate">মধ্যবর্তী</option>
-                        <option value="Advance">উচ্চতর</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advance">Advance</option>
                     </select>
                 </div>
                 <div class="as-mt-10px">
-                    <div class="as-mb-5px"><b>স্ট্যাটাস</b></div>
+                    <div class="as-mb-5px"><b>Status</b></div>
                     <select id="course-status" class="as-select">
-                        <option value="1">প্রকাশিত</option>
-                        <option value="0">অপ্রকাশিত</option>
+                        <option value="1">Published</option>
+                        <option value="0">Unpublished</option>
                     </select>
                 </div>
                 <div class="as-mt-10px">
-                    <div class="as-mb-5px"><b>ক্যাটাগরি</b></div>
+                    <div class="as-mb-5px"><b>Category</b></div>
                     <select id="course-category" class="as-select">
 
                     </select>
                 </div>
                 <div class="as-mt-10px">
-                    <div class="as-mb-5px"><b>প্রশিক্ষক</b></div>
+                    <div class="as-mb-5px"><b>Instructor</b></div>
                     <select id="course-instructor" class="as-select">
 
                     </select>
                 </div>
             </div>
             <div class="as-mt-10px as-text-right">
-                <button class="as-btn as-app-cursor as-bg-cancel" onclick="hideModal('add-course')">বাতিল করুন</button>
-                <button id="add-course-btn" class="as-btn as-app-cursor" onclick="addCourse()">যুক্ত করুন</button>
+                <button class="as-btn as-app-cursor as-bg-cancel" onclick="hideModal('add-course')">Cancel</button>
+                <button id="add-course-btn" class="as-btn as-app-cursor" onclick="addCourse()">Add</button>
             </div>
         </div>
     </div>
@@ -250,9 +250,9 @@
                                 <div class="as-card as-mb-10px as-flex as-space-between as-p-10px">
                                     <div>
                                         <div class="as-flex as-align-center">${course.course_name}</div>
-                                        <div class="as-f-fade">ভর্তি: ${course.enrolled_course_count} জন</div>
-                                        <div class="as-f-fade">সেলিং ফি: ৳${course.course_selling_fee}</div>
-                                        <div class="as-f-fade">স্ট্যাটাস: ${course.course_status == 1 ? 'প্রকাশিত' : 'অপ্রকাশিত'}</div>
+                                        <div class="as-f-fade">Student: ${course.enrolled_course_count} people</div>
+                                        <div class="as-f-fade">Selling fee: ৳${course.course_selling_fee}</div>
+                                        <div class="as-f-fade">Status: ${course.course_status == 1 ? 'Published' : 'Unpublished'}</div>
                                     </div>
                                     <div>
                                         <div><i onclick="window.location.href = '/admin/course/info/${course.id}'" class="fa-solid fa-eye as-app-cursor as-p-10px"></i></div>

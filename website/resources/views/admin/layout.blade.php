@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,18 +10,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
     <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ asset('css/splide.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/splide.min.css') }}" />
     <!-- Quill Styles -->
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
-    
+
     <link rel="icon" href="{{ url('image/icon/favicon.png') }}" type="image/png">
 
     <style>
-        body{
+        body {
             background: #f8f9fa;
             font-family: 'Poppins', sans-serif;
         }
-        #course-editor, #edited-course-editor{
+        button{
+            outline: none !important; 
+            font-family: 'Poppins', sans-serif; 
+            font-size: 16px !important;
+        }
+
+        #course-editor,
+        #edited-course-editor {
             height: 250px;
         }
 
@@ -28,6 +36,7 @@
             transition: all 0.3s;
             overflow: hidden;
         }
+
         .collapsed {
             width: 0px;
         }
@@ -36,22 +45,26 @@
             width: 5px !important;
             height: 3px !important;
         }
+
         #student-list::-webkit-scrollbar-thumb {
-            background-color: var(--secondary-color)  !important;
-            border-radius: 5px  !important;
-        }
-        #student-list::-webkit-scrollbar-track {
-            background-color: var(--primary-color)  !important;
+            background-color: var(--secondary-color) !important;
+            border-radius: 5px !important;
         }
 
-        @media  screen and (max-width: 768px) {
+        #student-list::-webkit-scrollbar-track {
+            background-color: var(--primary-color) !important;
+        }
+
+        @media screen and (max-width: 768px) {
             #admin-sidebar {
                 width: 0px;
             }
+
             .collapsed {
                 width: 200px !important;
             }
-            #add-student-button{
+
+            #add-student-button {
                 position: fixed;
                 bottom: 10px;
                 right: 10px;
@@ -62,9 +75,10 @@
 
     @yield('styles')
 </head>
-<body >
+
+<body>
     <!-- oncontextmenu="return false;" -->
-    <section class="as-flex"> 
+    <section class="as-flex">
         @yield('content')
     </section>
 
@@ -84,7 +98,7 @@
                 toolbar: [
                     ['bold', 'italic', 'underline', 'strike'],
                     [{ 'header': 1 }, { 'header': 2 }],
-                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                     ['link', 'image'],
                     ['clean']
                 ]
@@ -93,6 +107,8 @@
 
     </script>
 
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
     <script src="{{ asset('js/axios.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
@@ -100,4 +116,5 @@
 
     @yield('scripts')
 </body>
+
 </html>

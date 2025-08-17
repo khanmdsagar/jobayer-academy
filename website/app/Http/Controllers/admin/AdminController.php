@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Storage;
 class AdminController extends Controller
 {
     //chapter operations
+    function get_chapter_topic($course_id, $chapter_id){
+        return DB::table('chapter_topic')->where('chapter_id', $chapter_id)->where('course_id', $course_id)->get();
+    }
+
     function get_chapter($course_id){
         return DB::table('course_chapter')->where('course_id', $course_id)->get();
     }

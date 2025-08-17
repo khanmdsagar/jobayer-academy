@@ -39,7 +39,7 @@
                 <div class="as-divider"></div>
                 <div><b>Description:</b> {!!$course_data->course_description!!}</div>
                 <div class="as-divider"></div>
-                <div><b>Status:</b> {{$course_data->course_status == 1 ? 'প্রকাশিত' : 'অপ্রকাশিত' }}</div>
+                <div><b>Status:</b> {{$course_data->course_status == 1 ? 'Published' : 'Unpublished' }}</div>
                 <div class="as-divider"></div>
                 <div><b>Instructor:</b> {{$course_data->instructor->instructor_name}}</div>
                 <div class="as-divider"></div>
@@ -48,9 +48,9 @@
                 <div><b>Created at:</b> {{$course_data->created_at}}</div>
             </div>
 
-            <div class="actions as-flex as-justify-end as-mt-10px as-mb-10px">
+            <div class="actions as-flex as-justify-end as-mt-20px as-mb-10px">
                 <button class="as-btn as-app-cursor"><i onclick="showModal('add-chapter')"
-                        class="fa-solid fa-book as-app-cursor as-f-20px"></i></button>
+                        class="fa-solid fa-plus as-app-cursor as-f-20px"></i> Add chapter</button>
             </div>
 
             <div id="chapter-list-div">
@@ -116,8 +116,11 @@
                     response.data.forEach(function (chapter) {
                         chapterDataDiv.innerHTML += `
                                     <div class="as-card as-mb-10px as-flex as-space-between as-p-10px">
-                                        <div class="as-flex as-align-center">${chapter.chapter_name}</div>
-                                        <div id="chapter-topic-div"></div>
+                                        <div>
+                                            <div class="as-flex as-align-center as-f-bold">${chapter.chapter_name}</div>
+                                            <div class="as-divider"></div>
+                                            <div id="chapter-topic-div${chapter.id}"></div>
+                                        </div>
                                         <div>
                                             <span><i onclick="" class="fa-solid fa-plus as-app-cursor as-p-10px"></i></span>
                                             <span><i onclick="showEditCategoryModal('${chapter.id}')" class="fa-solid fa-edit as-app-cursor as-p-10px"></i></span>
@@ -126,16 +129,17 @@
                                     </div>
                                 `;
 
-                        axios.get(`/admin/chapter/topic/get/{{$course_id}}/${chapter.id}`)
-                            .then(function (response) {
-                                var chapterTopicDiv = document.getElementById('chapter-topic-div');
+                        axios.get(`/admin/chapter/topic/get/{{$course_data->id}}/${chapter.id}`)
+                            .then(function (response) {                                
+                                var chapterTopicDiv = document.getElementById(`chapter-topic-div${chapter.id}`);
+                                chapterTopicDiv.innerHTML = '';
+
                                 response.data.forEach(function (topic) {
                                     chapterTopicDiv.innerHTML += `
                                         <div class="as-flex as-align-center as-mb-5px">
-                                            <span class="as-f-bold">${topic.topic_name}</span>
-                                            <span class="as-text-gray as-ml-10px">(${topic.topic_video})</span>
-                                            <span class="as-text-gray as-ml-10px">(${topic.topic_is_free})</span>
+                                            <div class="">${topic.topic_name}</div>
                                         </div>
+                                        <div class="as-divider"></div>
                                     `;
                                 });
                             });

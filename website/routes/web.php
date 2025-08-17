@@ -227,7 +227,7 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
 
     Route::post('/admin/chapter/add', [AdminController::class, 'add_chapter']);
     Route::get('/admin/chapter/get/{course_id}', [AdminController::class, 'get_chapter']);
-    Route::get('/admin/chapter/topic/get/{course_id}/{chapter_id}', [AdminController::class, 'get_chapter']);
+    Route::get('/admin/chapter/topic/get/{course_id}/{chapter_id}', [AdminController::class, 'get_chapter_topic']);
 
     Route::get('/admin/logout', function (Request $request) {
         Session::forget('admin_id');
