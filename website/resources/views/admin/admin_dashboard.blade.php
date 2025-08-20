@@ -17,7 +17,7 @@
         </div>
 
         <div class="as-flex as-p-10px as-justify-center">
-            <span class="as-f-bold as-f-20px">ড্যাশবোর্ড</span>
+            <span class="as-f-bold as-f-20px">Dashboard</span>
         </div>
    </div> 
     

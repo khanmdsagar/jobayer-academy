@@ -421,14 +421,14 @@ button{outline: none !important; font-family: 'Tiro Bangla', serif; font-size: 1
     box-shadow: var(--shadow);
     transition: all 0.3s ease;
 }
-.as-card:hover {
+/* .as-card:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-hover);
 }
 .as-responsive-card:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-hover);
-}
+} */
 
 /* app side bar */
 .as-app-sidebar-background{
