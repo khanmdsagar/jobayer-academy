@@ -20,7 +20,7 @@ class AdminController extends Controller
     }
 
     function get_chapter($course_id){
-        return DB::table('course_chapter')->where('course_id', $course_id)->get();
+        return DB::table('course_chapter')->where('course_id', $course_id)->orderBy('id', 'DESC')->get();
     }
     function add_chapter(Request $request){
         $course_id = strip_tags(trim($request->input('course_id')));
@@ -46,6 +46,55 @@ class AdminController extends Controller
             catch(\Exception $e){
                 return response()->json(['status' => 404, "message" => $e->getMessage()]);
             }
+        }
+    }
+
+    function delete_chapter(Request $request){
+        $chapter_id = strip_tags(trim($request->input('chapter_id')));
+        $result = DB::table('course_chapter')->where('id', $chapter_id)->delete();
+
+        if($result){
+            return response()->json(['status' => 200, "message" => 'Chapter deleted successfully']);
+        }
+        else{
+            return response()->json(['status' => 404, "message" => 'Chapter could not be deleted']);
+        }
+    }
+
+    //chapter topic operations
+    function add_chapter_topic(Request $request){
+        $course_id     = strip_tags(trim($request->input('course_id')));
+        $chapter_id    = strip_tags(trim($request->input('chapter_id')));
+        $topic_name    = strip_tags(trim($request->input('topic_name')));
+        $topic_video   = strip_tags(trim($request->input('topic_video')));
+        $topic_is_free = strip_tags(trim($request->input('topic_is_free')));
+
+        $result = DB::table('chapter_topic')->insert([
+            'course_id' => $course_id,
+            'chapter_id' => $chapter_id,
+            'topic_name' => $topic_name,
+            'topic_video' => $topic_video,
+            'topic_is_free' => $topic_is_free,
+        ]);
+
+        if($result){
+            return response()->json(['status' => 200, "message" => 'Topic added successfully']);
+        }
+        else{
+            return response()->json(['status' => 404, "message" => 'Topic could not be added']);
+        }
+    }
+
+    function delete_chapter_topic(Request $request){
+        $topic_id = strip_tags(trim($request->input('topic_id')));
+
+        $result = DB::table('chapter_topic')->where('id', $topic_id)->delete();
+        
+        if($result){
+            return response()->json(['status' => 200, "message" => 'Topic deleted successfully']);
+        }
+        else{
+            return response()->json(['status' => 404, "message" => 'Topic could not be deleted']);
         }
     }
 
