@@ -1,0 +1,79 @@
+
+sudo apt update && sudo apt upgrade -y
+sudo apt install nginx -y
+sudo systemctl status nginx
+apt install vsftpd php php-fpm php-mysql unzip curl git composer php8.3-xml
+
+sudo ufw allow 'Nginx Full'
+sudo ufw enable
+sudo ufw status
+
+
+
+SSL=>
+    sudo apt install certbot python3-certbot-nginx -y
+    sudo certbot --nginx
+
+phpmyadmin=>
+	sudo apt install phpmyadmin
+	sudo phpenmod mbstring
+	sudo systemctl restart php8.3-fpm
+	sudo ln -s /usr/share/phpmyadmin /var/www/jobayer_academy/public/phpmyadmin
+
+	sudo systemctl reload nginx
+	sudo systemctl restart php8.3-fpm
+
+
+
+server {
+    server_name jobayeracademy.com;
+    root /var/www/jobayer_academy/public;
+
+    index index.php index.html index.htm;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+
+    error_log /var/log/nginx/jobayer_academy_error.log;
+    access_log /var/log/nginx/jobayer_academy_access.log;
+}
+server {
+    if ($host = jobayeracademy.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name jobayeracademy.com;
+    return 404; # managed by Certbot
+}
+
+
+sudo chown -R www-data:www-data /var/www/jobayer_academy
+sudo chmod -R 775 /var/www/jobayer_academy/storage
+sudo chmod -R 775 /var/www/jobayer_academy/bootstrap/cache
+
+if any problem->
+rm -rf public/storage
+php artisan storage:link
+sudo chmod -R 775 storage
+sudo chmod -R 775 public/storage
+sudo chown -R www-data:www-data storage public/storage
+
+
+
+sudo nginx -t
+sudo systemctl restart nginx
+sudo systemctl restart php8.3-fpm

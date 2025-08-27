@@ -14,7 +14,7 @@
    <div style="height: 15vh;">
         <div class="as-p-10px as-flex as-align-center">
             <i onclick="toggleAdminSidebar()" class="fas fa-bars as-app-cursor as-f-20px as-mr-10px"></i>
-            <span class="as-f-bold as-f-20px">শিক্ষার্থী তালিকা</span> &nbsp; <span id="total-student-div"></span>
+            <span class="as-f-bold as-f-20px">Student List</span> &nbsp; <span id="total-student-div"></span>
         </div>
 
         <div class="as-flex as-space-between as-p-10px">

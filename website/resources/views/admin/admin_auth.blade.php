@@ -6,24 +6,24 @@
 <div class="auth-div as-absolute as-absolute-center as-w-400px md:as-w-95" id="admin-login-container">
     <div class="as-card as-p-15px">
         <div class="as-text-center as-mb-20px">
-            <h1>👋 স্বাগতম</h1>
-            <p>লগইন করতে, আপনার ইউজার নেম ও পাসওয়ার্ড ব্যবহার করে এগিয়ে যান।</p>
+            <h1>👋 Welcome</h1>
+            <p>To login proceed by username and password</p>
         </div>
 
         <div>
             <div class="as-mb-10px">
-                <label for="username" class="as-f-bold">ইউজার নেম</label>
-                <input class="as-input" type="text" id="admin-username" placeholder="আপনার ইউজার নেম লিখুন">
+                <label for="username" class="as-f-bold">User name</label>
+                <input class="as-input" type="text" id="admin-username" placeholder="Enter User name">
             </div>
 
             <div class="as-mb-10px">
-                <label for="password" class="as-f-bold">পাসওয়ার্ড</label>
-                <input class="as-input" type="password" id="admin-password" placeholder="আপনার পাসওয়ার্ড লিখুন">
+                <label for="password" class="as-f-bold">Password</label>
+                <input class="as-input" type="password" id="admin-password" placeholder="Enter Password">
             </div>
 
             <div class="as-text-right">
                 <button id="login-admin-button" onclick="loginAdmin()" class="as-app-cursor as-w-100 as-btn">
-                    এগিয়ে যান <i class="fas fa-arrow-right"></i>
+                    Login <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </div>
@@ -33,28 +33,28 @@
 <div class="auth-div as-absolute as-absolute-center as-w-400px md:as-w-95" id="admin-register-container">
     <div class="as-card as-p-15px">
         <div class="as-text-center as-mb-20px">
-            <h1>👋 স্বাগতম</h1>
-            <p>রেজিস্টার করতে, ইউজার নেম ও পাসওয়ার্ড ব্যবহার করে এগিয়ে যান।</p>
+            <h1>👋 Welcome</h1>
+            <p>To register use username and password</p>
         </div>
 
         <div>
             <div class="as-mb-10px">
-                <label for="admin-username2" class="as-f-bold">ইউজার নেম</label>
-                <input class="as-input" type="text" id="admin-username2" placeholder="ইউজার নেম লিখুন">
+                <label for="admin-username2" class="as-f-bold">Username</label>
+                <input class="as-input" type="text" id="admin-username2" placeholder="Enter Username">
             </div>
 
             <div class="as-mb-10px">
-                <label for="admin-password2" class="as-f-bold">পাসওয়ার্ড</label>
-                <input class="as-input" type="password" id="admin-password2" placeholder="পাসওয়ার্ড লিখুন">
+                <label for="admin-password2" class="as-f-bold">Password</label>
+                <input class="as-input" type="password" id="admin-password2" placeholder="Enter Password">
             </div>
             <div class="as-mb-10px">
-                <label for="admin-repassword2" class="as-f-bold">পাসওয়ার্ড পুনরায়</label>
-                <input class="as-input" type="password" id="admin-repassword2" placeholder="পাসওয়ার্ড পুনরায় লিখুন">
+                <label for="admin-repassword2" class="as-f-bold">Re-Password</label>
+                <input class="as-input" type="password" id="admin-repassword2" placeholder="Retype Password">
             </div>
 
             <div class="as-text-right">
                 <button id="register-admin-button" onclick="registerAdmin()" class="as-app-cursor as-w-100 as-btn">
-                    এগিয়ে যান <i class="fas fa-arrow-right"></i>
+                    Register <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </div>
@@ -66,12 +66,12 @@
 @section('scripts')
 <script>
     function loginAdmin() {
-        var adminUsername = document.getElementById('admin-username').value;
-        var adminPassword = document.getElementById('admin-password').value;
+        var adminUsername    = document.getElementById('admin-username').value;
+        var adminPassword    = document.getElementById('admin-password').value;
         var loginAdminButton = document.getElementById('login-admin-button');
         
         if(adminUsername == '' || adminPassword == ''){
-            alert('ইউজার নেম ও পাসওয়ার্ড দিন');
+            alert('Enter username and password');
         }
         else{
             loginAdminButton.disabled = true;
@@ -86,22 +86,22 @@
             })
             .catch(error => {
                 loginAdminButton.disabled = false;
-                loginAdminButton.innerHTML = 'এগিয়ে যান <i class="fas fa-arrow-right"></i>';
+                loginAdminButton.innerHTML = 'Login <i class="fas fa-arrow-right"></i>';
             })
         }
     }
 
     function registerAdmin(){
-        var adminUsername = document.getElementById('admin-username2').value;
-        var adminPassword = document.getElementById('admin-password2').value;
-        var adminRepassword = document.getElementById('admin-repassword2').value;
+        var adminUsername       = document.getElementById('admin-username2').value;
+        var adminPassword       = document.getElementById('admin-password2').value;
+        var adminRepassword     = document.getElementById('admin-repassword2').value;
         var registerAdminButton = document.getElementById('register-admin-button');
 
         if(adminUsername == '' || adminPassword == '' || adminRepassword == ''){
-            alert('ইউজার নেম ও পাসওয়ার্ড দিন');
+            alert('Fill all the fields');
         }
         else if(adminPassword != adminRepassword){
-            alert('পাসওয়ার্ড মেলেনি');
+            alert('Passwords do not match');
         }
         else{
             registerAdminButton.disabled = true;
@@ -113,7 +113,7 @@
             })
             .catch(error => {
                 registerAdminButton.disabled = false;
-                registerAdminButton.innerHTML = 'এগিয়ে যান <i class="fas fa-arrow-right"></i>';
+                registerAdminButton.innerHTML = 'Register <i class="fas fa-arrow-right"></i>';
             })
         }
     }   
