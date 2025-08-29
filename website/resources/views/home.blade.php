@@ -206,7 +206,9 @@
                 <ul>
                     <li><a class="as-app-cursor" href="/">হোম</a></li>
                     <li><a class="as-app-cursor" href="#featured-course">কোর্সসমূহ</a></li>
-                    <li><a class="as-app-cursor" href="{{url('/about')}}">আমাদের সম্পর্কে</a></li>
+                    @foreach ($page as $pg)
+                        <li><a class="as-app-cursor" href="/{{$pg->page_slug}}">{{$pg->page_name}}</a></li>
+                    @endforeach
                 </ul>
             </div>
             <div class="footer-section">

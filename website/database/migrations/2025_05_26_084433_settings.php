@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('site_phone');
             $table->string('site_email');
             $table->string('site_logo')->nullable;
-            $table->longText('site_about')->nullable;
 
             $table->string('site_hero_image')->nullable;
             $table->string('site_hero_title')->nullable;

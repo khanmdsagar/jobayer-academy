@@ -33,10 +33,10 @@ Route::get('/api/get-courses', [SiteController::class, 'getCourses']);
 Route::get('/course/{course_slug}', [SiteController::class, 'course_detail'])->name('course-detail');
 Route::get('/checkout/{course_id}/{course_slug}', [SiteController::class, 'checkout'])->name('checkout')->middleware(AuthMiddleware::class);
 
-Route::get('/about', function () {
-    $settings = DB::table('settings')->first();
-    return view('about', compact('settings'));
-})->name('about');
+Route::get('/{page_slug?}', function ($page_slug) {
+    $page = DB::table('page')->where('page_slug', $page_slug)->first();
+    return view('page', compact('page'));
+});
 
 Route::get('/blog/{blog_slug}', function ($blog_slug) {
     $blog = DB::table('blog')->where('blog_slug', $blog_slug)->first();

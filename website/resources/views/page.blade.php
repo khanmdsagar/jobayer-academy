@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Jobayer Academy - About')
+@section('title', 'Jobayer Academy')
 
 @section('content')
 <section class="main-section">
     <div class="as-responsive-container">
-        {!!$settings->site_about!!}
+        @if (isset($page))
+            {!!$page->page_content!!}
+        @endif
     </div>
 </section>
 @endsection

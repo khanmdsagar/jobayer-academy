@@ -81,7 +81,6 @@ class DataSeedController extends Controller
                 "site_phone" => "01719295000",
                 "site_email" => "contact@jobayeracademy.com",
                 "site_logo" => "logo.webp",
-                "site_about" => "জোবায়ের একাডেমিতে, আমরা এমন একটি ভবিষ্যৎ কল্পনা করি যেখানে সমগ্র বাংলাদেশ এবং এর বাইরেও ব্যক্তিরা ক্রমাগত দক্ষতা বিকাশের মাধ্যমে তাদের পূর্ণ সম্ভাবনাকে আনলক করার সুযোগ পাবেন। আমাদের ওয়েবসাইট একটি রূপান্তরমূলক শিক্ষার অভিজ্ঞতার জন্য ডিজিটাল হাব হিসাবে কাজ করে, মানসম্পন্ন শিক্ষা আপনার হাতের নাগালে নিয়ে আসে।",
                 "site_hero_image" => "hero.avif",
                 "site_hero_title" => "সরাসরি ও অনলাইন কোর্স এর সুবিধা"
             ]
@@ -97,7 +96,6 @@ class DataSeedController extends Controller
                     "site_phone" => $st['site_phone'],
                     "site_email" => $st['site_email'],
                     "site_logo" => $st['site_logo'],
-                    "site_about" => $st['site_about'],
                     "site_hero_image" => $st['site_hero_image'],
                     "site_hero_title" => $st['site_hero_title']
                 ]);
