@@ -207,7 +207,7 @@
                     <li><a class="as-app-cursor" href="/">হোম</a></li>
                     <li><a class="as-app-cursor" href="#featured-course">কোর্সসমূহ</a></li>
                     @foreach ($page as $pg)
-                        <li><a class="as-app-cursor" href="/{{$pg->page_slug}}">{{$pg->page_name}}</a></li>
+                        <li><a class="as-app-cursor" href="/page/{{$pg->page_slug}}">{{$pg->page_name}}</a></li>
                     @endforeach
                 </ul>
             </div>

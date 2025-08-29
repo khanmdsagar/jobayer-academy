@@ -32,7 +32,7 @@
                     <div class="as-p-10px"><a href="#featured-course" class="as-app-cursor"><i class="fas fa-book"></i> কোর্সসমূহ</a></div>
                 @endif
                 @if(Route::currentRouteName() != 'about')
-                    <div class="as-p-10px"><a href="{{url('/about')}}" class="as-app-cursor"><i class="far fa-circle-question"></i> আমাদের সম্পর্কে</a></div>
+                    <div class="as-p-10px"><a href="{{url('/page/about-us')}}" class="as-app-cursor"><i class="far fa-circle-question"></i> আমাদের সম্পর্কে</a></div>
                 @endif
                 @if(!Session::has('user_id') && Route::currentRouteName() != 'login')
                     <div class="as-p-10px"><a href="{{ url('login') }}" class="as-app-cursor"><i class="far fa-circle-user"></i> লগইন</a></div>
@@ -86,7 +86,7 @@
                             <div class="as-p-10px as-f-16px"><a href="#featured-course">কোর্সসমূহ</a></div>
                         @endif
                         @if(Route::currentRouteName() != 'about')
-                            <div class="as-p-10px as-f-16px"><a href="/about">আমাদের সম্পর্কে</a></div>
+                            <div class="as-p-10px as-f-16px"><a href="/page/about-us">আমাদের সম্পর্কে</a></div>
                         @endif
                         @if(Route::currentRouteName() != 'dashboard')
                             <div class="as-p-10px as-f-16px"><a href="/dashboard" class="as-btn app-cursor">ড্যাশবোর্ড</a></div>
@@ -97,7 +97,7 @@
                             <div class="as-p-10px as-f-16px"><a href="#featured-course">কোর্সসমূহ</a></div>
                         @endif
                         @if(Route::currentRouteName() != 'about')
-                            <div class="as-p-10px as-f-16px"><a href="/about">আমাদের সম্পর্কে</a></div>
+                            <div class="as-p-10px as-f-16px"><a href="/page/about-us">আমাদের সম্পর্কে</a></div>
                         @endif
                         @if(Route::currentRouteName() != 'login')
                             <div class="as-p-10px as-f-16px"><a href="/login" class="as-btn app-cursor">লগইন</a></div>
