@@ -103,8 +103,11 @@ button{outline: none !important; font-family: 'Tiro Bangla', serif; font-size: 1
 .as-responsive-container img{width: 70%; border-radius: 5px;}
 
 .as-none{display: none;}
-.as-block{display: block; !important;}
+.as-block{display: block !important;}
 
+.page-content ul,ol{
+    padding-left: 30px;
+}
 .as-btn{
     text-align: center;
     background-color: var(--primary-color);

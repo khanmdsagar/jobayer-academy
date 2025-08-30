@@ -97,7 +97,7 @@
                 </div>
             @endif
         </div>
-
+ 
         {{--side bar--}}
         <div class="as-mt-15px as-w-30 md:as-w-100">
             <div class="as-card as-p-15px as-text-center">
@@ -161,8 +161,10 @@
                 @endif
             </div>
         </div>
-
     </div>
+
+    @include('partials.footer')
+    
 @endsection
 
 @section('styles')

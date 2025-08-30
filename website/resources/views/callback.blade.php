@@ -34,7 +34,7 @@
             </div>
         </div>
     @endif
-
+    @include('partials.footer')
 @endsection
 
 @section('scripts')

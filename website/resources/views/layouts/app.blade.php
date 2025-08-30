@@ -28,9 +28,9 @@
             <hr>
             <div class="as-app-sidebar-menu">
                 <div class="as-p-10px"><a href="{{url('/')}}" class="as-app-cursor"><i class="fas fa-house"></i> হোম</a></div>
-                @if(Route::currentRouteName() == 'home')
-                    <div class="as-p-10px"><a href="#featured-course" class="as-app-cursor"><i class="fas fa-book"></i> কোর্সসমূহ</a></div>
-                @endif
+                
+                <div class="as-p-10px"><a href="/#featured-course" class="as-app-cursor"><i class="fas fa-book"></i> কোর্সসমূহ</a></div>
+                
                 @if(Route::currentRouteName() != 'about')
                     <div class="as-p-10px"><a href="{{url('/page/about-us')}}" class="as-app-cursor"><i class="far fa-circle-question"></i> আমাদের সম্পর্কে</a></div>
                 @endif
@@ -82,9 +82,9 @@
                 <div id="menu-desktop" class="as-flex as-list-style-none">
                     @if(Session::has('user_id'))
                         <div class="as-p-10px as-f-16px"><a href="/">হোম</a></div>
-                        @if(Route::currentRouteName() == 'home')
-                            <div class="as-p-10px as-f-16px"><a href="#featured-course">কোর্সসমূহ</a></div>
-                        @endif
+                        
+                        <div class="as-p-10px as-f-16px"><a href="/#featured-course">কোর্সসমূহ</a></div>
+                        
                         @if(Route::currentRouteName() != 'about')
                             <div class="as-p-10px as-f-16px"><a href="/page/about-us">আমাদের সম্পর্কে</a></div>
                         @endif
@@ -93,9 +93,9 @@
                         @endif
                     @else
                         <div class="as-p-10px as-f-16px"><a href="/">হোম</a></div>
-                        @if(Route::currentRouteName() == 'home')
-                            <div class="as-p-10px as-f-16px"><a href="#featured-course">কোর্সসমূহ</a></div>
-                        @endif
+                        
+                        <div class="as-p-10px as-f-16px"><a href="/#featured-course">কোর্সসমূহ</a></div>
+                        
                         @if(Route::currentRouteName() != 'about')
                             <div class="as-p-10px as-f-16px"><a href="/page/about-us">আমাদের সম্পর্কে</a></div>
                         @endif

@@ -5,9 +5,10 @@
 @section('content')
 <section class="main-section">
     <div class="as-responsive-container">
-        @if (isset($page))
-            {!!$page->page_content!!}
+        @if (isset($page_content))
+            <div class="page-content">{!!$page_content->page_content!!}</div>
         @endif
     </div>
 </section>
+@include('partials.footer')
 @endsection

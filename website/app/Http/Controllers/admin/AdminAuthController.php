@@ -25,14 +25,14 @@ class AdminAuthController extends Controller
 
                 return response()->json([
                     'status' => 'success',
-                    'message' => 'লগইন সফল হয়েছে'
+                    'message' => 'Login Successful'
                 ]);
             }
         }
         else{
             return response()->json([
                 'status' => 'error',
-                'message' => 'ইউজার নেম অথবা পাসওয়ার্ড সঠিক নয়'
+                'message' => 'Invalid Username or Password'
             ]);
         }
     }
@@ -52,7 +52,7 @@ class AdminAuthController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'রেজিস্টার সফল হয়েছে'
+            'message' => 'Registration successful'
         ]);
     }
 }
