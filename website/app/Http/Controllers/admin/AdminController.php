@@ -98,6 +98,31 @@ class AdminController extends Controller
         }
     }
 
+    function edit_chapter_topic(Request $request){
+        $topic_id     = strip_tags(trim($request->input('topic_id')));
+        $topic_name   = strip_tags(trim($request->input('topic_name')));
+        $topic_video  = strip_tags(trim($request->input('topic_video')));
+        $topic_status = strip_tags(trim($request->input('topic_status')));
+
+        try{
+            $result = DB::table('chapter_topic')->where('id', $topic_id)->update([
+                'topic_name' => $topic_name,
+                'topic_video' => $topic_video,
+                'topic_is_free' => $topic_status,
+            ]);
+
+            if($result){
+                return response()->json(['status' => 200, "message" => 'Topic updated successfully']);
+            }
+            else{
+                return response()->json(['status' => 404, "message" => 'Topic could not be updated']);
+            }
+        }
+        catch(\Exception $e){
+            return response()->json(['status' => 404, "message" => $e->getMessage()]);
+        }
+    }
+
     //course operations
     function course_info($course_id){
         $course_data = Course::with('course_category')->with('instructor')->where('id', $course_id)->first();

@@ -11,10 +11,10 @@
 
 <div class="as-w-100">
     <!-- navbar -->
-   <div style="height: 15vh;" class="as-p-10px">
+   <div style="height: 10vh;" class="as-p-10px">
         <div>
             <i onclick="toggleAdminSidebar()" class="fas fa-bars as-app-cursor as-f-20px as-mr-10px"></i>
-            <span class="as-f-bold as-f-20px">ক্যাটাগরি</span>
+            <span class="as-f-bold as-f-20px">Category</span>
         </div>
 
         <div class="actions as-flex as-justify-end">
@@ -23,7 +23,7 @@
    </div>
 
     <!-- category list -->
-    <div style="height: 85vh; overflow-y: auto;" id="category-data" class="as-p-10px">
+    <div style="height: 90vh; overflow-y: auto;" id="category-data" class="as-p-10px">
         <i style="font-size: 25px;" class="fa-solid fa-spinner fa-spin as-w-100 as-text-center"></i>
     </div>
    
@@ -35,13 +35,13 @@
 
         <div class="as-modal-child as-p-10px">
             <div class="as-mt-10px">
-                <div class="as-mb-5px"><b>ক্যাটাগরির নাম</b></div>
-                <input type="text" id="category-name" class="as-input" placeholder="ক্যাটাগরির নাম দিন">
+                <div class="as-mb-5px"><b>Category name</b></div>
+                <input type="text" id="category-name" class="as-input" placeholder="Enter category name">
             </div>
         </div>
         <div class="as-mt-10px as-text-right">
-            <button class="as-btn as-app-cursor as-bg-cancel" onclick="hideModal('add-category')">বাতিল করুন</button>
-            <button class="as-btn as-app-cursor" onclick="addCategory()">যুক্ত করুন</button>
+            <button class="as-btn as-app-cursor as-bg-cancel" onclick="hideModal('add-category')">Cancel</button>
+            <button class="as-btn as-app-cursor" onclick="addCategory()">Add</button>
         </div>
     </div>
 </div>
@@ -55,7 +55,7 @@
         var categoryName = document.getElementById('category-name').value;
 
         if(categoryName == ''){
-            alert('ক্যাটাগরির নাম দিন');
+            alert('Enter category name');
         }
         else{
             axios.post('/admin/category/add', {category_name: categoryName})
@@ -101,13 +101,13 @@
 
                 <div class="as-modal-child as-p-10px">
                     <div class="as-mt-10px">
-                        <div class="as-mb-5px"><b>ক্যাটাগরির নাম</b></div>
+                        <div class="as-mb-5px"><b>Category name</b></div>
                         <input type="text" id="edited-category-name" class="as-input" value="${categoryName}">
                     </div>
                 </div>
                 <div class="as-mt-10px as-text-right">
-                    <button class="as-btn as-app-cursor as-bg-cancel" onclick="hideModal('edit-category')">বাতিল করুন</button>
-                    <button class="as-btn as-app-cursor" onclick="editCategory(${categoryId})">সম্পাদনা করুন</button>
+                    <button class="as-btn as-app-cursor as-bg-cancel" onclick="hideModal('edit-category')">Cancel</button>
+                    <button class="as-btn as-app-cursor" onclick="editCategory(${categoryId})">Edit</button>
                 </div>
             </div>
         </div>`
@@ -119,7 +119,7 @@
         var editedCategoryName = document.getElementById('edited-category-name').value;
 
         if(editedCategoryName == ''){
-            alert('ক্যাটাগরির নাম দিন');
+            alert('Enter category name');
         }
         else{
             axios.post('/admin/category/edit', {category_id: categoryId, category_name: editedCategoryName})
@@ -137,7 +137,7 @@
     }
 
     function deleteCategory(category_id){
-        var confirm = window.confirm('ক্যাটাগরি মুছে ফেলবেন কি?');
+        var confirm = window.confirm('Do you want to delete category?');
 
         if(confirm){
             axios.post('/admin/category/delete', {category_id: category_id})
