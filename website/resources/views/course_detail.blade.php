@@ -97,7 +97,7 @@
                 </div>
             @endif
         </div>
- 
+
         {{--side bar--}}
         <div class="as-mt-15px as-w-30 md:as-w-100">
             <div class="as-card as-p-15px as-text-center">
@@ -164,7 +164,7 @@
     </div>
 
     @include('partials.footer')
-    
+
 @endsection
 
 @section('styles')
@@ -245,13 +245,13 @@
                             qsnAnsLength = res.data.length;
 
                             qsnAnsDiv.innerHTML += `
-                                        <div class="as-mb-10px">
-                                            <div><b>প্রশ্ন: ${res.data[i]['question']}</b></div>
-                                            <div>
-                                                <b>উত্তর:</b> ${res.data[i]['answer']}
+                                            <div class="as-mb-10px">
+                                                <div><b>প্রশ্ন: ${res.data[i]['question']}</b></div>
+                                                <div>
+                                                    <b>উত্তর:</b> ${res.data[i]['answer']}
+                                                </div>
                                             </div>
-                                        </div>
-                                `
+                                    `
                         }
                     });
             }
@@ -280,7 +280,9 @@
                     },
                 ],
             };
-
+            document.getElementById('as-app-body-content-full').scrollIntoView({
+                behavior: 'smooth'
+            });
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -293,24 +295,24 @@
 
                     response.data.forEach(function (courseChapter) {
                         courseCurriculumContainer.innerHTML += `
-                                <div style="border: 1px solid lightgrey" onclick="expand(${courseChapter.id})" class="as-app-cursor as-accordion-hover accordion as-flex as-space-between">
-                                    <div>${courseChapter.chapter_name}</div>
-                                    <div><i class="fa-solid fa-caret-down"></i></div>
-                                </div>
+                                    <div style="border: 1px solid lightgrey" onclick="expand(${courseChapter.id})" class="as-app-cursor as-accordion-hover accordion as-flex as-space-between">
+                                        <div>${courseChapter.chapter_name}</div>
+                                        <div><i class="fa-solid fa-caret-down"></i></div>
+                                    </div>
 
-                                <div class="panel panel${courseChapter.id}">
-                                    ${courseChapter.chapter_topic.map(function (chapterTopic) {
+                                    <div class="panel panel${courseChapter.id}">
+                                        ${courseChapter.chapter_topic.map(function (chapterTopic) {
                             return `
-                                            <div ${chapterTopic.topic_is_free ? `class="topic-list as-list-hover app-cursor panel-item as-flex as-space-between"` : `class="topic-list as-list-hover panel-item as-flex as-space-between"`} ${chapterTopic.topic_is_free ? `onclick="checkLogin('${chapterTopic.topic_video}')"` : ''}>
-                                                <div>${chapterTopic.topic_name}</div>
-                                                <div>
-                                                    <i class="fa-solid ${chapterTopic.topic_is_free ? 'fa-eye' : 'fa-lock'}"></i>
+                                                <div ${chapterTopic.topic_is_free ? `class="topic-list as-list-hover as-app-cursor panel-item as-flex as-space-between"` : `class="topic-list as-list-hover panel-item as-flex as-space-between"`} ${chapterTopic.topic_is_free ? `onclick="checkLogin('${chapterTopic.topic_video}')"` : ''}>
+                                                    <div>${chapterTopic.topic_name}</div>
+                                                    <div>
+                                                        <i class="fa-solid ${chapterTopic.topic_is_free ? 'fa-play' : 'fa-lock'}"></i>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        `;
+                                            `;
                         }).join('')}
-                                </div>
-                            `;
+                                    </div>
+                                `;
                     })
                 })
                 .catch(function (error) {
@@ -395,20 +397,20 @@
                             }
 
                             reviewContainer.innerHTML += `
-                                <div class="as-mb-20px">
-                                    <div class="as-mb-10px">
-                                        <img class="as-w-50px as-h-50px as-brr-50" src="${res.data[i].student.student_photo ? '/image/student' + res.data[i].student.student_photo : '/image/other/profile_avater.webp'}" alt="User">
-                                        <div>
-                                            <h4>${review.student.student_name}</h4>
-                                            <div class="as-color-yellow">
-                                                ${reviewStar}
-                                                (${review.review_rating})
+                                    <div class="as-mb-20px">
+                                        <div class="as-mb-10px">
+                                            <img class="as-w-50px as-h-50px as-brr-50" src="${res.data[i].student.student_photo ? '/image/student' + res.data[i].student.student_photo : '/image/other/profile_avater.webp'}" alt="User">
+                                            <div>
+                                                <h4>${review.student.student_name}</h4>
+                                                <div class="as-color-yellow">
+                                                    ${reviewStar}
+                                                    (${review.review_rating})
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <p class="">${review.review}</p>
-                                    <div class="as-date">তারিখ: ${review.review_date}</div>
-                                </div>`
+                                        <p class="">${review.review}</p>
+                                        <div class="as-date">তারিখ: ${review.review_date}</div>
+                                    </div>`
                         }
                     }
                     else {

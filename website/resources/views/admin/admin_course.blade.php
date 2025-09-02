@@ -222,7 +222,7 @@
                                         location.reload();
                                     }
                                     else {
-                                        hideModal('add-course');
+                                        location.reload();
                                     }
                                 });
                         }
@@ -238,8 +238,7 @@
 
             axios.get('/admin/course/get')
                 .then(function (response) {
-                    console.log(response.data);
-
+                    
                     if (response.data.length == 0) {
                         courseDataDiv.innerHTML = '<div class="as-text-center as-f-20px">No Course</div>';
                         return;
@@ -441,33 +440,35 @@
             var editedCourseInstructor   = parseInt(document.getElementById('edited-course-instructor').value);
 
             if (editedCourseThumbnail == '') {
-                alert('কোর্সের থাম্বনেল দিন');
+                alert('Enter course Thumbnail');
             }
             else if (editedCourseName == '') {
-                alert('কোর্সের নাম দিন');
+                alert('Enter course name');
             }
             else if (editedCourseSlug == '') {
-                alert('কোর্সের স্লাগ দিন');
+                alert('Enter course slug');
             }
             else if (editedCourseDescription == '<p><br></p>') {
-                alert('কোর্সের বিস্তারিত দিন');
+                alert('Enter course description');
             }
             else if (editedCourseTagline == '') {
-                alert('কোর্সের ট্যাগলাইন দিন');
+                alert('Enter course tagline');
             }
             else if (editedCourseRegularFee == '') {
-                alert('কোর্সের রেগুলার ফি দিন');
+                alert('Enter course regular fee');
             }
             else if (editedCourseSellingFee == '') {
-                alert('কোর্সের সেলিং ফি দিন');
+                alert('Enter course selling fee');
             }
             else if (editedCourseDuration == '') {
-                alert('কোর্সের ডিউরেশন দিন');
+                alert('Enter course duration');
             }
             else {
                 var editCourseBtn = document.getElementById('edit-course-btn');
                 editCourseBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
                 editCourseBtn.disabled = true;
+
+                console.log(editedCourseDescription);
 
                 if (editedCourseThumbnailNew != undefined) {
                     var formData = new FormData();
@@ -500,9 +501,7 @@
                                         location.reload();
                                     }
                                     else {
-                                        editCourseBtn.innerHTML = 'সম্পাদন করুন';
-                                        editCourseBtn.disabled = false;
-                                        hideModal('edit-course');
+                                        location.reload();
                                     }
                                 });
                         });
@@ -533,9 +532,7 @@
                                 location.reload();
                             }
                             else {
-                                editCourseBtn.innerHTML = 'সম্পাদন করুন';
-                                editCourseBtn.disabled = false;
-                                hideModal('edit-course');
+                                location.reload();
                             }
                         });
                 }

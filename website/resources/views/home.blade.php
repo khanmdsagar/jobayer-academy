@@ -253,7 +253,7 @@ function getBlog(){
             const slide = document.createElement('li');
             slide.className = 'splide__slide blog-card';
 
-            slide.innerHTML = `<article class="as-card">
+            slide.innerHTML = `<article class="as-card" style="margin: 5px;">
                         <div>
                             <img class="as-w-100 as-brr-5px" src="/image/blog/${item.blog_thumbnail}" alt="Image">
                         </div>
@@ -299,7 +299,7 @@ function getSiteGallery(){
             const slide = document.createElement('li');
             slide.className = 'splide__slide';
 
-            slide.innerHTML = `<div class="as-card"><img class="as-w-100 as-h-240px as-brr-5px" src="/image/gallery/${item.gallery_image}" alt="Image" onclick="openLightbox(this)"></div>`;
+            slide.innerHTML = `<div class="as-card" style="margin: 5px;"><img class="as-w-100 as-h-260px as-brr-5px" src="/image/gallery/${item.gallery_image}" alt="Image" onclick="openLightbox(this)"></div>`;
             splideList.appendChild(slide);
         });
 
@@ -337,14 +337,14 @@ function getCourseReview(){
 
             var studentImage = ''
 
-            if(item.student.student_photo == ''){
+            if(item.student.student_photo == '' || item.student.student_photo == null){
                 studentImage = 'profile_avater.webp'
             }else{
                 studentImage = item.student.student_photo
             }
 
             slide.innerHTML = `
-                <div class="as-card as-text-center as-p-10px">
+                <div class="as-card as-text-center as-p-10px" style="margin: 5px;">
                     <div class="as-mb-10px">
                         <img class="as-w-50px as-h-50px as-brr-50 as-mb-10px" src="${studentImage == 'profile_avater.webp'? '/image/other/profile_avater.webp' : '/image/student/' + studentImage}" alt="Student">
                         <div class="">

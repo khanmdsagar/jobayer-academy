@@ -135,46 +135,47 @@ class AdminController extends Controller
     }
 
     function add_course(Request $request){
-        $course_name = strip_tags(trim($request->input('course_name')));
-        $course_thumbnail = strip_tags(trim($request->input('course_thumbnail')));
-        $course_slug = strip_tags(trim($request->input('course_slug')));
-        $course_tagline = strip_tags(trim($request->input('course_tagline')));
+        $course_name        = strip_tags(trim($request->input('course_name')));
+        $course_thumbnail   = strip_tags(trim($request->input('course_thumbnail')));
+        $course_slug        = strip_tags(trim($request->input('course_slug')));
+        $course_tagline     = strip_tags(trim($request->input('course_tagline')));
         $course_regular_fee = strip_tags(trim($request->input('course_regular_fee')));
         $course_selling_fee = strip_tags(trim($request->input('course_selling_fee')));
-        $course_duration = strip_tags(trim($request->input('course_duration')));
-        $course_level = strip_tags(trim($request->input('course_level')));
-        $course_status = strip_tags(trim($request->input('course_status')));
-        $course_category = strip_tags(trim($request->input('course_category')));
-        $course_instructor = strip_tags(trim($request->input('course_instructor')));
-        $course_description = strip_tags(trim($request->input('course_description')));
+        $course_duration    = strip_tags(trim($request->input('course_duration')));
+        $course_level       = strip_tags(trim($request->input('course_level')));
+        $course_status      = strip_tags(trim($request->input('course_status')));
+        $course_category    = strip_tags(trim($request->input('course_category')));
+        $course_instructor  = strip_tags(trim($request->input('course_instructor')));
+        $course_description = $request->input('course_description');
 
         $is_course = DB::table('course')->where('course_name', $course_name)->count();
 
         if($is_course > 0){
-            return response()->json(['status' => 404, "message" => 'কোর্স ইতিমধ্যে রয়েছে']);
+            return response()->json(['status' => 404, "message" => 'Course already exists']);
         }
         else{
             try{
                 $result = DB::table('course')->insert([
-                    'course_name' => $course_name,
-                    'course_slug' => $course_slug,
-                    'course_status' => $course_status,
-                    'category_id' => $course_category,
-                    'instructor_id' => $course_instructor,
+                    'course_name'        => $course_name,
+                    'course_slug'        => $course_slug,
+                    'course_status'      => $course_status,
+                    'category_id'        => $course_category,
+                    'instructor_id'      => $course_instructor,
                     'course_description' => $course_description,
-                    'course_thumbnail' => $course_thumbnail,
-                    'course_tagline' => $course_tagline,
-                    'course_fee' => $course_regular_fee,
+                    'course_thumbnail'   => $course_thumbnail,
+                    'course_tagline'     => $course_tagline,
+                    'course_fee'         => $course_regular_fee,
                     'course_selling_fee' => $course_selling_fee,
-                    'course_duration' => $course_duration,
-                    'course_level' => $course_level,
-                    'created_at' => Carbon::now(),
+                    'course_duration'    => $course_duration,
+                    'course_level'       => $course_level,
+                    'created_at'         => Carbon::now(),
                 ]);
+
                 if($result){
-                    return response()->json(['status' => 200, "message" => 'কোর্স যুক্ত করা হয়েছে']);
+                    return response()->json(['status' => 200, "message" => 'Course added successfully']);
                 }
                 else{
-                    return response()->json(['status' => 404, "message" => 'কোর্স যুক্ত করা যায়নি']);
+                    return response()->json(['status' => 404, "message" => 'Course could not be added']);
                 }
             }
             catch(\Exception $e){
@@ -210,7 +211,7 @@ class AdminController extends Controller
         $course_slug        = strip_tags(trim($request->input('edited_course_slug')));
         $course_thumbnail   = strip_tags(trim($request->input('edited_course_thumbnail')));
         $course_tagline     = strip_tags(trim($request->input('edited_course_tagline')));
-        $course_description = strip_tags(trim($request->input('edited_course_description')));
+        $course_description = $request->input('edited_course_description');
         $course_regular_fee = strip_tags(trim($request->input('edited_course_regular_fee')));
         $course_selling_fee = strip_tags(trim($request->input('edited_course_selling_fee')));
         $course_duration    = strip_tags(trim($request->input('edited_course_duration')));
@@ -237,10 +238,10 @@ class AdminController extends Controller
             ]);
 
             if($result){
-                return response()->json(['status' => 200, "message" => 'কোর্স সম্পাদন করা হয়েছে']);
+                return response()->json(['status' => 200, "message" => 'Course updated successfully']);
             }
             else{
-                return response()->json(['status' => 404, "message" => 'কোর্স সম্পাদন করা যায়নি']);
+                return response()->json(['status' => 404, "message" => 'Course could not be updated']);
             }
         }
         catch(\Exception $e){

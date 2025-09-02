@@ -328,7 +328,7 @@
 
     player.on('timeupdate', () => {
         const currentTime = player.currentTime;
-        const duration = player.duration;
+        const duration    = player.duration;
 
         if (duration > 0) {
             const percentagePlayed = (currentTime / duration) * 100;
@@ -568,7 +568,5 @@
         event.currentTarget.classList.add('active');
         document.getElementById(tabId).classList.add('active');
     }
-
-
 </script>
 @endsection
