@@ -1,5 +1,12 @@
 @extends('layouts.app')
-@section('title', 'Jobayer Academy - Course Detail')
+
+@section('title', $course->course_name)
+@section('description', Str::limit($course->course_description, 150))
+
+@section('og_title', $course->course_name)
+@section('og_description', Str::limit(strip_tags($course->course_description), 150))
+@section('og_image', asset('storage/' . $course->course_thumbnail))
+@section('og_type', 'course')
 
 @section('content')
     {{--course header--}}
@@ -404,12 +411,12 @@
                                                 <h4>${review.student.student_name}</h4>
                                                 <div class="as-color-yellow">
                                                     ${reviewStar}
-                                                    (${review.review_rating})
+                                                    (${convertToBengali(review.review_rating)})
                                                 </div>
                                             </div>
                                         </div>
                                         <p class="">${review.review}</p>
-                                        <div class="as-date">তারিখ: ${review.review_date}</div>
+                                        <div class="as-date">তারিখ: ${convertToBengali(review.review_date)}</div>
                                     </div>`
                         }
                     }

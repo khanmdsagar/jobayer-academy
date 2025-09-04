@@ -9,9 +9,9 @@
         </div>
     </div>
 
-    <div class="as-w-100">
+    <div class="as-w-100" style="overflow-y: auto; height: 100vh;">
         <!-- navbar -->
-        <div style="height: 7vh;" class="as-p-10px">
+        <div class="as-p-10px">
             <div>
                 <i onclick="toggleAdminSidebar()" class="fas fa-bars as-app-cursor as-f-20px as-mr-10px"></i>
                 <span class="as-f-bold as-f-20px">Course Information</span>
@@ -19,7 +19,7 @@
         </div>
 
         <!--list-->
-        <div style="height: 93vh; overflow-y: auto;" id="" class="as-p-10px">
+        <div id="" class="as-p-10px">
             <div class="as-card as-p-10px">
                 <div><b>Id:</b> {{$course_data->id}}</div>
                 <div class="as-divider"></div>

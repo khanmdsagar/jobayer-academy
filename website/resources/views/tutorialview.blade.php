@@ -125,7 +125,7 @@
             </div>
             <div class="as-mt-10px">
                 <span><b>রিভিউ</b></span><br>
-                <input id="review" class="as-input" type="text" value="কোর্সটি অসাধারণ ছিলো।">
+                <input id="review" class="as-input" type="text" value="">
             </div>
 
             <div class="as-mt-20px as-text-right">

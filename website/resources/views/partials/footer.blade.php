@@ -45,5 +45,5 @@
             <span id="copyright" style="font-family: sans-serif"></span>
             <span>সর্বস্বত্ব সংরক্ষিত।</span>
         </div>
-        <div style="text-align: center; font-family: sans-serif; font-size: 14px">Developed by <a class="as-app-cursor" style="color: var(--secondary-color)" href="https://www.facebook.com/profile.php?id=61576235612401">Nobogram Technologies</a></div>
+        <div style="text-align: center; font-family: sans-serif; font-size: 14px">Developed by <a rel="nofollow" target="_blank" class="as-app-cursor" style="color: var(--secondary-color)" href="https://www.facebook.com/profile.php?id=61576235612401">Nobogram Technologies</a></div>
     </footer>

@@ -4,8 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
-    <meta name="description" content="Jobayer Academy is a leading online skill development platform in Bangladesh. We offer courses on skincare product formulation, handmade soap art, resin art, product sourcing, and more.">
+    <meta name="description" content="@yield('description', 'Jobayer Academy is a leading online skill development platform in Bangladesh. We offer courses on skincare product formulation, handmade soap art, resin art, product sourcing, and more.')">
     <meta name="keywords" content="Jobayer Academy, online course, skincare training, handmade soap, resin art, product sourcing, Bangladesh, skill development, learn online">
+
+     {{-- Open Graph (Facebook) --}}
+    <meta property="og:title" content="@yield('og_title', 'Jobayer Academy')" />
+    <meta property="og:description" content="@yield('og_description', 'Jobayer Academy is a leading online skill development platform in Bangladesh. We offer courses on skincare product formulation, handmade soap art, resin art, product sourcing, and more.')" />
+    <meta property="og:image" content="@yield('og_image', asset('image/icon/favicon.png'))" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta property="og:type" content="@yield('og_type', 'website')" />
 
     <link rel="stylesheet" href="{{ asset('css/asteroid.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">

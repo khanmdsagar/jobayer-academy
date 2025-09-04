@@ -9,9 +9,9 @@
         </div>
     </div>
 
-    <div class="as-w-100">
+    <div class="as-w-100" style="overflow-y: auto; height: 100vh;">
         <!-- navbar -->
-        <div style="height: 15vh;">
+        <div >
             <div class="as-p-10px as-flex as-align-center">
                 <i onclick="toggleAdminSidebar()" class="fas fa-bars as-app-cursor as-f-20px as-mr-10px"></i>
                 <span class="as-f-bold as-f-20px">Student List</span> &nbsp; <span id="total-student-div"></span>
@@ -35,7 +35,7 @@
         </div>
 
         <!-- student list -->
-        <div style="height: 85vh; overflow-y: auto;" id="student-list" class="as-p-10px">
+        <div id="student-list" class="as-p-10px">
             <i style="font-size: 25px;" class="fa-solid fa-spinner fa-spin as-w-100 as-text-center"></i>
         </div>
     </div>
