@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use App\Models\Course;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Crypt;
 
 class AdminController extends Controller
 {
@@ -637,6 +638,8 @@ class AdminController extends Controller
         $student_birthday     = strip_tags(trim($request->input('student_birthday')));
         $student_profession   = strip_tags(trim($request->input('student_profession')));
         $student_profile_url  = strip_tags(trim($request->input('student_profile_url')));
+        $student_password     = strip_tags(trim($request->input('student_password')));
+        $encrypted_password   = Crypt::encrypt($student_password);
 
         try{
             $result = DB::table('student')->insert([
@@ -651,14 +654,15 @@ class AdminController extends Controller
                 "student_profile_url" => $student_profile_url,
                 "student_district"    => $student_district,
                 "student_note"        => $student_note,
+                "student_password"    => $encrypted_password,
                 "created_at"  => Carbon::now(),
             ]);
 
             if($result){
-                return response()->json(['status' => 200, "message" => 'তথ্য যোগ করা হয়েছে']);
+                return response()->json(['status' => 200, "message" => 'Information added successfully']);
             }
             else{
-                return response()->json(['status' => 404, "message" => 'তথ্য যোগ করা যায়নি']);
+                return response()->json(['status' => 404, "message" => 'Information could not be added']);
             }
         }
         catch(\Exception $e){

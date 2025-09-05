@@ -24,10 +24,12 @@
                         class="as-btn as-btn-primary as-app-cursor as-mr-5px"><i class="fas fa-search"></i></button>
                 </div>
                 <div class="as-flex">
-                    <button id="filter-student-button" class="as-btn as-btn-primary as-app-cursor as-mr-5px"
-                        onclick="showModal('student-filter')"><i class="fas fa-filter"></i></button>
                     <button id="add-student-button" class="as-btn as-btn-primary as-app-cursor as-mr-5px"
                         onclick="showModal('student-info')"><i class="fas fa-plus"></i></button>
+
+                    <button id="filter-student-button" class="as-btn as-btn-primary as-app-cursor as-mr-5px"
+                        onclick="showModal('student-filter')"><i class="fas fa-filter"></i></button>
+                    
                     <a id="download-student-button" class="as-btn as-btn-primary as-app-cursor"
                         href="/admin/download-student-data"><i class="fas fa-download"></i></a>
                 </div>
@@ -154,6 +156,10 @@
 
                         </div>
                     </select>
+                </div>
+                <div class="as-mt-10px">
+                    <div class="as-mb-5px"><b>Password</b></div>
+                    <input id="password" class="as-input" type="text">
                 </div>
             </div>
             <div class="as-mt-20px as-text-right">
@@ -355,6 +361,7 @@
             var studentDivision = document.getElementById('division').value;
             var studentDistrict = document.getElementById('district').value;
             var studentNote = document.getElementById('note').value;
+            var studentPassword = document.getElementById('password').value;
 
             if (studentName == '') {
                 alert('Enter full name');
@@ -367,6 +374,12 @@
             }
             else if (studentNumber.length != 11) {
                 alert('Enter valid phone number');
+            }
+            else if (studentPassword == "") {
+                alert('Please enter a password');
+            }
+            else if (studentPassword.length < 6) {
+                alert('Password must be at least 6 characters long');
             }
             else {
                 var data = {
@@ -381,13 +394,12 @@
                     student_district: studentDistrict,
                     student_address: studentAddress,
                     student_note: studentNote,
+                    student_password: studentPassword,
                 }
 
                 var addInfoButton = document.getElementById('add-info-button');
                 addInfoButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
                 addInfoButton.disabled = true;
-
-                console.log(data);
 
                 axios.post('/admin/student/add', data)
                     .then(res => {

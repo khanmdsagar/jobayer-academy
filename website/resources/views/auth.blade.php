@@ -189,7 +189,7 @@
                 student_number: phone_number
             })
                 .then(function (response) {
-                    console.log(response.data.code)
+                    //console.log(response.data.code)
 
                     if (response.data.status == 'failed') {
                         open_password_reset_container_button.innerHTML = 'দুঃখিত! কোড পাঠানো হয়নি';
@@ -246,7 +246,7 @@
                                             window.location.replace('/dashboard');
                                         }
                                         else if ('{{$course_id}}' != '' && '{{$course_curriculumn}}' != '') {
-                                            window.location.replace('{{ url('/course-detail/' . $course_id . '/' . $course_slug) }}');
+                                            window.location.replace('{{ url('/course/' . $course_id . '/' . $course_slug) }}');
                                         }
                                         else if ('{{ $course_id }}' != '') {
                                             window.location.replace('{{ url('/checkout/' . $course_id . '/' . $course_slug) }}');
@@ -259,7 +259,7 @@
                             }
                             else {
                                 if ('{{$course_id}}' != '' && '{{$course_curriculumn}}' != '') {
-                                    window.location.replace('{{ url('/course-detail/' . $course_id . '/' . $course_slug) }}');
+                                    window.location.replace('{{ url('/course/' . $course_id . '/' . $course_slug) }}');
                                 }
                                 else if ('{{ $course_id }}' != '') {
                                     window.location.replace('{{ url('/checkout/' . $course_id . '/' . $course_slug) }}');
@@ -325,7 +325,7 @@
                         }
 
                         verification_code = response.data.code;
-                        console.log(response.data.code)
+                        //console.log(response.data.code)
                     }
                 })
                 .catch(function (error) {
@@ -390,7 +390,7 @@
                                             window.location.replace('/dashboard');
                                         }
                                         else if ('{{$course_id}}' != '' && '{{$course_curriculumn}}' != '') {
-                                            window.location.replace('{{ url('/course-detail/' . $course_id . '/' . $course_slug) }}');
+                                            window.location.replace('{{ url('/course/' . $course_id . '/' . $course_slug) }}');
                                         }
                                         else if ('{{ $course_id }}' != '') {
                                             window.location.replace('{{ url('/checkout/' . $course_id . '/' . $course_slug) }}');
@@ -403,7 +403,7 @@
                             }
                             else {
                                 if ('{{$course_id}}' != '' && '{{$course_curriculumn}}' != '') {
-                                    window.location.replace('{{ url('/course-detail/' . $course_id . '/' . $course_slug) }}');
+                                    window.location.replace('{{ url('/course/' . $course_id . '/' . $course_slug) }}');
                                 }
                                 else if ('{{ $course_id }}' != '') {
                                     window.location.replace('{{ url('/checkout/' . $course_id . '/' . $course_slug) }}');
@@ -451,7 +451,7 @@
                                             window.location.replace('/dashboard');
                                         }
                                         else if ('{{$course_id}}' != '' && '{{$course_curriculumn}}' != '') {
-                                            window.location.replace('{{ url('/course-detail/' . $course_id . '/' . $course_slug) }}');
+                                            window.location.replace('{{ url('/course/' . $course_id . '/' . $course_slug) }}');
                                         }
                                         else if ('{{ $course_id }}' != '') {
                                             window.location.replace('{{ url('/checkout/' . $course_id . '/' . $course_slug) }}');
@@ -464,7 +464,7 @@
                             }
                             else {
                                 if ('{{$course_id}}' != '' && '{{$course_curriculumn}}' != '') {
-                                    window.location.replace('{{ url('/course-detail/' . $course_id . '/' . $course_slug) }}');
+                                    window.location.replace('{{ url('/course/' . $course_id . '/' . $course_slug) }}');
                                 }
                                 else if ('{{ $course_id }}' != '') {
                                     window.location.replace('{{ url('/checkout/' . $course_id . '/' . $course_slug) }}');
