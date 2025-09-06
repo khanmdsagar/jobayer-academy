@@ -41,7 +41,7 @@
                             <h2 id="course-title" class="as-p-10px"></h2>
                         </div>
                         <div class="as-p-10px">
-                            <div style="visibility: hidden; font-family: 'Tiro Bangla', serif;" id="next-prev">
+                            <div style="visibility: hidden; font-family: 'Tiro Bangla', serif; text-align: end;" id="next-prev">
                                 <button onclick="playPreviousVideo()" class="as-btn as-app-cursor"><i class="fas fa-arrow-left"></i> পূর্বের ভিডিও</button>
                                 <button onclick="playNextVideo()" class="as-btn as-app-cursor">পরের ভিডিও <i class="fas fa-arrow-right"></i></button>
                             </div>
@@ -130,7 +130,7 @@
 
             <div class="as-mt-20px as-text-right">
                 <button class="as-btn app-cursor as-bg-cancel as-mr-10px" onclick="hideModal('review-modal')">বাতিল করুন</button>
-                <button class="as-btn app-cursor" onclick="submitReview()">দাখিল করুন</button>
+                <button class="as-btn app-cursor" onclick="submitReview()">জমা দিন</button>
             </div>
         </div>
     </div>
@@ -448,11 +448,11 @@
                 for(var i=0; i < loadQsnAns; i++){
                     tab2Content.innerHTML +=`<div class="askqsn-card as-mb-10px">
                                 <div class="profile">
-                                    <img src="${res.data[i].student_photo != '' ? '/image/student/' + res.data[i].student_photo : '/image/other/profile_avater.webp'}" alt="Profile Picture">
+                                    <img src="${res.data[i].student_photo != null ? '/image/student/' + res.data[i].student_photo : '/image/other/profile_avater.webp'}" alt="Profile Picture">
                                     <div class="info">
                                         <h3>${res.data[i].student_name}</h3>
                                         <p class="question"><b>প্রশ্ন: </b>${res.data[i].question}?</p>
-                                        <p class="answer as-p-10px as-brr-5px"><b>রিপ্লাই: </b>${res.data[i].answer ? res.data[i].answer : 'নেই!'}</p>
+                                        <p class="answer as-p-10px as-brr-5px"><b>রিপ্লাই: </b>${res.data[i].answer ? res.data[i].answer : '...'}</p>
                                     </div>
                                 </div>
                            </div>`
@@ -509,15 +509,25 @@
                     tab1Content.innerHTML = '';
 
                     for(var i=0; i < res.data.length; i++){
-                        tab1Content.innerHTML +=`<div class="as-flex as-space-between as-br-1px as-p-10px">
+                        tab1Content.innerHTML +=`<div class="as-flex as-space-between as-br-1px as-p-10px as-mb-5px as-brr-5px">
                         <div class="as-flex as-align-center">
-                            <div><i class="fas fa-file fa-2x"></i></div>
+                            ${res.data[i].resource_type == 'file' ?
+                                `<div><i class="fas fa-file"></i></div>`
+                                :
+                                `<div><i class="fas fa-link"></i></div>`
+                            }
                             <div class="as-ml-10px">${res.data[i].resource_name}</div>
                         </div>
                         <div class="as-flex as-align-center">
-                            <a download rel="nofollow" href="/files/${res.data[i].resource_file}" class="app-cursor as-btn">
-                                ডাউনলোড <!--<i class="fas fa-arrow-down"></i>-->
-                            </a>
+                            ${res.data[i].resource_type == 'file' ?
+                                `<a download rel="nofollow" href="/storage/${res.data[i].resource_url}" class="app-cursor as-btn">
+                                    ডাউনলোড
+                                </a>`
+                                :
+                                `<a download target="_blank" rel="nofollow" href="${res.data[i].resource_url}" class="app-cursor as-btn">
+                                    ভিজিট
+                                </a>`
+                            }
                         </div>
                     </div>`
                     }
