@@ -19,4 +19,8 @@ class Student extends Model
     {
         return $this->hasMany(EnrolledCourse::class, 'student_id');
     }
+
+    protected $casts = [
+        'created_at' => 'date:Y-m-d',
+    ];
 }

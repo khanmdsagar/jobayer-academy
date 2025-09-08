@@ -57,9 +57,7 @@
                         <option hidden value="" disabled selected>Seelect Course</option>
                         <option value="enrolled">Enrolled</option>
                         <option value="unenrolled">Unenrolled</option>
-                        <div id="course-div">
-
-                        </div>
+                        <optgroup id="course-div"></optgroup>
                     </select>
                 </div>
 
@@ -152,9 +150,7 @@
                     <div class="as-mb-5px"><b>District</b></div>
                     <select id="district" class="as-select">
                         <option hidden value="" disabled selected>Select District</option>
-                        <div id="district-div">
-
-                        </div>
+                        <optgroup id="district-div"></optgroup>
                     </select>
                 </div>
                 <div class="as-mt-10px">
@@ -175,7 +171,7 @@
         getCourseData();
         function getCourseData() {
             axios.get('/admin/course/data').then(response => {
-                const courseDiv = document.getElementById('course-div');
+                var courseDiv = document.getElementById('course-div');
                 courseDiv.innerHTML = response.data.map(course => `<option value="${course.id}">${course.course_name}</option>`).join('');
             });
         }
@@ -217,7 +213,7 @@
                                 studentList.innerHTML += `
                             <div class="as-p-10px as-card as-mb-10px as-brr-5px as-flex as-align-center as-justify-between as-space-between">
                                 <div>
-                                    <div>${response.data[i].student_name}</div>
+                                    <div>${response.data[i].student_name != null ? response.data[i].student_name : 'Anonymous'}</div>
                                     <div class="as-f-fade">Phone: ${response.data[i].student_number}</div>
                                     <div class="as-f-fade">Registration Date: ${response.data[i].created_at}</div>
                                     <div class="as-f-fade">Enrolled Course: ${response.data[i].student_enrolled_course}</div>
@@ -242,10 +238,10 @@
                                 studentList.innerHTML += `
                             <div class="as-p-10px as-card as-mb-10px as-brr-5px as-flex as-align-center as-justify-between as-space-between">
                                 <div>
-                                    <div>${response.data[i].student_name}</div>
-                                    <div class="as-f-fade">Phone: ${response.data[i].student_number}</div>
-                                    <div class="as-f-fade">Registration Date: ${response.data[i].created_at}</div>
-                                    <div class="as-f-fade">Enrolled Course: ${response.data[i].student_enrolled_course}</div>
+                                    <div>${response.data[i].student.student_name != null ? response.data[i].student.student_name : 'Anonymous'}</div>
+                                    <div class="as-f-fade">Phone: ${response.data[i].student.student_number}</div>
+                                    <div class="as-f-fade">Registration Date: ${response.data[i].student.created_at}</div>
+                                    <div class="as-f-fade">Enrolled Course: ${response.data[i].student.student_enrolled_course}</div>
                                 </div>
                                 <div>
                                     <span><i onclick="window.location.href='/admin/student/info/${response.data[i].student.id}'" class="fa-solid fa-eye as-app-cursor"></i></span>
@@ -275,7 +271,7 @@
                         studentList.innerHTML += `
                         <div class="as-p-10px as-card as-mb-10px as-brr-5px as-flex as-align-center as-justify-between as-space-between">
                             <div>
-                                <div>${response.data[i].student_name}</div>
+                                <div>${response.data[i].student_name != null ? response.data[i].student_name : 'Anonymous'}</div>
                                 <div class="as-f-fade">Phone: ${response.data[i].student_number}</div>
                                 <div class="as-f-fade">Registration Date: ${response.data[i].created_at}</div>
                                 <div class="as-f-fade">Enrolled Course: ${response.data[i].student_enrolled_course}</div>
