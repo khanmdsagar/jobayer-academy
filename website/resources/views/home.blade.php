@@ -299,7 +299,7 @@ function getSiteGallery(){
             const slide = document.createElement('li');
             slide.className = 'splide__slide';
 
-            slide.innerHTML = `<div class="as-card" style="margin: 5px;"><img class="as-w-100 as-h-260px as-brr-5px" src="/image/gallery/${item.gallery_image}" alt="Image" onclick="openLightbox(this)"></div>`;
+            slide.innerHTML = `<div class="as-card" style="margin: 5px;"><img class="as-w-100 as-h-240px as-brr-5px" src="/image/gallery/${item.gallery_image}" alt="Image" onclick="openLightbox(this)"></div>`;
             splideList.appendChild(slide);
         });
 

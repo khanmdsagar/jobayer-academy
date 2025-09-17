@@ -38,7 +38,9 @@
 
             <div class="as-card as-p-15px as-mb-15px">
                 <div class="as-mb-10px as-f-20px as-f-bold">কোর্স বিবরণ</div>
-                {!! $course->course_description !!}
+                <div class="course-description">
+                    {!! $course->course_description !!}
+                </div>
             </div>
 
             {{-- question and answer --}}
@@ -114,7 +116,7 @@
                 <p>{{$course->instructor['instructor_designation']}}</p>
             </div>
 
-            <div class="as-card as-p-15px as-mt-15px md:as-mb-76px">
+            <div class="as-card as-p-15px as-mt-15px">
                 <div class="as-mb-10px as-f-20px as-f-bold">কোর্স হাইলাইটস</div>
                 <div>
                     <div class="as-mb-10px"><i class="fas fa-clock"></i> সময়কাল : {{$course->course_duration}}</div>
@@ -178,6 +180,11 @@
     <style>
         .course-description ul {
             padding: 10px 10px 10px 35px;
+        }
+
+        .course-description img {
+            width: 100%;
+            border-radius: 5px; 
         }
 
         .accordion {
@@ -405,9 +412,9 @@
 
                             reviewContainer.innerHTML += `
                                     <div class="as-mb-20px">
-                                        <div class="as-mb-10px">
+                                        <div class="as-mb-10px as-flex">
                                             <img class="as-w-50px as-h-50px as-brr-50" src="${res.data[i].student.student_photo ? '/image/student' + res.data[i].student.student_photo : '/image/other/profile_avater.webp'}" alt="User">
-                                            <div>
+                                            <div class="as-ml-10px">
                                                 <h4>${review.student.student_name}</h4>
                                                 <div class="as-color-yellow">
                                                     ${reviewStar}
@@ -417,7 +424,8 @@
                                         </div>
                                         <p class="">${review.review}</p>
                                         <div class="as-date">তারিখ: ${convertToBengali(review.review_date)}</div>
-                                    </div>`
+                                    </div>
+                                    <div class="as-divider"></div>`
                         }
                     }
                     else {

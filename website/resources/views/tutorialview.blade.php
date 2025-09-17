@@ -29,10 +29,15 @@
                 <!-- Video Container -->
                 <div class="tutorialview-video-container">
                     <div class="tutorialview-video-player">
-                        <div class="video-wrapper" style="">
+                        <div class="video-wrapper" style="display: none" id="video-wrapper">
                             <video id="videoPlayer" class="plyr" playsinline autoplay controls>
                                 <source src="" type="video/mp4" />
                             </video>
+                        </div>
+                        <div id="video-message" class="as-p-20px">
+                            <h3 style="text-align: center; color: grey;">
+                                <i class="fas fa-info-circle"></i> ক্লাস দেখতে কোর্সের বিষয়বস্তু থেকে একটি টপিক নির্বাচন করুন
+                            </h3>
                         </div>
                     </div>
 
@@ -357,6 +362,11 @@
     }
 
     function playVideoNow(videoId, courseTitle, topicId){
+        var videoWrapper = document.getElementById('video-wrapper');
+        var videoMessage = document.getElementById('video-message');
+        videoWrapper.style.display = 'block';
+        videoMessage.innerHTML = '';
+
         var videoInfoContainer = document.getElementById('video-info-container');
         videoInfoContainer.style.display = 'block';
 
