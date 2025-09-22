@@ -264,7 +264,8 @@ class AdminController extends Controller
 
         if ($is_category > 0) {
             return response()->json(['status' => 404, "message" => 'ক্যাটাগরি ইতিমধ্যে রয়েছে']);
-        } else {
+        } 
+        else {
             $result = DB::table('course_category')->insert([
                 'category_name' => $category_name,
                 'category_slug' => Str::slug($category_name),
@@ -274,7 +275,8 @@ class AdminController extends Controller
 
             if ($result) {
                 return response()->json(['status' => 200, "message" => 'ক্যাটাগরি যুক্ত করা হয়েছে']);
-            } else {
+            } 
+            else {
                 return response()->json(['status' => 404, "message" => 'ক্যাটাগরি যুক্ত করা যায়নি']);
             }
         }
@@ -292,7 +294,8 @@ class AdminController extends Controller
 
         if ($result) {
             return response()->json(['status' => 200, "message" => 'ক্যাটাগরি মুছে ফেলা হয়েছে']);
-        } else {
+        } 
+        else {
             return response()->json(['status' => 404, "message" => 'ক্যাটাগরি মুছে ফেলা যায়নি']);
         }
     }
@@ -311,7 +314,8 @@ class AdminController extends Controller
 
         if ($result) {
             return response()->json(['status' => 200, "message" => 'ক্যাটাগরি সম্পাদন করা হয়েছে']);
-        } else {
+        } 
+        else {
             return response()->json(['status' => 404, "message" => 'ক্যাটাগরি সম্পাদন করা যায়নি']);
         }
     }
@@ -330,27 +334,22 @@ class AdminController extends Controller
         if (is_numeric($search_data2)) {
             $student_data = DB::table('student')->where('student_number', 'like', '%' . $search_data2 . '%')->get();
             return response()->json($student_data);
-        } else {
+        } 
+        else {
             $student_data = DB::table('student')->where('student_name', 'like', '%' . $search_data2 . '%')->get();
             return response()->json($student_data);
         }
-    }
-
-    function student_info($student_id)
-    {
-        $student_data = DB::table('student')->where('id', $student_id)->first();
-        $enrolled_course = EnrolledCourse::with('course')->where('student_id', $student_id)->get();
-        $site_course = DB::table('course')->get();
-        return view('admin.admin_student_info', compact('student_data', 'enrolled_course', 'site_course'));
     }
 
     function filter_student($course_value)
     {
         if ($course_value == 'enrolled') {
             return DB::table('student')->where('student_enrolled_course', '!=', 0)->get();
-        } else if ($course_value == 'unenrolled') {
+        } 
+        else if ($course_value == 'unenrolled') {
             return DB::table('student')->where('student_enrolled_course', 0)->get();
-        } else {
+        } 
+        else {
             return EnrolledCourse::with('student')->where('course_id', $course_value)->get();
         }
     }

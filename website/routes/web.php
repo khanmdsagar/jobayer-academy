@@ -14,6 +14,7 @@ use App\Http\Controllers\DataSeedController;
 
 use App\Http\Controllers\admin\AdminAuthController;
 use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\admin\AdminStudentController;
 
 use App\Models\CourseChapter;
 use App\Models\ChapterTopic;
@@ -189,7 +190,8 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
     Route::get('/admin/student/data', [AdminController::class, 'get_student_data']);
     Route::post('/admin/student/add', [AdminController::class, 'add_student_info']);
     Route::post('/admin/student/delete', [AdminController::class, 'delete_student_info']);
-    Route::get('/admin/student/info/{student_id}', [AdminController::class, 'student_info']);
+    Route::get('/admin/student/info/{student_id}', [AdminStudentController::class, 'student_info']);
+    Route::post('/admin/student/edit', [AdminStudentController::class, 'edit_student_info']);
     Route::post('/admin/student/enroll', [AdminController::class, 'enroll_student']);
     Route::post('/admin/student/unenroll', [AdminController::class, 'unenroll_student']);
     Route::get('/admin/student/search/{search_data}', [AdminController::class, 'search_student_data']);

@@ -325,8 +325,8 @@
                         }
 
                         verification_code = response.data.code;
-                        //console.log(response.data.code)
-                        console.log(response.data.data)
+                        console.log(response.data.code)
+                        //console.log(response.data.data)
                     }
                 })
                 .catch(function (error) {
