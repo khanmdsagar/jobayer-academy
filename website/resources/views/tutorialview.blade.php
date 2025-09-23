@@ -261,6 +261,7 @@
     var loadMoreQsnAns = document.getElementById('load-more-qsn-ans');
     var markCompleteBtn = document.getElementById('mark-complete-btn');
 
+
     async function getCourseContent() {
         const courseContent = document.getElementById('course-content');
         const response = await axios.get('/api/get-course-content/{{ $course_id }}');

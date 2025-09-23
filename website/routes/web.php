@@ -62,6 +62,7 @@ Route::post('/api/register-student', [AuthController::class, 'registerStudent'])
 
 Route::get('/data-seed', [DataSeedController::class, 'data_seed']);
 
+
 // Student Dashboard functions
 Route::middleware([AuthMiddleware::class])->group(function(){
 
@@ -123,6 +124,10 @@ Route::middleware([AuthMiddleware::class])->group(function(){
 
         return view('profile', compact('student_info', 'day', 'month', 'year', 'profession', 'division', 'district'));
     })->name('profile');
+
+    Route::get('/settings', function () {
+        return view('settings');
+    })->name('settings');
 
 
     Route::post('/api/enroll-course', [SiteController::class, 'enrollCourse']);

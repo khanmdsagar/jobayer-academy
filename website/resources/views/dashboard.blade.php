@@ -15,6 +15,9 @@
                 <div class="as-mb-10px">
                     <a class="as-app-cursor" href="{{ url('/profile') }}"><i class="fas fa-user as-mr-10px"></i> প্রোফাইল</a>
                 </div>
+                <div class="as-mb-10px">
+                    <a class="as-app-cursor" href="{{ url('/settings') }}"><i class="fas fa-gear as-mr-10px"></i> সেটিংস</a>
+                </div>
                 <div class="">
                     <div class="logout as-app-cursor" onclick="logout()"><i class="fas fa-sign-out-alt as-mr-10px"></i> লগআউট</div>
                 </div>

@@ -52,38 +52,35 @@
     <div class="as-app-sidebar">
         <div class="as-app-sidebar-content">
             <div class="as-app-sidebar-header">
-                <a href="/"><img width="138px" src="/image/icon/{{$site_data[0]->site_logo}}"
-                        alt="{{$site_data[0]->site_name}}"></a>
+                <a href="/"><img width="138px" src="/image/icon/{{$site_data[0]->site_logo}}" alt="{{$site_data[0]->site_name}}"></a>
             </div>
             <hr>
             <div class="as-app-sidebar-menu">
-                <div class="as-p-10px"><a href="{{url('/')}}" class="as-app-cursor"><i class="fas fa-house"></i> হোম</a>
-                </div>
+                <div class="as-p-10px"><a href="{{url('/')}}" class="as-app-cursor"><i class="fas fa-house"></i> হোম</a></div>
 
-                <div class="as-p-10px"><a href="/#featured-course" class="as-app-cursor"><i class="fas fa-book"></i>
-                        কোর্সসমূহ</a></div>
+                <div class="as-p-10px"><a href="/#featured-course" class="as-app-cursor"><i class="fas fa-book"></i>কোর্সসমূহ</a></div>
 
                 @if(Route::currentRouteName() != 'about')
-                    <div class="as-p-10px"><a href="{{url('/page/about-us')}}" class="as-app-cursor"><i
-                                class="far fa-circle-question"></i> আমাদের সম্পর্কে</a></div>
+                    <div class="as-p-10px"><a href="{{url('/page/about-us')}}" class="as-app-cursor"><i class="fas fa-circle-question"></i> আমাদের সম্পর্কে</a></div>
                 @endif
+
                 @if(!Session::has('user_id') && Route::currentRouteName() != 'login')
                     <div class="as-p-10px"><a href="{{ url('login') }}" class="as-app-cursor"><i
-                                class="far fa-circle-user"></i> লগইন</a></div>
+                                class="fas fa-circle-user"></i> লগইন</a></div>
                 @endif
 
                 @if(Session::has('user_id'))
                     @if(Route::currentRouteName() != 'dashboard')
-                        <div class="as-p-10px"><a href="{{ url('dashboard') }}" class="as-app-cursor"><i
-                                    class="far fa-square"></i> ড্যাশবোর্ড</a></div>
+                        <div class="as-p-10px"><a href="{{ url('dashboard') }}" class="as-app-cursor"><i class="fas fa-square"></i> ড্যাশবোর্ড</a></div>
                     @endif
                     @if(Route::currentRouteName() != 'profile')
-                        <div class="as-p-10px"><a href="{{ url('/profile') }}" class="as-app-cursor"><i class="far fa-user"></i>
-                                প্রোফাইল</a></div>
+                        <div class="as-p-10px"><a href="{{ url('/profile') }}" class="as-app-cursor"><i class="fas fa-user"></i>প্রোফাইল</a></div>
+                    @endif
+                    @if(Route::currentRouteName() != 'settings')
+                        <div class="as-p-10px"><a href="{{ url('/settings') }}" class="as-app-cursor"><i class="fas fa-gear"></i>সেটিংস</a></div>
                     @endif
                     <div class="as-p-10px">
-                        <div class="logout as-app-cursor as-color-primary" onclick="logout()"><i
-                                class="far fa-arrow-alt-circle-left"></i> লগআউট</div>
+                        <div class="logout as-app-cursor as-color-primary" onclick="logout()"><i class="fas fa-arrow-alt-circle-left"></i> লগআউট</div>
                     </div>
                 @endif
             </div>
