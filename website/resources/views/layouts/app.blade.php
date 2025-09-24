@@ -120,15 +120,17 @@
 
                 <div id="menu-desktop" class="as-flex as-list-style-none">
                     @if(Session::has('user_id'))
-                        <div class="as-p-10px as-f-16px"><a href="/">হোম</a></div>
+                        @if(Route::currentRouteName() != 'dashboard' && Route::currentRouteName() != 'profile' && Route::currentRouteName() != 'settings')
+                            <div class="as-p-10px as-f-16px"><a href="/">হোম</a></div>
 
-                        <div class="as-p-10px as-f-16px"><a href="/#featured-course">কোর্সসমূহ</a></div>
+                            <div class="as-p-10px as-f-16px"><a href="/#featured-course">কোর্সসমূহ</a></div>
 
-                        @if(Route::currentRouteName() != 'about')
-                            <div class="as-p-10px as-f-16px"><a href="/page/about-us">আমাদের সম্পর্কে</a></div>
-                        @endif
-                        @if(Route::currentRouteName() != 'dashboard')
-                            <div class="as-p-10px as-f-16px"><a href="/dashboard" class="as-btn app-cursor">ড্যাশবোর্ড</a></div>
+                            @if(Route::currentRouteName() != 'about')
+                                <div class="as-p-10px as-f-16px"><a href="/page/about-us">আমাদের সম্পর্কে</a></div>
+                            @endif
+                            @if(Route::currentRouteName() != 'dashboard')
+                                <div class="as-p-10px as-f-16px"><a href="/dashboard" class="as-btn app-cursor">ড্যাশবোর্ড</a></div>
+                            @endif
                         @endif
                     @else
                         <div class="as-p-10px as-f-16px"><a href="/">হোম</a></div>

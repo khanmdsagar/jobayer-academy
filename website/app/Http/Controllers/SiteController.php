@@ -119,6 +119,24 @@ class SiteController extends Controller
         }
     }
 
+    function check_login_isenrolled($course_id){
+        if (Session::has('user_id')) {
+            $is_student_enrolled = DB::table('enrolled_course')
+                ->where('student_id', Session::get('user_id'))
+                ->where('course_id', $course_id)->count();
+
+            if($is_student_enrolled){
+                return 'Enrolled';
+            }
+            else{
+                return 'notEnrolled';
+            }
+        }
+        else{
+            return "notLoggedIn";
+        }
+    }
+
     function get_review($course_id = null){
         if($course_id != null){
             return $course_review = CourseReview::with('student')->where('course_id', $course_id)->get();

@@ -20,7 +20,7 @@ class DashController extends Controller
         $this->student_id = Session::get('user_id');
     }
 
-    function tutorial_view($course_id, $slug) {
+    function tutorial_view($course_id, $slug = null) {
         $student_id = Session::get('user_id');
 
         $course_content = Course::where('id', $course_id)->first();

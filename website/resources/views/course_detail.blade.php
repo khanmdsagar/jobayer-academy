@@ -184,7 +184,7 @@
 
         .course-description img {
             width: 100%;
-            border-radius: 5px; 
+            border-radius: 5px;
         }
 
         .accordion {
@@ -259,13 +259,13 @@
                             qsnAnsLength = res.data.length;
 
                             qsnAnsDiv.innerHTML += `
-                                            <div class="as-mb-10px">
-                                                <div><b>প্রশ্ন: ${res.data[i]['question']}</b></div>
-                                                <div>
-                                                    <b>উত্তর:</b> ${res.data[i]['answer']}
+                                                <div class="as-mb-10px">
+                                                    <div><b>প্রশ্ন: ${res.data[i]['question']}</b></div>
+                                                    <div>
+                                                        <b>উত্তর:</b> ${res.data[i]['answer']}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                    `
+                                        `
                         }
                     });
             }
@@ -302,6 +302,12 @@
 
         function getCourseCurriculum() {
             var courseCurriculumContainer = document.getElementById('course-curriculum-container');
+            var enrollStatus = '';
+
+            axios.get('/api/check-login-isenrolled/{{$course_id}}')
+                        .then((response) => {
+                            enrollStatus = response.data;
+                        })
 
             axios.get('/api/get-course-curriculum/' + {{$course_id}})
                 .then(function (response) {
@@ -309,24 +315,24 @@
 
                     response.data.forEach(function (courseChapter) {
                         courseCurriculumContainer.innerHTML += `
-                                    <div style="border: 1px solid lightgrey" onclick="expand(${courseChapter.id})" class="as-app-cursor as-accordion-hover accordion as-flex as-space-between">
-                                        <div>${courseChapter.chapter_name}</div>
-                                        <div><i class="fa-solid fa-caret-down"></i></div>
-                                    </div>
+                                        <div style="border: 1px solid lightgrey" onclick="expand(${courseChapter.id})" class="as-app-cursor as-accordion-hover accordion as-flex as-space-between">
+                                            <div>${courseChapter.chapter_name}</div>
+                                            <div><i class="fa-solid fa-caret-down"></i></div>
+                                        </div>
 
-                                    <div class="panel panel${courseChapter.id}">
-                                        ${courseChapter.chapter_topic.map(function (chapterTopic) {
+                                        <div class="panel panel${courseChapter.id}">
+                                            ${courseChapter.chapter_topic.map(function (chapterTopic) {
                             return `
-                                                <div ${chapterTopic.topic_is_free ? `class="topic-list as-list-hover as-app-cursor panel-item as-flex as-space-between"` : `class="topic-list as-list-hover panel-item as-flex as-space-between"`} ${chapterTopic.topic_is_free ? `onclick="checkLogin('${chapterTopic.topic_video}')"` : ''}>
-                                                    <div>${chapterTopic.topic_name}</div>
-                                                    <div>
-                                                        <i class="fa-solid ${chapterTopic.topic_is_free ? 'fa-play' : 'fa-lock'}"></i>
+                                                    <div ${chapterTopic.topic_is_free ? `class="topic-list as-list-hover as-app-cursor panel-item as-flex as-space-between"` : `class="topic-list as-list-hover panel-item as-flex as-space-between"`} ${chapterTopic.topic_is_free ? `onclick="checkLogin('${chapterTopic.topic_video}')"` : ''}>
+                                                        <div>${chapterTopic.topic_name}</div>
+                                                        <div>
+                                                           ${enrollStatus == 'Enrolled' ? `<i onclick="window.location.href = '/tutorial/{{$course_id}}'" class="fa-solid fa-play"></i>` : `<i class="fa-solid ${chapterTopic.topic_is_free ? 'fa-play' : 'fa-lock'}"></i>`}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            `;
+                                                `;
                         }).join('')}
-                                    </div>
-                                `;
+                                        </div>
+                                    `;
                     })
                 })
                 .catch(function (error) {
@@ -347,6 +353,13 @@
                             window.location.href = '/login/{{$course_id}}/{{$course_slug}}/curriculumn';
                         }
                     }
+                })
+        }
+
+        function checkLogin2() {
+            axios.get('/api/check-login')
+                .then((response) => {
+                    return response.data;
                 })
         }
 
@@ -411,21 +424,21 @@
                             }
 
                             reviewContainer.innerHTML += `
-                                    <div class="as-mb-20px">
-                                        <div class="as-mb-10px as-flex">
-                                            <img class="as-w-50px as-h-50px as-brr-50" src="${res.data[i].student.student_photo ? '/image/student' + res.data[i].student.student_photo : '/image/other/profile_avater.webp'}" alt="User">
-                                            <div class="as-ml-10px">
-                                                <h4>${review.student.student_name}</h4>
-                                                <div class="as-color-yellow">
-                                                    ${reviewStar}
-                                                    (${convertToBengali(review.review_rating)})
+                                        <div class="as-mb-20px">
+                                            <div class="as-mb-10px as-flex">
+                                                <img class="as-w-50px as-h-50px as-brr-50" src="${res.data[i].student.student_photo ? '/image/student' + res.data[i].student.student_photo : '/image/other/profile_avater.webp'}" alt="User">
+                                                <div class="as-ml-10px">
+                                                    <h4>${review.student.student_name}</h4>
+                                                    <div class="as-color-yellow">
+                                                        ${reviewStar}
+                                                        (${convertToBengali(review.review_rating)})
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <p class="">${review.review}</p>
+                                            <div class="as-date">তারিখ: ${convertToBengali(review.review_date)}</div>
                                         </div>
-                                        <p class="">${review.review}</p>
-                                        <div class="as-date">তারিখ: ${convertToBengali(review.review_date)}</div>
-                                    </div>
-                                    <div class="as-divider"></div>`
+                                        <div class="as-divider"></div>`
                         }
                     }
                     else {

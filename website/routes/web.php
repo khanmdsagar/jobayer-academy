@@ -134,7 +134,7 @@ Route::middleware([AuthMiddleware::class])->group(function(){
     Route::get('/api/get-enrolled-course', [SiteController::class, 'getEnrolledCourse']);
     Route::get('/api/get-course-content/{id}', [DashController::class, 'get_course_content']);
 
-    Route::get('/tutorial/{course_id}/{slug}', [DashController::class, 'tutorial_view'])->name('tutorialview');
+    Route::get('/tutorial/{course_id}/{slug?}', [DashController::class, 'tutorial_view'])->name('tutorialview');
     Route::post('/api/mark-as-complete', [DashController::class, 'mark_as_complete']);
 
     Route::post('/api/get-course-progress', [DashController::class, 'get_course_progress']);
@@ -153,6 +153,7 @@ Route::middleware([AuthMiddleware::class])->group(function(){
 });
 
 Route::get('/api/check-login', [SiteController::class, 'check_login']);
+Route::get('/api/check-login-isenrolled/{course_id}', [SiteController::class, 'check_login_isenrolled']);
 Route::get('/api/get-review/{course_id?}', [SiteController::class, 'get_review']);
 Route::get('/api/get-course-curriculum/{course_id}', [SiteController::class, 'get_course_curriculum']);
 Route::get('/api/get-site-gallery', [SiteController::class, 'get_site_gallery']);
