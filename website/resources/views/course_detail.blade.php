@@ -50,8 +50,7 @@
 
                     <div id="qsnansdiv">
                         {{--loop--}}
-                        <h3 style="text-align: center; color: grey; padding: 20px;"><i class="fas fa-spinner fa-spin"></i>
-                            প্রশ্ন ও উত্তর লোডিং হচ্ছে...</h3>
+                        <h3 style="text-align: center; color: grey; padding: 20px;"><i class="fas fa-spinner fa-spin"></i></h3>
                     </div>
 
                     <div class="as-mt-10px as-text-center">
@@ -69,7 +68,7 @@
                     <div id="course-curriculum-container">
                         <!-- loop -->
                         <h3 style="text-align: center; color: grey; padding: 20px;">
-                            <i class="fas fa-spinner fa-spin"></i> কোর্স কারিকুলাম লোডিং হচ্ছে...
+                            <i class="fas fa-spinner fa-spin"></i>
                         </h3>
                     </div>
                 </div>
@@ -93,8 +92,7 @@
                     <div id="review-list">
                         <div class="review-container" id="review-container">
                             <!-- loop here -->
-                            <h3 style="text-align: center; color: grey; padding: 20px;"><i class="fas fa-spinner fa-spin"></i>
-                                রিভিউ লোডিং হচ্ছে...</h3>
+                            <h3 style="text-align: center; color: grey; padding: 20px;"><i class="fas fa-spinner fa-spin"></i></h3>
                         </div>
 
                         <div class="as-text-center">
@@ -320,20 +318,27 @@
                                             <div><i class="fa-solid fa-caret-down"></i></div>
                                         </div>
 
-                                        <div class="panel panel${courseChapter.id}">
+                                        <div class="panel panel${courseChapter.id} as-mb-5px">
                                             ${courseChapter.chapter_topic.map(function (chapterTopic) {
-                            return `
-                                                    <div ${chapterTopic.topic_is_free ? `class="topic-list as-list-hover as-app-cursor panel-item as-flex as-space-between"` : `class="topic-list as-list-hover panel-item as-flex as-space-between"`} ${chapterTopic.topic_is_free ? `onclick="checkLogin('${chapterTopic.topic_video}')"` : ''}>
-                                                        <div>${chapterTopic.topic_name}</div>
+                                                return enrollStatus == 'Enrolled' 
+                                                ? `<div onclick="window.location.href = '/tutorial/{{$course_id}}'" class="topic-list as-list-hover as-app-cursor panel-item as-flex as-space-between">
+                                                        <div class="as-mr-5px">${chapterTopic.topic_name}</div>
                                                         <div>
-                                                           ${enrollStatus == 'Enrolled' ? `<i onclick="window.location.href = '/tutorial/{{$course_id}}'" class="fa-solid fa-play"></i>` : `<i class="fa-solid ${chapterTopic.topic_is_free ? 'fa-play' : 'fa-lock'}"></i>`}
+                                                            <i style="color: grey;" class="fa-solid fa-video"></i>
                                                         </div>
-                                                    </div>
-                                                `;
-                        }).join('')}
+                                                    </div>` 
+                                                    : 
+                                                    `<div class="topic-list as-list-hover ${chapterTopic.topic_is_free ? 'as-app-cursor' : ''} panel-item as-flex as-space-between"
+                                                        ${chapterTopic.topic_is_free ? `onclick="checkLogin('${chapterTopic.topic_video}')"` : ''}>
+                                                        <div class="as-mr-5px">${chapterTopic.topic_name}</div>
+                                                        <div>
+                                                            <i style="color: grey;" class="fa-solid ${chapterTopic.topic_is_free ? 'fa-video' : 'fa-lock'}"></i>
+                                                        </div>
+                                                    </div>`
+                                                }).join('')
+                                            }
                                         </div>
-                                    `;
-                    })
+                                    `})
                 })
                 .catch(function (error) {
                     console.log(error);

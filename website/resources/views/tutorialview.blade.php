@@ -276,7 +276,7 @@
 
         courseContent.innerHTML = '';
         courseContent.innerHTML = `<h3 id="content-load-indicator" style="text-align: center; color: grey;">
-                                        <i class="fas fa-spinner fa-spin"></i> লোডিং হচ্ছে...
+                                        <i class="fas fa-spinner fa-spin"></i>
                                     </h3>`;
 
         if (response.data) {
@@ -299,7 +299,7 @@
                     if (isCompleted) {
                         iconHtml = `<i class="fas fa-check-circle" style="color: green;"></i>`;
                     } else {
-                        iconHtml = `<i class="fas fa-eye-slash" style="color: grey;"></i>`;
+                        iconHtml = `<i class="fa-solid fa-video" style="color: grey;"></i>`;
                     }
                     return `<div id="topic-list-${topic.id}" class="completed as-mr-10px as-brr-5px as-app-cursor" onclick="playVideoNow('${topic.topic_video}', '${topic.topic_name}', '${topic.id}')">
                                 <div class="as-flex as-align-center as-p-7px">
