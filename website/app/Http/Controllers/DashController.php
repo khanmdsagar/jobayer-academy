@@ -53,6 +53,10 @@ class DashController extends Controller
         return view('tutorialview', compact('course_id', 'slug', 'course_name', 'course_tagline'));
     }
 
+    function get_video_data($topic_id){
+        return DB::table('chapter_topic')->where('id', $topic_id)->first();
+    }
+
     // get course content
     function get_course_content($course_id){
         $student_id = Session::get('user_id');

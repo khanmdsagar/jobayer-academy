@@ -201,9 +201,9 @@ class AdminController extends Controller
         Storage::disk('public')->delete($course_thumbnail);
 
         if ($result) {
-            return response()->json(['status' => 200, "message" => 'কোর্স মুছে ফেলা হয়েছে']);
+            return response()->json(['status' => 200, "message" => 'Course deleted successfully']);
         } else {
-            return response()->json(['status' => 404, "message" => 'কোর্স মুছে ফেলা যায়নি']);
+            return response()->json(['status' => 404, "message" => 'Course could not be deleted']);
         }
     }
 
@@ -263,7 +263,7 @@ class AdminController extends Controller
         $is_category = DB::table('course_category')->where('category_name', $category_name)->count();
 
         if ($is_category > 0) {
-            return response()->json(['status' => 404, "message" => 'ক্যাটাগরি ইতিমধ্যে রয়েছে']);
+            return response()->json(['status' => 404, "message" => 'Category already exists']);
         } 
         else {
             $result = DB::table('course_category')->insert([
@@ -274,10 +274,10 @@ class AdminController extends Controller
             ]);
 
             if ($result) {
-                return response()->json(['status' => 200, "message" => 'ক্যাটাগরি যুক্ত করা হয়েছে']);
+                return response()->json(['status' => 200, "message" => 'Category added successfully']);
             } 
             else {
-                return response()->json(['status' => 404, "message" => 'ক্যাটাগরি যুক্ত করা যায়নি']);
+                return response()->json(['status' => 404, "message" => 'Category could not be added']);
             }
         }
     }
@@ -293,10 +293,10 @@ class AdminController extends Controller
         $result = DB::table('course_category')->where('id', $category_id)->delete();
 
         if ($result) {
-            return response()->json(['status' => 200, "message" => 'ক্যাটাগরি মুছে ফেলা হয়েছে']);
+            return response()->json(['status' => 200, "message" => 'Category deleted successfully']);
         } 
         else {
-            return response()->json(['status' => 404, "message" => 'ক্যাটাগরি মুছে ফেলা যায়নি']);
+            return response()->json(['status' => 404, "message" => 'Category could not be deleted']);
         }
     }
 
@@ -313,10 +313,10 @@ class AdminController extends Controller
         ]);
 
         if ($result) {
-            return response()->json(['status' => 200, "message" => 'ক্যাটাগরি সম্পাদন করা হয়েছে']);
+            return response()->json(['status' => 200, "message" => 'Category updated successfully']);
         } 
         else {
-            return response()->json(['status' => 404, "message" => 'ক্যাটাগরি সম্পাদন করা যায়নি']);
+            return response()->json(['status' => 404, "message" => 'Category could not be updated']);
         }
     }
 
@@ -576,13 +576,14 @@ class AdminController extends Controller
     //enroll student
     function enroll_student(Request $request)
     {
-        $student_id = strip_tags(trim($request->input('student_id')));
-        $course_id = strip_tags(trim($request->input('course_id')));
+        $student_id      = strip_tags(trim($request->input('student_id')));
+        $course_id       = strip_tags(trim($request->input('course_id')));
         $enrolled_course = DB::table('enrolled_course')->where('student_id', $student_id)->where('course_id', $course_id)->count();
 
         if ($enrolled_course > 0) {
-            return response()->json(['status' => 404, "message" => 'কোর্স ইতিমধ্যে ভর্তি করা আছে']);
-        } else {
+            return response()->json(['status' => 404, "message" => 'Student already enrolled']);
+        } 
+        else {
             try {
                 $result = DB::table('enrolled_course')->insert([
                     'student_id' => $student_id,
@@ -591,16 +592,17 @@ class AdminController extends Controller
                     'enrolled_date' => Carbon::now(),
                 ]);
 
-                $student_data = DB::table('student')->where('id', $student_id)->first();
                 $enrolled_course = DB::table('enrolled_course')->where('student_id', $student_id)->count();
                 DB::table('student')->where('id', $student_id)->update(['student_enrolled_course' => $enrolled_course]);
 
                 if ($result) {
-                    return response()->json(['status' => 200, "message" => 'কোর্স ভর্তি করা হয়েছে']);
-                } else {
-                    return response()->json(['status' => 404, "message" => 'কোর্স ভর্তি করা যায়নি']);
+                    return response()->json(['status' => 200, "message" => 'Student enrolled successfully']);
+                } 
+                else {
+                    return response()->json(['status' => 404, "message" => 'Student could not be enrolled']);
                 }
-            } catch (\Exception $e) {
+            } 
+            catch (\Exception $e) {
                 return response()->json(['status' => 404, "message" => $e->getMessage()]);
             }
         }
@@ -609,11 +611,17 @@ class AdminController extends Controller
     function unenroll_student(Request $request)
     {
         $enrolled_course_id = strip_tags(trim($request->input('enrolled_course_id')));
+        $student_id         = strip_tags(trim($request->input('student_id')));
+
         $result = DB::table('enrolled_course')->where('id', $enrolled_course_id)->delete();
+
+        $enrolled_course = DB::table('enrolled_course')->where('student_id', $student_id)->count();
+        DB::table('student')->where('id', $student_id)->update(['student_enrolled_course' => $enrolled_course]);
+
         if ($result) {
-            return response()->json(['status' => 200, "message" => 'কোর্স বাতিল করা হয়েছে']);
+            return response()->json(['status' => 200, "message" => 'Enrollment cancelled']);
         } else {
-            return response()->json(['status' => 404, "message" => 'কোর্স বাতিল করা যায়নি']);
+            return response()->json(['status' => 404, "message" => 'Enrollment could not be cancelled']);
         }
     }
 

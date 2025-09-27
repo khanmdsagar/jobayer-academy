@@ -135,6 +135,7 @@ Route::middleware([AuthMiddleware::class])->group(function(){
     Route::get('/api/get-course-content/{id}', [DashController::class, 'get_course_content']);
 
     Route::get('/tutorial/{course_id}/{slug?}', [DashController::class, 'tutorial_view'])->name('tutorialview');
+    Route::get('/api/get-video-data/{topic_id}', [DashController::class, 'get_video_data']);
     Route::post('/api/mark-as-complete', [DashController::class, 'mark_as_complete']);
 
     Route::post('/api/get-course-progress', [DashController::class, 'get_course_progress']);

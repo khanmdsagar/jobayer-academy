@@ -361,13 +361,6 @@
                 })
         }
 
-        function checkLogin2() {
-            axios.get('/api/check-login')
-                .then((response) => {
-                    return response.data;
-                })
-        }
-
         function expand(id) {
             document.querySelector('.panel' + id).classList.toggle('show');
         }

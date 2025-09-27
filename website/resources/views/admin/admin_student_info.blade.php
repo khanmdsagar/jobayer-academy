@@ -378,9 +378,10 @@
 
         }
 
-        function unenrollCourse(enrolled_course_id, student_id) {
+        function unenrollCourse(enrolled_course_id) {
             const data = {
                 enrolled_course_id: enrolled_course_id,
+                student_id: {{$student_data->id}}
             }
 
             var confirm = window.confirm('Are you sure you want to unenroll this course?');
