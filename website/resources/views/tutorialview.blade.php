@@ -273,72 +273,6 @@
         var loadMoreQsnAns = document.getElementById('load-more-qsn-ans');
         var markCompleteBtn = document.getElementById('mark-complete-btn');
 
-
-        async function getCourseContent() {
-            const response = await axios.get('/api/get-course-content/{{ $course_id }}');
-            const courseContent = document.getElementById('course-content');
-
-            response.data.course_content.forEach(chapter => {
-                chapter.chapter_topic.forEach(topic => {
-                    videoData.push(topic);
-                });
-            });
-
-            let topic_ids = JSON.parse(response.data.topic_completion_ids[0].topic_ids);
-            const firstParts = topic_ids.map(item => item.split("-")[0]);
-
-            var isanytoPlay = localStorage.getItem('isanytoPlay');
-            if (isanytoPlay == null) {
-                axios.get(`/api/get-video-data/${firstParts[0]}`)
-                    .then(res => {
-                        playVideoNow(res.data.topic_video, res.data.topic_name, res.data.id);
-                        console.log(res.data);
-                    })
-            }
-
-            courseContent.innerHTML = '';
-            courseContent.innerHTML = `<h3 id="content-load-indicator" style="text-align: center; color: grey;">
-                                                        <i class="fas fa-spinner fa-spin"></i>
-                                                    </h3>`;
-
-            if (response.data) {
-                document.getElementById('content-load-indicator').style.display = 'none';
-
-                for (const item of response.data.course_content) {
-                    courseContent.innerHTML += `
-                                <div class="as-mb-10px">
-                                    <div class="as-flex as-space-between">
-                                        <h3 class="as-mr-5px">${item.chapter_name}</h3>
-                                        <span class="as-date as-mr-10px">বিষয়: ${convertToBengali(item.chapter_topic.length)} টি</span>
-                                    </div>
-                                    <div>
-                                        ${item.chapter_topic.map(topic => {
-                        const topicKey = `${topic.id}-1`;
-                        const isCompleted = topic_ids.includes(topicKey);
-
-                        let iconHtml = '';
-
-                        if (isCompleted) {
-                            iconHtml = `<i class="fas fa-check-circle" style="color: green;"></i>`;
-                        } else {
-                            iconHtml = `<i class="fa-solid fa-video" style="color: grey;"></i>`;
-                        }
-                        return `<div id="topic-list-${topic.id}" class="completed as-mr-10px as-brr-5px as-app-cursor" onclick="playVideoNow('${topic.topic_video}', '${topic.topic_name}', '${topic.id}')">
-                                                <div class="as-flex as-align-center as-p-7px">
-                                                    <div class="as-mr-10px">
-                                                        ${iconHtml}
-                                                    </div>
-                                                    <div>${topic.topic_name}</div>
-                                                </div>
-                                            </div>
-                                        `;
-                    }).join('')}
-                                    </div>
-                                </div>`;
-                }
-            }
-        }
-
         const player = new Plyr('#videoPlayer', {
             controls: [
                 'play-large', 'play', 'progress', 'current-time',
@@ -355,6 +289,90 @@
                 controls: 0,
             }
         });
+
+        async function getCourseContent() {
+            const response = await axios.get('/api/get-course-content/{{ $course_id }}');
+            const courseContent = document.getElementById('course-content');
+
+            response.data.course_content.forEach(chapter => {
+                chapter.chapter_topic.forEach(topic => {
+                    videoData.push(topic);
+                });
+            });
+
+            let topic_ids = JSON.parse(response.data.topic_completion_ids[0].topic_ids);
+            const firstParts = topic_ids.map(item => item.split("-")[0]);
+
+            // if any video to play
+            var isanytoPlay = localStorage.getItem('isanytoPlay' + {{$course_id}});
+            if (isanytoPlay == null) {
+                axios.get(`/api/get-video-data/${firstParts[0]}`)
+                    .then(res => {
+                        playVideoNow(res.data.topic_video, res.data.topic_name, res.data.id);
+                    })
+            }
+            else {
+                const isanytoPlayX = JSON.parse(localStorage.getItem('isanytoPlay' + {{$course_id}}));
+                axios.get(`/api/get-video-data/${isanytoPlayX.topic_id}`)
+                    .then(res => {
+                        playVideoNow(res.data.topic_video, res.data.topic_name, res.data.id, isanytoPlayX.time);
+                    })
+            }
+
+            courseContent.innerHTML = '';
+            courseContent.innerHTML = `<h3 id="content-load-indicator" style="text-align: center; color: grey;">
+                                                                                            <i class="fas fa-spinner fa-spin"></i>
+                                                                                        </h3>`;
+
+            if (response.data) {
+                document.getElementById('content-load-indicator').style.display = 'none';
+
+                for (const item of response.data.course_content) {
+                    courseContent.innerHTML += `
+                                                                    <div class="as-mb-10px">
+                                                                        <div class="as-flex as-space-between">
+                                                                            <h3 class="as-mr-5px">${item.chapter_name}</h3>
+                                                                            <span class="as-date as-mr-10px">বিষয়: ${convertToBengali(item.chapter_topic.length)} টি</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            ${item.chapter_topic.map(topic => {
+                        const topicKey = `${topic.id}-1`;
+                        const isCompleted = topic_ids.includes(topicKey);
+
+                        let iconHtml = '';
+
+                        if (isCompleted) {
+                            iconHtml = `<i class="fas fa-check-circle" style="color: green;"></i>`;
+                        } else {
+                            iconHtml = `<i class="fa-solid fa-video" style="color: grey;"></i>`;
+                        }
+                        return `<div id="topic-list-${topic.id}" class="completed as-mr-10px as-brr-5px as-app-cursor" onclick="playVideoNow('${topic.topic_video}', '${topic.topic_name}', '${topic.id}')">
+                                                                                    <div class="as-flex as-align-center as-p-7px">
+                                                                                        <div class="as-mr-10px">
+                                                                                            ${iconHtml}
+                                                                                        </div>
+                                                                                        <div>${topic.topic_name}</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            `;
+                    }).join('')}
+                                                                        </div>
+                                                                    </div>`;
+                }
+            }
+        }
+
+        //tracking current video
+        player.on('timeupdate', () => {
+            const key = 'isanytoPlay' + {{ $course_id }};
+            const data = {
+                topic_id: currentTopicId,
+                time: player.currentTime
+            };
+
+            localStorage.setItem(key, JSON.stringify(data));
+        });
+
 
         player.on('ready', () => {
             const controls = player.elements.controls;
@@ -418,7 +436,7 @@
             playVideoNow(topic.topic_video, topic.topic_name, topic.id);
         }
 
-        function playVideoNow(videoId, courseTitle, topicId) {
+        function playVideoNow(videoId, courseTitle, topicId, playTime = null) {
             var videoWrapper = document.getElementById('video-wrapper');
 
             videoWrapper.style.display = 'block';
@@ -448,6 +466,17 @@
                 ],
             };
 
+            if (playTime !== null) {
+                player.once('ready', () => {
+                    player.currentTime = playTime;
+
+                    player.play().catch(err => {
+                        console.log('Autoplay blocked by browser:', err);
+                    });
+                });
+            }
+
+
             document.getElementById('course-title').innerHTML = courseTitle;
             topicID = topicId;
 
@@ -469,7 +498,7 @@
             axios.post('/api/mark-as-complete', {
                 topic_id: topicID,
                 course_id: {{$course_id}}
-                        })
+                                                            })
                 .then(response => {
                     if (response.data.status == 'success') {
                         getCourseContent();
@@ -500,8 +529,8 @@
 
                     if (res.data.length == 0) {
                         tab2Content.innerHTML = `<h3 style="text-align: center; color: grey;">
-                                        কোন প্রশ্ন নেই!
-                                    </h3>`
+                                                                            কোন প্রশ্ন নেই!
+                                                                        </h3>`
                     }
                     else if (loadQsnAns >= qsnAnsLength) {
                         loadMoreQsnAns.style.display = 'none';
@@ -512,15 +541,15 @@
 
                     for (var i = 0; i < loadQsnAns; i++) {
                         tab2Content.innerHTML += `<div class="askqsn-card as-mb-10px">
-                                                <div class="profile">
-                                                    <img src="${res.data[i].student_photo != null ? '/image/student/' + res.data[i].student_photo : '/image/other/profile_avater.webp'}" alt="Profile Picture">
-                                                    <div class="info">
-                                                        <h3>${res.data[i].student_name}</h3>
-                                                        <p class="question"><b>প্রশ্ন: </b>${res.data[i].question}?</p>
-                                                        <p class="answer as-p-10px as-brr-5px"><b>রিপ্লাই: </b>${res.data[i].answer ? res.data[i].answer : '...'}</p>
-                                                    </div>
-                                                </div>
-                                           </div>`
+                                                                                    <div class="profile">
+                                                                                        <img src="${res.data[i].student_photo != null ? '/image/student/' + res.data[i].student_photo : '/image/other/profile_avater.webp'}" alt="Profile Picture">
+                                                                                        <div class="info">
+                                                                                            <h3>${res.data[i].student_name}</h3>
+                                                                                            <p class="question"><b>প্রশ্ন: </b>${res.data[i].question}?</p>
+                                                                                            <p class="answer as-p-10px as-brr-5px"><b>রিপ্লাই: </b>${res.data[i].answer ? res.data[i].answer : '...'}</p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                               </div>`
                     }
                 })
         }
@@ -567,34 +596,34 @@
                 .then(res => {
                     if (res.data.length == 0) {
                         tab1Content.innerHTML = `<h3 style="text-align: center; color: grey;">
-                                        কোন ফাইল নেই!
-                                    </h3>`
+                                                                            কোন ফাইল নেই!
+                                                                        </h3>`
                     }
                     else {
                         tab1Content.innerHTML = '';
 
                         for (var i = 0; i < res.data.length; i++) {
                             tab1Content.innerHTML += `<div class="as-flex as-space-between as-br-1px as-p-10px as-mb-5px as-brr-5px">
-                                        <div class="as-flex as-align-center">
-                                            ${res.data[i].resource_type == 'file' ?
+                                                                            <div class="as-flex as-align-center">
+                                                                                ${res.data[i].resource_type == 'file' ?
                                     `<div><i class="fas fa-file"></i></div>`
                                     :
                                     `<div><i class="fas fa-link"></i></div>`
                                 }
-                                            <div class="as-ml-10px">${res.data[i].resource_name}</div>
-                                        </div>
-                                        <div class="as-flex as-align-center">
-                                            ${res.data[i].resource_type == 'file' ?
+                                                                                <div class="as-ml-10px">${res.data[i].resource_name}</div>
+                                                                            </div>
+                                                                            <div class="as-flex as-align-center">
+                                                                                ${res.data[i].resource_type == 'file' ?
                                     `<a download rel="nofollow" href="/storage/${res.data[i].resource_url}" class="app-cursor as-btn">
-                                                    ডাউনলোড
-                                                </a>`
+                                                                                        ডাউনলোড
+                                                                                    </a>`
                                     :
                                     `<a download target="_blank" rel="nofollow" href="${res.data[i].resource_url}" class="app-cursor as-btn">
-                                                    ভিজিট
-                                                </a>`
+                                                                                        ভিজিট
+                                                                                    </a>`
                                 }
-                                        </div>
-                                    </div>`
+                                                                            </div>
+                                                                        </div>`
                         }
                     }
                 })
