@@ -16,8 +16,8 @@ class bKashController extends Controller
     {
         //$this->base_url = 'https://tokenized.sandbox.bka.sh/v1.2.0-beta';
         $this->base_url = 'https://tokenized.pay.bka.sh/v1.2.0-beta';
-        //$this->site_url = 'https://jobayeracademy.com';
-        $this->site_url = 'http://127.0.0.1:8000';
+        $this->site_url = 'https://jobayeracademy.com';
+        //$this->site_url = 'http://127.0.0.1:8000';
     }
 
     public function authHeaders(){
