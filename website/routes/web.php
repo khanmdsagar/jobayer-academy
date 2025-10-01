@@ -129,6 +129,11 @@ Route::middleware([AuthMiddleware::class])->group(function(){
         return view('settings');
     })->name('settings');
 
+    Route::get('/question-answer', function () {
+        return view('question_answer');
+    });
+
+    Route::get('/api/get-asked-question-answer', [DashController::class, 'get_asked_question_answer']);
 
     Route::post('/api/enroll-course', [SiteController::class, 'enrollCourse']);
     Route::get('/api/get-enrolled-course', [SiteController::class, 'getEnrolledCourse']);

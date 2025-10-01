@@ -7,26 +7,26 @@
         <!-- Sidebar -->
         <div class="as-show-desktop as-mt-15px as-w-28">
             <div class="">
-                <img class="as-w-50px" src="https://cdn-icons-png.flaticon.com/512/2436/2436874.png" alt="Logo"
-                    class="sidebar-logo">
-                <h2>শীক্ষার্থী প্রোফাইল</h2>
+                <img class="as-w-50px" src="https://cdn-icons-png.flaticon.com/512/2436/2436874.png" alt="Logo" class="sidebar-logo">
+                <h2>শীক্ষার্থী ড্যাশবোর্ড</h2>
             </div>
 
             <div class="as-mt-20px">
-                <div class="as-mb-10px">
-                    <a class="as-app-cursor" href="{{ url('/dashboard') }}"><i class="fas fa-square as-mr-10px"></i>
-                        ড্যাশবোর্ড</a>
-                </div>
-                <div class="as-mb-10px">
-                    <a class="as-app-cursor" href="{{ url('/settings') }}"><i class="fas fa-user as-mr-10px"></i>
-                        সেটিংস</a>
+                <div class="">
+                    <div class="as-app-cursor as-hover as-p-10px as-brr-5px" onclick="window.location.href = '/dashboard'"><i class="fas fa-box as-mr-10px"></i>ড্যাশবোর্ড</div>
                 </div>
                 <div class="">
-                    <div class="logout as-app-cursor" onclick="logout()"><i class="fas fa-sign-out-alt as-mr-10px"></i>
-                        লগআউট</div>
+                    <div class="as-app-cursor as-hover as-p-10px as-brr-5px" onclick="window.location.href = '/question-answer'"><i class="fas fa-question as-mr-10px"></i>প্রশ্ন ও উত্তর</div>
+                </div>
+                <div class="">
+                    <div class="as-app-cursor as-hover as-p-10px as-brr-5px" onclick="window.location.href = '/settings'"><i class="fas fa-gear as-mr-10px"></i>সেটিংস</div>
+                </div>
+                <div class="">
+                    <div class="logout as-app-cursor as-hover as-p-10px as-brr-5px" onclick="logout()"><i class="fas fa-sign-out-alt as-mr-10px"></i>লগআউট</div>
                 </div>
             </div>
         </div>
+
 
         <!-- Main Content -->
         <div class="as-mt-15px as-w-70 md:as-w-100">

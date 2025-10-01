@@ -76,13 +76,18 @@
         else{
             loginAdminButton.disabled = true;
             loginAdminButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
             axios.post('/admin/login', {admin_username: adminUsername, admin_password: adminPassword})
             .then(response => {
                 if(response.data.status == 'success'){
                     window.location.replace('/admin/dashboard');
-                }else{
+                }
+                else{
                     alert(response.data.message);
                 }
+                loginAdminButton.disabled = false;
+                loginAdminButton.innerHTML = 'Login <i class="fas fa-arrow-right"></i>';
+                
             })
             .catch(error => {
                 loginAdminButton.disabled = false;

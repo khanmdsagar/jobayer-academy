@@ -12,14 +12,17 @@
             </div>
 
             <div class="as-mt-20px">
-                <div class="as-mb-10px">
-                    <a class="as-app-cursor" href="{{ url('/profile') }}"><i class="fas fa-user as-mr-10px"></i> প্রোফাইল</a>
+                <div>
+                    <div class="as-app-cursor as-hover as-p-10px as-brr-5px" onclick="window.location.href = '/profile'"><i class="fas fa-user as-mr-10px"></i>প্রোফাইল</div>
                 </div>
-                <div class="as-mb-10px">
-                    <a class="as-app-cursor" href="{{ url('/settings') }}"><i class="fas fa-gear as-mr-10px"></i> সেটিংস</a>
+                <div>
+                    <div class="as-app-cursor as-hover as-p-10px as-brr-5px" onclick="window.location.href = '/question-answer'"><i class="fas fa-question as-mr-10px"></i>প্রশ্ন ও উত্তর</div>
                 </div>
-                <div class="">
-                    <div class="logout as-app-cursor" onclick="logout()"><i class="fas fa-sign-out-alt as-mr-10px"></i> লগআউট</div>
+                <div>
+                    <div class="as-app-cursor as-hover as-p-10px as-brr-5px" onclick="window.location.href = '/settings'"><i class="fas fa-gear as-mr-10px"></i>সেটিংস</div>
+                </div>
+                <div>
+                    <div class="logout as-app-cursor as-hover as-p-10px as-brr-5px" onclick="logout()"><i class="fas fa-sign-out-alt as-mr-10px"></i>লগআউট</div>
                 </div>
             </div>
         </div>
@@ -32,7 +35,7 @@
                     <div class="as-f-16px">আপনার শিক্ষার প্রগতি চালিয়ে যান</div>
                 </div>
 
-                @if($profile_percentage != 100)
+                {{-- @if($profile_percentage != 100)
                     <div class="pc-notification as-bg-red as-color-white as-p-10px as-brr-5px as-mb-20px as-flex as-space-between">
                         <div class="as-flex as-align-center">
                             <i class="fas fa-bell"></i> <p class="as-ml-10px">আপনার প্রফাইল {{100 - $profile_percentage}}% অসম্পূর্ণ</p>
@@ -43,7 +46,7 @@
                             </button>
                         </div>
                     </div>
-                @endif
+                @endif --}}
 
                 <!-- Current Courses -->
                 <div class="">
@@ -140,23 +143,6 @@
                 }
             })
             .catch(error => {});
-    }
-
-    function logout() {
-        var confirmLogout = confirm('আপনি কি চাইলে লগ আউট করতে?');
-
-        if(confirmLogout){
-            axios.get('/logout')
-            .then(response => {
-                if(response.data == "logged out"){
-                        window.location.replace('/');
-                }
-                else{
-                    window.location.replace('/');
-                }
-            })
-            .catch(error => {});
-        }
     }
 </script>
 @endsection

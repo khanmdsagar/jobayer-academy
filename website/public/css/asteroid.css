@@ -121,6 +121,7 @@ button{outline: none !important; font-family: 'Tiro Bangla', serif; font-size: 1
 .as-btn:hover{background-color: var(--secondary-color); color: var(--primary-color) !important;}
 
 .as-list-hover:hover{transition: .3s; background-color: #dadada; color: var(--primary-color) !important;}
+.as-hover:hover{transition: .3s; background-color: var(--primary-color); color: #fff !important;}
 
 /* position */
 .as-fixed {position: fixed;}

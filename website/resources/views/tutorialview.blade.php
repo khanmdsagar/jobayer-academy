@@ -560,11 +560,11 @@
                     for (var i = 0; i < loadQsnAns; i++) {
                         tab2Content.innerHTML += `<div class="askqsn-card as-mb-10px">
                                                                                                                         <div class="profile">
-                                                                                                                            <img src="${res.data[i].student_photo != null ? '/image/student/' + res.data[i].student_photo : '/image/other/profile_avater.webp'}" alt="Profile Picture">
-                                                                                                                            <div class="info">
+                                                                                                                            <img src="${res.data[i].student_photo !== null && res.data[i].student_photo !== '' ? '/image/student/' + res.data[i].student_photo : '/image/other/profile_avater.webp'}" alt="Profile Picture">
+                                                                                                                            <div class="info as-w-100">
                                                                                                                                 <h3>${res.data[i].student_name}</h3>
                                                                                                                                 <p class="question"><b>প্রশ্ন: </b>${res.data[i].question}?</p>
-                                                                                                                                <p class="answer as-p-10px as-brr-5px"><b>রিপ্লাই: </b>${res.data[i].answer ? res.data[i].answer : '...'}</p>
+                                                                                                                                <p style="background-color: #f1f1f1; padding: 10px; width: 100%" class="answer as-brr-5px"><b>উত্তর: </b>${res.data[i].answer ? res.data[i].answer : '...'}</p>
                                                                                                                             </div>
                                                                                                                         </div>
                                                                                                                    </div>`

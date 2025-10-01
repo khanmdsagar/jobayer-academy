@@ -79,3 +79,20 @@ function adminLogout() {
         return false;
     }
 }
+
+function logout() {
+        var confirmLogout = confirm('আপনি কি চাইলে লগ আউট করতে?');
+
+        if(confirmLogout){
+            axios.get('/logout')
+            .then(response => {
+                if(response.data == "logged out"){
+                        window.location.replace('/');
+                }
+                else{
+                    window.location.replace('/');
+                }
+            })
+            .catch(error => {});
+        }
+    }
