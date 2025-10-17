@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('title', 'Admin - student')
+@section('title', 'Admin - Category')
 
 @section('content')
 <div class="as-flex">

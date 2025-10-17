@@ -138,7 +138,7 @@
             <h3>প্রশ্ন করুন</h3>
             <div class="as-align-end">
                 <input class="as-input" type="text" id="qsnInput" placeholder="আপনার প্রশ্ন লিখুন..." />
-                <button class="as-btn app-cursor as-bg-cancel as-mr-10px"
+                <button class="as-btn app-cursor as-bg-cancel"
                     onclick="hideModal('ask-qsn-modal')">বাতিল</button>
                 <button class="as-btn as-mt-10px" onclick="submitQsn()" id="submitQsn">জমা দিন</button>
             </div>

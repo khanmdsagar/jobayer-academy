@@ -15,6 +15,7 @@ use App\Http\Controllers\DataSeedController;
 use App\Http\Controllers\admin\AdminAuthController;
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\AdminStudentController;
+use App\Http\Controllers\admin\AskedQuestionController;
 
 use App\Models\CourseChapter;
 use App\Models\ChapterTopic;
@@ -133,7 +134,8 @@ Route::middleware([AuthMiddleware::class])->group(function(){
         return view('question_answer');
     });
 
-    Route::get('/api/get-asked-question-answer', [DashController::class, 'get_asked_question_answer']);
+    Route::get('/api/get-asked-question', [DashController::class, 'get_asked_question']);
+    Route::post('/api/asked-question/delete', [DashController::class, 'delete_asked_question']);
 
     Route::post('/api/enroll-course', [SiteController::class, 'enrollCourse']);
     Route::get('/api/get-enrolled-course', [SiteController::class, 'getEnrolledCourse']);
@@ -170,6 +172,9 @@ Route::get('/api/get-question-answer/{course_id}', [SiteController::class, 'get_
 Route::post('/api/get-device-info', [AuthController::class, 'getDeviceInfo']);
 
 
+
+
+
 // admin functions
 Route::get('/admin', function () {
     $is_admin = DB::table('admin')->where('admin_role', 'admin')->count();
@@ -181,6 +186,8 @@ Route::get('/admin', function () {
 
 Route::post('/admin/login', [AdminAuthController::class, 'admin_login']);
 Route::post('/admin/register', [AdminAuthController::class, 'admin_register']);
+
+
 
 Route::middleware([AdminAuthMiddleware::class])->group(function(){
     Route::get('/admin/dashboard', function () {
@@ -197,6 +204,10 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
 
     Route::get('/admin/course', function () {
         return view('admin.admin_course');
+    });
+
+    Route::get('/admin/asked-question', function () {
+        return view('admin.admin_asked_question');
     });
 
     Route::get('/admin/student/data', [AdminController::class, 'get_student_data']);
@@ -248,6 +259,11 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
     Route::post('/admin/chapter/topic/add', [AdminController::class, 'add_chapter_topic']);
     Route::post('/admin/chapter/topic/delete', [AdminController::class, 'delete_chapter_topic']);
     Route::post('/admin/chapter/topic/edit', [AdminController::class, 'edit_chapter_topic']);
+
+    //question and answer
+    Route::get('/admin/get-asked-question', [AskedQuestionController::class, 'get_asked_question']);
+    Route::post('/admin/asked-question/delete', [AskedQuestionController::class, 'delete_asked_question']);
+    Route::post('/admin/asked-question/reply', [AskedQuestionController::class, 'reply_asked_question']);
 
 
     Route::get('/admin/logout', function (Request $request) {

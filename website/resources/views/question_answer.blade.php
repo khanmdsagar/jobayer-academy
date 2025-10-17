@@ -52,29 +52,55 @@
 
 @section('scripts')
     <script>
-        getAskedQuenstionAnswer();
+        getAskedQuenstion();
 
-        function getAskedQuenstionAnswer() {
+        function getAskedQuenstion() {
             let questionAnswerDiv = document.getElementById('question-answer-div');
 
-            axios.get('/api/get-asked-question-answer')
+            axios.get('/api/get-asked-question')
                 .then(res => {
                     questionAnswerDiv.innerHTML = '';
-                    console.log(res.data)
+
+                    if (res.data.length === 0) {
+                        questionAnswerDiv.innerHTML = `<h3 style="text-align: center; color: grey;">কোনো প্রশ্ন করা হয়নি!</h3>`;
+                        return;
+                    }
                     res.data.forEach(element => {
                         questionAnswerDiv.innerHTML += `<div class="as-card as-mb-10px as-p-10px">
                                                     <div class="profile">
                                                         <div class="info as-w-100">
-                                                            <h4>কোর্স: ${element.course_name}</h4>
-                                                            <h4>বিষয়: ${element.topic_name}</h4>
+                                                            <div class="as-flex as-space-between as-align-center">
+                                                                <div>
+                                                                    <h4>কোর্স: ${element.course_name}</h4>
+                                                                    <h4>বিষয়: ${element.topic_name}</h4>
+                                                                </div>
+                                                                <div onclick="deleteQuestion(${element.id})">
+                                                                    <i class="fas fa-trash as-app-cursor"></i>
+                                                                </div>
+                                                            </div>
                                                             <div class="as-divider"></div>
                                                             <p class="question"><b>প্রশ্ন: </b>${element.question}?</p>
-                                                            <p style="background-color: #f1f1f1; padding: 10px; width: 100%" class="answer as-brr-5px"><b>উত্তর: </b>${element.answer ? element.answer : '...'}</p>
+                                                            <p style="background-color: #fff; padding: 0px; width: 100%" class="answer as-brr-5px"><b>উত্তর: </b>${element.answer ? element.answer : '...'}</p>
                                                         </div>
                                                     </div>
                                                 </div>`
                     });
                 })
+        }
+
+        function deleteQuestion(questionId) {
+            if (confirm('আপনি কি নিশ্চিত এই প্রশ্নটি মুছে ফেলতে চান?')) {
+                axios.post('/api/asked-question/delete', {
+                    question_id: questionId
+                }).then(res => {
+                    if (res.data.status === 'success') {
+                        alert('প্রশ্নটি সফলভাবে মুছে ফেলা হয়েছে।');
+                        getAskedQuenstion();
+                    } else {
+                        alert('কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করুন।');
+                    }
+                })
+            }
         }
     </script>
 @endsection

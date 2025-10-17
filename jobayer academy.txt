@@ -20,6 +20,7 @@ BULKSMSBD.COM
 cloudflare.com
 jobayeracademy@gmail.com
 Raiyan12#
+tejr#000T
 
 SELECT * FROM `student` WHERE `student_number` = 01937477099
 

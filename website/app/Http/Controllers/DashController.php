@@ -20,15 +20,45 @@ class DashController extends Controller
         $this->student_id = Session::get('user_id');
     }
 
-    function get_asked_question_answer()
+    //question answer
+    function get_asked_question()
     {
         return DB::table('ask_question')
-            ->where('student_id', Session::get('user_id'))
+            ->where('ask_question.student_id', Session::get('user_id'))
             ->join('course', 'ask_question.course_id', '=', 'course.id')
-            ->join('chapter_topic', 'ask_question.topic_id','=', 'chapter_topic.id')
+            ->join('chapter_topic', 'ask_question.topic_id', '=', 'chapter_topic.id')
+            ->select(
+                'ask_question.id as question_id',
+                'ask_question.*',
+                'course.course_name',
+                'chapter_topic.topic_name'
+            )
             ->orderBy('ask_question.id', 'DESC')
             ->get();
     }
+
+    function delete_asked_question(Request $request)
+    {
+        $question_id = strip_tags(trim($request->input('question_id')));
+
+        $is_data = DB::table('ask_question')
+            ->where('id', $question_id)
+            ->where('student_id', $this->student_id)
+            ->first();
+
+        if ($is_data) {
+            DB::table('ask_question')
+                ->where('id', $question_id)
+                ->where('student_id', $this->student_id)
+                ->delete();
+
+            return response()->json(['status' => 'success']);
+        } else {
+            return response()->json(['status' => 'failed']);
+        }
+    }
+
+
 
     function tutorial_view($course_id, $slug = null)
     {
