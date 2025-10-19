@@ -20,6 +20,7 @@ class DashController extends Controller
         $this->student_id = Session::get('user_id');
     }
 
+
     //question answer
     function get_asked_question()
     {

@@ -10,6 +10,7 @@ use App\Http\Controllers\SiteController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\bKashController;
 use App\Http\Controllers\DashController;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\DataSeedController;
 
 use App\Http\Controllers\admin\AdminAuthController;
@@ -62,6 +63,7 @@ Route::post('/api/reset-password', [AuthController::class, 'resetPassword']);
 Route::post('/api/register-student', [AuthController::class, 'registerStudent']);
 
 Route::get('/data-seed', [DataSeedController::class, 'data_seed']);
+
 
 
 // Student Dashboard functions
@@ -132,7 +134,17 @@ Route::middleware([AuthMiddleware::class])->group(function(){
 
     Route::get('/question-answer', function () {
         return view('question_answer');
-    });
+    })->name('question-answer');
+
+    Route::get('/exam/{course_id}', function ($course_id) {
+        $student_id = Session::get('user_id');
+        $student_info = DB::table('student')->where('id', $student_id)->first();
+        $student_name = $student_info->student_name;
+
+        return view('exam', compact('student_name', 'course_id'));
+    })->name('exam');
+
+    Route::get('/api/get-exam-quiz/{course_id}', [ExamController::class, 'get_exam_quiz']);
 
     Route::get('/api/get-asked-question', [DashController::class, 'get_asked_question']);
     Route::post('/api/asked-question/delete', [DashController::class, 'delete_asked_question']);
@@ -186,7 +198,6 @@ Route::get('/admin', function () {
 
 Route::post('/admin/login', [AdminAuthController::class, 'admin_login']);
 Route::post('/admin/register', [AdminAuthController::class, 'admin_register']);
-
 
 
 Route::middleware([AdminAuthMiddleware::class])->group(function(){

@@ -120,7 +120,7 @@
 
                 <div id="menu-desktop" class="as-flex as-list-style-none">
                     @if(Session::has('user_id'))
-                        @if(Route::currentRouteName() != 'dashboard' && Route::currentRouteName() != 'profile' && Route::currentRouteName() != 'settings')
+                        @if(Route::currentRouteName() != 'dashboard' && Route::currentRouteName() != 'profile' && Route::currentRouteName() != 'settings' && Route::currentRouteName() != 'question-answer' && Route::currentRouteName() != 'exam')
                             <div class="as-p-10px as-f-16px"><a href="/">হোম</a></div>
 
                             <div class="as-p-10px as-f-16px"><a href="/#featured-course">কোর্সসমূহ</a></div>
@@ -132,7 +132,7 @@
                                 <div class="as-p-10px as-f-16px"><a href="/dashboard" class="as-btn app-cursor">ড্যাশবোর্ড</a></div>
                             @endif
                         @endif
-                    @else
+                        @else
                         <div class="as-p-10px as-f-16px"><a href="/">হোম</a></div>
 
                         <div class="as-p-10px as-f-16px"><a href="/#featured-course">কোর্সসমূহ</a></div>

@@ -117,6 +117,9 @@
                                         </div>
                                     </div>
                                     <div class="as-text-right">
+                                        <button onclick="window.location.href = '/exam/${course.course.id}'" class="as-btn as-app-cursor">
+                                            পরীক্ষা দিন
+                                        </button>
                                         <button onclick="window.location.href = '/tutorial/${course.course.id}/${course.course.course_slug}'" class="as-btn as-app-cursor">
                                             ${course.is_new ? 'শুরু করুন' : 'চালিয়ে যান'}
                                             <i class="fas fa-arrow-right"></i>
