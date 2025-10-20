@@ -136,7 +136,8 @@ Route::middleware([AuthMiddleware::class])->group(function(){
         return view('question_answer');
     })->name('question-answer');
 
-    Route::get('/exam/{course_id}', function ($course_id) {
+    //exam route
+    Route::get('/exam/course/{course_id}', function ($course_id) {
         $student_id = Session::get('user_id');
         $student_info = DB::table('student')->where('id', $student_id)->first();
         $student_name = $student_info->student_name;
@@ -144,7 +145,19 @@ Route::middleware([AuthMiddleware::class])->group(function(){
         return view('exam', compact('student_name', 'course_id'));
     })->name('exam');
 
+    Route::get('/certificate/course/{course_id}', function ($course_id) {
+        $student_id = Session::get('user_id');
+        $student_info = DB::table('student')->where('id', $student_id)->first();
+        $student_name = $student_info->student_name;
+
+        return view('certificate', compact('student_name', 'course_id'));
+    })->name('certificate');
+
     Route::get('/api/get-exam-quiz/{course_id}', [ExamController::class, 'get_exam_quiz']);
+    Route::post('/api/mark-exam-started/{course_id}', [ExamController::class, 'mark_exam_started']);
+    Route::get('/api/check-exam-participation/{course_id}', [ExamController::class, 'check_exam_participation']);
+    Route::post('/api/submit-exam-result/{course_id}', [ExamController::class, 'submit_exam_result']);
+
 
     Route::get('/api/get-asked-question', [DashController::class, 'get_asked_question']);
     Route::post('/api/asked-question/delete', [DashController::class, 'delete_asked_question']);

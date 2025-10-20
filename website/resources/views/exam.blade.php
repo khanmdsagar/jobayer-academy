@@ -13,6 +13,10 @@
             </div>
 
             <div class="as-mt-20px">
+                <div class="">
+                    <div class="as-app-cursor as-hover as-p-10px as-brr-5px" onclick="window.location.href = '/dashboard'">
+                        <i class="fas fa-box as-mr-10px"></i>ড্যাশবোর্ড</div>
+                </div>
                 <div>
                     <div class="as-app-cursor as-hover as-p-10px as-brr-5px" onclick="window.location.href = '/profile'"><i
                             class="fas fa-user as-mr-10px"></i>প্রোফাইল</div>
@@ -42,17 +46,27 @@
                     <div class="logo">{{ $site_data[0]->site_name }}</div>
                     <div class="user-info">
                         <div class="user-name">{{ $student_name }}</div>
+                        <p>শীক্ষার্থী</p>
                     </div>
                 </div>
 
                 <!-- Welcome Screen -->
                 <div id="welcome-screen" class="screen active">
-                    <div class="welcome-screen">
+                    <div class="welcome-screen" id="welcome-screen1" style="display: none;">
                         <h2>কুইজ চ্যালেঞ্জে স্বাগতম</h2>
                         <p>কুইজের মাধ্যমে আপনার জ্ঞান পরীক্ষা করুন! প্রতিটি প্রশ্নের উত্তর দিতে আপনার কাছে থাকবে
-                            নির্দিষ্ট সময়, অথবা আপনি "পরবর্তী" বোতামে ক্লিক করে এগিয়ে যেতে পারেন।</p>
+                            নির্দিষ্ট সময়, অথবা আপনি "পরবর্তী" বোতামে ক্লিক করে এগিয়ে যেতে পারেন।
+                            আপনি একবারই পরীক্ষা দিতে পারবেন। পরীক্ষায় উত্তীর্ণ হতে কমপক্ষে ৭০% মার্কস পেতে হবে। 
+                            পরীক্ষা চলাকালীন সময়ে পেজ রিলোড নেয়া, অন্য ট্যাব বা অ্যাপ ওপেন করলে পরীক্ষা বাতিল হবে।</p>
                         <p>মোট <span id="total-questions"></span>টি প্রশ্ন রয়েছে। শুভকামনা!</p>
                         <button id="start-btn" class="btn">কুইজ শুরু করুন</button>
+                    </div>
+                    <div id="welcome-screen2" style="text-align: center; display: none;">
+                        <h2>নোটিশ</h2>
+                        <p>
+                            আপনি ইতমধ্যে পরীক্ষায় অংশগ্রহণ করেছেন। পুনরায় পরীক্ষা দিতে চাইলে কর্তৃপক্ষের অনুমতি নিন। 
+                        </p>
+                        <button id="dashboard-btn" class="btn as-mt-10px">ড্যাশবোর্ডে যান</button>
                     </div>
                 </div>
 
@@ -67,13 +81,13 @@
                                 <!-- বিকল্পগুলো স্বয়ংক্রিয়ভাবে এখানে যুক্ত হবে -->
                             </div>
                             <div class="button-container">
-                                <button id="next-btn" class="btn" disabled>পরবর্তী প্রশ্ন</button>
+                                <button id="next-btn" class="btn" disabled>পরবর্তী</button>
                             </div>
                         </div>
                         <div class="timer-section">
                             <div class="timer-label">অবশিষ্ট সময়</div>
                             <div class="timer-circle">
-                                <div id="timer" class="timer">15</div>
+                                <div id="timer" class="timer"></div>
                             </div>
                             <div class="progress-section">
                                 <div class="progress-label">
@@ -97,9 +111,9 @@
                         </div>
                         <div class="feedback" id="feedback">দারুন করেছেন!</div>
                         <div class="question-review" id="question-review">
-                            <!-- প্রশ্নগুলোর পুনরালোচনা এখানে স্বয়ংক্রিয়ভাবে যুক্ত হবে -->
+                            <!-- প্রশ্নগুলো এখানে স্বয়ংক্রিয়ভাবে যুক্ত হবে -->
                         </div>
-                        <button id="restart-btn" class="btn">ড্যাশবোর্ডে যান</button>
+                        <button id="dashboard-btn" class="btn">ড্যাশবোর্ডে যান</button>
                     </div>
                 </div>
             </div>
@@ -457,7 +471,7 @@
         const resultScreen = document.getElementById('result-screen');
         const startBtn = document.getElementById('start-btn');
         const nextBtn = document.getElementById('next-btn');
-        const restartBtn = document.getElementById('restart-btn');
+        const dashboardBtn = document.getElementById('dashboard-btn');
         const questionElement = document.getElementById('question');
         const optionsElement = document.getElementById('options');
         const timerElement = document.getElementById('timer');
@@ -479,13 +493,34 @@
         let answerSelected = false;
         let quizInitialized = false;
 
+        isUserAlreadyParticipated();
+        function isUserAlreadyParticipated() {
+            axios.get('/api/check-exam-participation/' + {{$course_id}})
+                .then(response => {
+                    const participated = response.data.has_participated;
+                    console.log('User participation status:', participated);
+
+                    if (participated) {
+                        document.getElementById('welcome-screen1').style.display = 'none';
+                        document.getElementById('welcome-screen2').style.display = 'block';
+                    }
+                    else {
+                        document.getElementById('welcome-screen1').style.display = 'block';
+                        document.getElementById('welcome-screen2').style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking exam participation:', error);
+                });
+        }
+
         // Fetch quiz data from API
         function fetchQuizData() {
             // Show loading state
             startBtn.disabled = true;
             startBtn.textContent = 'ডেটা লোড হচ্ছে...';
 
-            axios.get('/api/get-exam-quiz/'+ {{$course_id}})
+            axios.get('/api/get-exam-quiz/' + {{$course_id}})
                 .then(response => {
                     const apiData = response.data;
                     if (apiData && apiData.length > 0) {
@@ -521,7 +556,7 @@
             scoreElement.textContent = `0/${totalQuestions}`;
 
             quizInitialized = true;
-            console.log('Quiz initialized with', totalQuestions, 'questions');
+            //console.log('Quiz initialized with', totalQuestions, 'questions');
         }
 
         // Start the quiz
@@ -531,13 +566,21 @@
                 return;
             }
             startQuiz();
+
+            axios.post('/api/mark-exam-started/' + {{$course_id}})
+                .then(response => {
+                    console.log('Exam started marked successfully');
+                })
+                .catch(error => {
+                    console.error('Error marking exam started:', error);
+                });
         });
 
         // Next question button
         nextBtn.addEventListener('click', nextQuestion);
 
         // Restart quiz button - redirect to dashboard
-        restartBtn.addEventListener('click', function () {
+        dashboardBtn.addEventListener('click', function () {
             window.location.href = '/dashboard';
         });
 
@@ -697,6 +740,11 @@
 
             // Display feedback based on score
             const percentage = (score / quizData.length) * 100;
+
+            axios.post('/api/submit-exam-result/' + {{$course_id}}, {
+                score: percentage,
+            })
+
             if (percentage === 100) {
                 feedbackElement.textContent = "অসাধারণ! পারফেক্ট স্কোর! আপনি বিষয়টি সম্পূর্ণরূপে আয়ত্ত করেছেন।";
             } else if (percentage >= 70) {

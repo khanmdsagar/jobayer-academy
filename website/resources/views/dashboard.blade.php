@@ -117,8 +117,11 @@
                                         </div>
                                     </div>
                                     <div class="as-text-right">
-                                        <button onclick="window.location.href = '/exam/${course.course.id}'" class="as-btn as-app-cursor">
+                                        <button onclick="window.location.href = '/exam/course/${course.course.id}'" class="as-btn as-app-cursor">
                                             পরীক্ষা দিন
+                                        </button>
+                                        <button onclick="window.location.href = '/certificate/course/${course.course.id}'" class="as-btn as-app-cursor">
+                                            সার্টিফিকেট নিন
                                         </button>
                                         <button onclick="window.location.href = '/tutorial/${course.course.id}/${course.course.course_slug}'" class="as-btn as-app-cursor">
                                             ${course.is_new ? 'শুরু করুন' : 'চালিয়ে যান'}
