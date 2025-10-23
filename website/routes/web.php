@@ -148,11 +148,14 @@ Route::middleware([AuthMiddleware::class])->group(function(){
     Route::get('/certificate/course/{course_id}', function ($course_id) {
         $student_id = Session::get('user_id');
         $student_info = DB::table('student')->where('id', $student_id)->first();
+        $student_id = $student_info->id;
         $student_name = $student_info->student_name;
 
-        return view('certificate', compact('student_name', 'course_id'));
+        return view('certificate', compact('student_name', 'student_id', 'course_id'));
     })->name('certificate');
 
+    Route::post('/api/confirm-certificate-generation', [ExamController::class, 'confirm_certificate_generation']);
+    Route::get('/api/get-course-data/{course_id}', [ExamController::class, 'get_course_data']);
     Route::get('/api/get-exam-quiz/{course_id}', [ExamController::class, 'get_exam_quiz']);
     Route::post('/api/mark-exam-started/{course_id}', [ExamController::class, 'mark_exam_started']);
     Route::get('/api/check-exam-participation/{course_id}', [ExamController::class, 'check_exam_participation']);

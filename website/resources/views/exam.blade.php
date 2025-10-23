@@ -15,7 +15,8 @@
             <div class="as-mt-20px">
                 <div class="">
                     <div class="as-app-cursor as-hover as-p-10px as-brr-5px" onclick="window.location.href = '/dashboard'">
-                        <i class="fas fa-box as-mr-10px"></i>ড্যাশবোর্ড</div>
+                        <i class="fas fa-box as-mr-10px"></i>ড্যাশবোর্ড
+                    </div>
                 </div>
                 <div>
                     <div class="as-app-cursor as-hover as-p-10px as-brr-5px" onclick="window.location.href = '/profile'"><i
@@ -56,7 +57,7 @@
                         <h2>কুইজ চ্যালেঞ্জে স্বাগতম</h2>
                         <p>কুইজের মাধ্যমে আপনার জ্ঞান পরীক্ষা করুন! প্রতিটি প্রশ্নের উত্তর দিতে আপনার কাছে থাকবে
                             নির্দিষ্ট সময়, অথবা আপনি "পরবর্তী" বোতামে ক্লিক করে এগিয়ে যেতে পারেন।
-                            আপনি একবারই পরীক্ষা দিতে পারবেন। পরীক্ষায় উত্তীর্ণ হতে কমপক্ষে ৭০% মার্কস পেতে হবে। 
+                            আপনি একবারই পরীক্ষা দিতে পারবেন। পরীক্ষায় উত্তীর্ণ হতে কমপক্ষে ৭০% মার্কস পেতে হবে।
                             পরীক্ষা চলাকালীন সময়ে পেজ রিলোড নেয়া, অন্য ট্যাব বা অ্যাপ ওপেন করলে পরীক্ষা বাতিল হবে।</p>
                         <p>মোট <span id="total-questions"></span>টি প্রশ্ন রয়েছে। শুভকামনা!</p>
                         <button id="start-btn" class="btn">কুইজ শুরু করুন</button>
@@ -64,7 +65,7 @@
                     <div id="welcome-screen2" style="text-align: center; display: none;">
                         <h2>নোটিশ</h2>
                         <p>
-                            আপনি ইতমধ্যে পরীক্ষায় অংশগ্রহণ করেছেন। পুনরায় পরীক্ষা দিতে চাইলে কর্তৃপক্ষের অনুমতি নিন। 
+                            আপনি ইতমধ্যে পরীক্ষায় অংশগ্রহণ করেছেন। পুনরায় পরীক্ষা দিতে চাইলে কর্তৃপক্ষের অনুমতি নিন।
                         </p>
                         <button id="dashboard-btn" class="btn as-mt-10px">ড্যাশবোর্ডে যান</button>
                     </div>
@@ -76,7 +77,7 @@
                         <div class="question-section">
                             <div class="question-number">প্রশ্ন <span id="current-q">1</span> মোট <span
                                     id="total-q">5</span> টির মধ্যে</div>
-                            <div id="question" class="question">প্রশ্ন এখানে প্রদর্শিত হবে</div>
+                            <div id="question" class="question as-noselect">প্রশ্ন এখানে প্রদর্শিত হবে</div>
                             <div id="options" class="options">
                                 <!-- বিকল্পগুলো স্বয়ংক্রিয়ভাবে এখানে যুক্ত হবে -->
                             </div>
@@ -107,7 +108,10 @@
                     <div class="result-screen">
                         <h2>কুইজ সম্পন্ন হয়েছে!</h2>
                         <div class="score-circle">
-                            <div id="score" class="score">0/5</div>
+                            <div>
+                                <div id="score" class="score">0/0</div>
+                                <div style="color: #fff">মার্কস: <span id="mark-percent"></span>%</div>
+                            </div>
                         </div>
                         <div class="feedback" id="feedback">দারুন করেছেন!</div>
                         <div class="question-review" id="question-review">
@@ -498,7 +502,6 @@
             axios.get('/api/check-exam-participation/' + {{$course_id}})
                 .then(response => {
                     const participated = response.data.has_participated;
-                    console.log('User participation status:', participated);
 
                     if (participated) {
                         document.getElementById('welcome-screen1').style.display = 'none';
@@ -740,6 +743,7 @@
 
             // Display feedback based on score
             const percentage = (score / quizData.length) * 100;
+            document.getElementById('mark-percent').textContent = percentage;
 
             axios.post('/api/submit-exam-result/' + {{$course_id}}, {
                 score: percentage,

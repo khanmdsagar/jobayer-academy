@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Hind+Siliguri:wght@300;400;500;600;700&family=Pacifico&family=Satisfy&family=Tiro+Bangla:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Meow+Script&display=swap');
 
 * {
     margin: 0;
@@ -29,6 +30,13 @@ body {
     /* user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none; */
+}
+
+.as-noselect {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 input[type=number]::-webkit-inner-spin-button,
