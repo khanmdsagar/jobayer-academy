@@ -141,8 +141,10 @@ Route::middleware([AuthMiddleware::class])->group(function(){
         $student_id = Session::get('user_id');
         $student_info = DB::table('student')->where('id', $student_id)->first();
         $student_name = $student_info->student_name;
+        $course_info = DB::table('course')->where('id', $course_id)->first();
+        $course_name = $course_info->course_name;
 
-        return view('exam', compact('student_name', 'course_id'));
+        return view('exam', compact('student_name', 'course_id', 'course_name'));
     })->name('exam');
 
     Route::get('/certificate/course/{course_id}', function ($course_id) {

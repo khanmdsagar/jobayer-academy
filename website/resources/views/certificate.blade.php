@@ -92,7 +92,7 @@
         //getting course data
         axios.get('/api/get-course-data/' + {{ $course_id }})
             .then(response => {
-                document.getElementById('course-name').innerText = response.data.course_name;
+                document.getElementById('course-name').innerText = response.data.course_another_name;
                 document.getElementById('course-duration').innerText = response.data.course_duration;
                 document.getElementById('certificate-id').innerText = response.data.course_code + new Date().getDate() + new Date().getMonth() + new Date().getFullYear() + {{ $student_id }};
                 certificateCode = response.data.course_code + new Date().getDate() + new Date().getMonth() + new Date().getFullYear() + {{ $student_id }};

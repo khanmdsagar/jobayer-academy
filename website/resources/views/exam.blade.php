@@ -44,10 +44,13 @@
             <div class="container as-card">
                 <!-- Header -->
                 <div class="header">
-                    <div class="logo">{{ $site_data[0]->site_name }}</div>
+                    <div>
+                        <div class="logo">{{ $site_data[0]->site_name }}</div>
+                        <div class="course-name">কোর্স: {{ $course_name }}</div>
+                    </div>
                     <div class="user-info">
                         <div class="user-name">{{ $student_name }}</div>
-                        <p>শীক্ষার্থী</p>
+                        <p>(শীক্ষার্থী)</p>
                     </div>
                 </div>
 
@@ -67,7 +70,8 @@
                         <p>
                             আপনি ইতমধ্যে পরীক্ষায় অংশগ্রহণ করেছেন। পুনরায় পরীক্ষা দিতে চাইলে কর্তৃপক্ষের অনুমতি নিন।
                         </p>
-                        <button id="dashboard-btn" class="btn as-mt-10px">ড্যাশবোর্ডে যান</button>
+                        <button id="dashboard-btn" class="btn as-mt-10px"
+                            onclick="window.location.href = '/dashboard'">ড্যাশবোর্ডে যান</button>
                     </div>
                 </div>
 
@@ -117,7 +121,8 @@
                         <div class="question-review" id="question-review">
                             <!-- প্রশ্নগুলো এখানে স্বয়ংক্রিয়ভাবে যুক্ত হবে -->
                         </div>
-                        <button id="dashboard-btn" class="btn">ড্যাশবোর্ডে যান</button>
+                        <button id="dashboard-btn" class="btn" onclick="window.location.href = '/dashboard'">ড্যাশবোর্ডে
+                            যান</button>
                     </div>
                 </div>
             </div>
@@ -466,6 +471,24 @@
 
 @section('scripts')
     <script>
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                console.log("User switched away from the page (maybe opened another app/tab)");
+            } else {
+                window.location.reload();
+            }
+        });
+
+        window.addEventListener("blur", () => {
+            console.log("Page lost focus (user might have opened another app)");
+        });
+
+        window.addEventListener("focus", () => {
+            window.location.reload();
+        });
+
+
         // Quiz questions array - will be populated from API
         let quizData = [];
 
@@ -475,7 +498,6 @@
         const resultScreen = document.getElementById('result-screen');
         const startBtn = document.getElementById('start-btn');
         const nextBtn = document.getElementById('next-btn');
-        const dashboardBtn = document.getElementById('dashboard-btn');
         const questionElement = document.getElementById('question');
         const optionsElement = document.getElementById('options');
         const timerElement = document.getElementById('timer');
@@ -581,11 +603,6 @@
 
         // Next question button
         nextBtn.addEventListener('click', nextQuestion);
-
-        // Restart quiz button - redirect to dashboard
-        dashboardBtn.addEventListener('click', function () {
-            window.location.href = '/dashboard';
-        });
 
         function startQuiz() {
             if (quizData.length === 0) {
@@ -743,10 +760,10 @@
 
             // Display feedback based on score
             const percentage = (score / quizData.length) * 100;
-            document.getElementById('mark-percent').textContent = percentage;
+            document.getElementById('mark-percent').textContent = percentage.toFixed(0);
 
             axios.post('/api/submit-exam-result/' + {{$course_id}}, {
-                score: percentage,
+                score: percentage.toFixed(0),
             })
 
             if (percentage === 100) {

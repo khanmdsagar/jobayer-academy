@@ -107,12 +107,9 @@
 
 @section('scripts')
     <script>
-        getEnrolledCourses();
-
         function getEnrolledCourses() {
             axios.get('/api/get-enrolled-course')
                 .then(response => {
-
                     let courses = response.data;
                     let courseField = document.getElementById('dashboard-course-field');
 
@@ -120,70 +117,95 @@
                         courseField.innerHTML = ``;
                         courses.forEach(course => {
                             courseField.innerHTML += `
-                                <div class="dashboard-course-card as-responsive-card">
-                                    <div class="dashboard-course-image">
-                                        <img onclick="window.location.href = '/tutorial/${course.course.id}/${course.course.course_slug}'" class="image as-app-cursor" src="/storage/${course.course.course_thumbnail}" alt="image">
-                                    </div>
-                                    <div class="dashboard-course-info">
-                                        <div class="as-ml-10px">
-                                            <h3 onclick="window.location.href = '/tutorial/${course.course.id}/${course.course.course_slug}'" class="as-app-cursor">${course.course.course_name}</h3>
-                                            <p>${course.course.course_tagline}</p>
-                                            <div class="as-mt-10px as-mb-20px">
-                                                <div id="course-progress-${course.course.id}">লোডিং...</div>
-                                                <div class="tutorialview-progress-bar">
-                                                    <div class="tutorialview-progress" id="course-progress-bar-${course.course.id}"></div>
-                                                </div>
+                            <div class="dashboard-course-card as-responsive-card">
+                                <div class="dashboard-course-image">
+                                    <img onclick="window.location.href = '/tutorial/${course.course.id}/${course.course.course_slug}'" class="image as-app-cursor" src="/storage/${course.course.course_thumbnail}" alt="image">
+                                </div>
+                                <div class="dashboard-course-info">
+                                    <div class="as-ml-10px">
+                                        <h3 onclick="window.location.href = '/tutorial/${course.course.id}/${course.course.course_slug}'" class="as-app-cursor">${course.course.course_name}</h3>
+                                        <p>${course.course.course_tagline}</p>
+                                        <div class="as-mt-10px as-mb-20px">
+                                            <div id="course-progress-${course.course.id}">লোডিং...</div>
+                                            <div class="tutorialview-progress-bar">
+                                                <div class="tutorialview-progress" id="course-progress-bar-${course.course.id}"></div>
                                             </div>
                                         </div>
-                                        <div class="as-flex as-justify-end">
-                                            <button style="display: none" id="give-exam" onclick="window.location.href = '/exam/course/${course.course.id}'" class="as-btn as-app-cursor as-mr-5px">
-                                                পরীক্ষা দিন
-                                            </button>
-                                            <button style="display: none" id="certificate" onclick="window.location.href = '/certificate/course/${course.course.id}'" class="as-btn as-app-cursor as-mr-5px">
-                                                সার্টিফিকেট
-                                            </button>
-                                            <button onclick="window.location.href = '/tutorial/${course.course.id}/${course.course.course_slug}'" class="as-btn as-app-cursor">
-                                                ${course.is_new ? 'শুরু করুন' : 'চালিয়ে যান'}
-                                                <i class="fas fa-arrow-right"></i>
-                                            </button>
-                                        </div>
+                                    </div>
+                                    <div class="as-flex as-justify-end">
+                                        <button style="display: none" id="give-exam-${course.course.id}" onclick="window.location.href = '/exam/course/${course.course.id}'" class="as-btn as-app-cursor as-mr-5px">
+                                            পরীক্ষা দিন
+                                        </button>
+                                        <button style="display: none" id="certificate-${course.course.id}" onclick="window.location.href = '/certificate/course/${course.course.id}'" class="as-btn as-app-cursor as-mr-5px">
+                                            সার্টিফিকেট
+                                        </button>
+                                        <button onclick="window.location.href = '/tutorial/${course.course.id}/${course.course.course_slug}'" class="as-btn as-app-cursor">
+                                            ${course.is_new ? 'শুরু করুন' : 'চালিয়ে যান'}
+                                            <i class="fas fa-arrow-right"></i>
+                                        </button>
                                     </div>
                                 </div>
-                            `;
+                            </div>
+                        `;
 
-                            //user exam participation check
-                            axios.get('/api/check-exam-participation/' + course.course.id)
-                                .then(response => {
-                                    const participated = response.data.has_participated;
-                                    const examMark = response.data.exam_mark;
+                            // Check exam participation for each course
+                            checkExamParticipation(course.course.id);
 
-                                    if (participated) {
-                                        if (examMark >= 70) {
-                                            document.getElementById('certificate').style.display = 'block';
-                                        } 
-                                        else {
-                                            document.getElementById('give-exam').style.display = 'block';
-                                        }
-                                    }
-                                    else {
-                                        document.getElementById('give-exam').style.display = 'block';
-                                    }
-                                })
-
-                            axios.post('/api/get-course-progress', { 'course_id': course.course.id })
-                                .then(res => {
-                                    const progress = Math.round(res.data.course_progress);
-                                    document.getElementById(`course-progress-${course.course.id}`).innerText = convertToBengali(progress) + ' %';
-                                    document.getElementById(`course-progress-bar-${course.course.id}`).style.width = progress + '%';
-                                })
+                            // Get course progress for each course
+                            getCourseProgress(course.course.id);
                         });
-
-                    }
-                    else {
+                    } else {
                         courseField.innerHTML = `<h3 style="text-align: center; color: grey;">কোন কোর্সে ভর্তি নেই</h3>`;
                     }
                 })
-                .catch(error => { });
+                .catch(error => {
+                    console.error('Error fetching enrolled courses:', error);
+                });
         }
+
+        // Separate function to check exam participation
+        function checkExamParticipation(courseId) {
+            axios.get('/api/check-exam-participation/' + courseId)
+                .then(response => {
+                    const participated = response.data.has_participated;
+                    const examMark = response.data.exam_mark;
+                    const giveExamBtn = document.getElementById(`give-exam-${courseId}`);
+                    const certificateBtn = document.getElementById(`certificate-${courseId}`);
+
+                    if (!participated) {
+                        if (giveExamBtn) giveExamBtn.style.display = 'block';
+                    }
+                    else if (participated === true && examMark >= 70) {
+                        if (certificateBtn) certificateBtn.style.display = 'block';
+                    }
+                    else if (participated === true && examMark < 70) {
+                        if (giveExamBtn) giveExamBtn.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking exam participation:', error);
+                });
+        }
+
+        // Separate function to get course progress
+        function getCourseProgress(courseId) {
+            axios.post('/api/get-course-progress', { 'course_id': courseId })
+                .then(res => {
+                    const progress = Math.round(res.data.course_progress);
+                    const progressElement = document.getElementById(`course-progress-${courseId}`);
+                    const progressBar = document.getElementById(`course-progress-bar-${courseId}`);
+
+                    if (progressElement) progressElement.innerText = convertToBengali(progress) + ' %';
+                    if (progressBar) progressBar.style.width = progress + '%';
+                })
+                .catch(error => {
+                    console.error('Error fetching course progress:', error);
+                });
+        }
+
+        // Call the function when the page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            getEnrolledCourses();
+        });
     </script>
 @endsection

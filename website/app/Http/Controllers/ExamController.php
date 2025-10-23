@@ -36,7 +36,7 @@ class ExamController extends Controller
         if ($enrollment && $enrollment->is_attended_exam) {
             return response()->json(['has_participated' => true, 'exam_mark' => $enrollment->exam_mark]);
         } else {
-            return response()->json(['has_participated' => false]);
+            return response()->json(['has_participated' => false, 'exam_mark' => $enrollment->exam_mark]);
         }
     }
 
