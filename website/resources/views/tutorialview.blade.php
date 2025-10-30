@@ -126,7 +126,7 @@
             </div>
 
             <div class="as-mt-20px as-text-right">
-                <button class="as-btn app-cursor as-bg-cancel as-mr-10px" onclick="hideModal('review-modal')">বাতিল</button>
+                <button class="as-btn app-cursor as-bg-cancel" onclick="hideModal('review-modal')">বাতিল</button>
                 <button class="as-btn app-cursor" onclick="submitReview()">জমা দিন</button>
             </div>
         </div>
@@ -212,7 +212,7 @@
         .tab-buttons button {
             border: 1px solid #ddd;
             outline: none !important;
-            background: #f8f9fa;
+            background: #fff;
         }
 
         .tab {

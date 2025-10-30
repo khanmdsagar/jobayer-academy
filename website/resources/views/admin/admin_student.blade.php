@@ -11,7 +11,7 @@
 
     <div class="as-w-100" style="overflow-y: auto; height: 100vh;">
         <!-- navbar -->
-        <div >
+        <div>
             <div class="as-p-10px as-flex as-align-center">
                 <i onclick="toggleAdminSidebar()" class="fas fa-bars as-app-cursor as-f-20px as-mr-10px"></i>
                 <span class="as-f-bold as-f-20px">Student List</span> &nbsp; <span id="total-student-div"></span>
@@ -29,7 +29,7 @@
 
                     <button id="filter-student-button" class="as-btn as-btn-primary as-app-cursor as-mr-5px"
                         onclick="showModal('student-filter')"><i class="fas fa-filter"></i></button>
-                    
+
                     <a id="download-student-button" class="as-btn as-btn-primary as-app-cursor"
                         href="/admin/download-student-data"><i class="fas fa-download"></i></a>
                 </div>
@@ -59,6 +59,8 @@
                         <option value="unenrolled">Unenrolled</option>
                         <optgroup id="course-div"></optgroup>
                     </select>
+                    <input type="date" class="as-date-input as-mt-10px" id="filter-date-start" value="">
+                    <input type="date" class="as-date-input as-mt-10px" id="filter-date-end" value="">
                 </div>
 
             </div>
@@ -168,6 +170,11 @@
 
 @section('scripts')
     <script>
+        // Get today's date in YYYY-MM-DD format
+        // const filterDate = new Date().toISOString().split('T')[0];
+        // document.getElementById('filter-date-start').value = filterDate;
+        // document.getElementById('filter-date-end').value = filterDate;
+
         getCourseData();
         function getCourseData() {
             axios.get('/admin/course/data').then(response => {
@@ -178,6 +185,8 @@
 
         function filterStudent() {
             var courseValue = document.getElementById('course').value;
+            var filterDateStart = document.getElementById('filter-date-start').value;
+            var filterDateEnd = document.getElementById('filter-date-end').value;
 
             if (courseValue == '') {
                 alert('Select a course')
@@ -187,7 +196,7 @@
                 filterButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
                 filterButton.disabled = true;
 
-                axios.get('/admin/filter-student/' + courseValue)
+                axios.get('/admin/filter-student/' + courseValue + '/' + filterDateStart + '/' + filterDateEnd)
                     .then(response => {
                         filterButton.innerHTML = 'Filter';
                         filterButton.disabled = false;
@@ -211,18 +220,44 @@
 
                             for (let i = 0; i < response.data.length; i++) {
                                 studentList.innerHTML += `
-                            <div class="as-p-10px as-card as-mb-10px as-brr-5px as-flex as-align-center as-justify-between as-space-between">
-                                <div>
-                                    <div>${response.data[i].student_name != null ? response.data[i].student_name : 'Anonymous'}</div>
-                                    <div class="as-f-fade">Phone: ${response.data[i].student_number}</div>
-                                    <div class="as-f-fade">Registration Date: ${response.data[i].created_at}</div>
-                                    <div class="as-f-fade">Enrolled Course: ${response.data[i].student_enrolled_course}</div>
-                                </div>
-                                <div>
-                                    <span><i onclick="window.location.href='/admin/student/info/${response.data[i].id}'" class="fa-solid fa-eye as-app-cursor"></i></span>
-                                </div>
-                            </div>
-                        `;
+                                        <div class="as-p-10px as-card as-mb-10px as-brr-5px as-flex as-align-center as-justify-between as-space-between">
+                                            <div>
+                                                <div>${response.data[i].student_name != null ? response.data[i].student_name : 'Anonymous'}</div>
+                                                <div class="as-f-fade">Phone: ${response.data[i].student_number}</div>
+                                                <div class="as-f-fade">Registration Date: ${response.data[i].created_at}</div>
+                                                <div class="as-f-fade">Enrolled Course: ${response.data[i].student_enrolled_course}</div>
+                                            </div>
+                                            <div>
+                                                <span><i onclick="window.location.href='/admin/student/info/${response.data[i].id}'" class="fa-solid fa-eye as-app-cursor"></i></span>
+                                            </div>
+                                        </div>
+                                    `;
+                            }
+                        }
+                        else if(filterDateStart != '' && filterDateEnd != ''){
+                            const studentList = document.getElementById('student-list');
+                            const totalStudentDiv = document.getElementById('total-student-div');
+                            totalStudentDiv.innerHTML = `(${response.data.length} people)`;
+
+                            studentList.innerHTML = ``;
+                            hideModal('student-filter');
+                            //document.getElementById('download-student-button').href = '/admin/download-course-student-data/' + courseValue;
+                            document.getElementById('download-student-button').style.display = 'none';
+
+                            for (let i = 0; i < response.data.length; i++) {
+                                studentList.innerHTML += `
+                                        <div class="as-p-10px as-card as-mb-10px as-brr-5px as-flex as-align-center as-justify-between as-space-between">
+                                            <div>
+                                                <div>${response.data[i].student_name != null ? response.data[i].student_name : 'Anonymous'}</div>
+                                                <div class="as-f-fade">Phone: ${response.data[i].student_number}</div>
+                                                <div class="as-f-fade">Registration Date: ${response.data[i].created_at}</div>
+                                                <div class="as-f-fade">Enrolled Course: ${response.data[i].student_enrolled_course}</div>
+                                            </div>
+                                            <div>
+                                                <span><i onclick="window.location.href='/admin/student/info/${response.data[i].student_id}'" class="fa-solid fa-eye as-app-cursor"></i></span>
+                                            </div>
+                                        </div>
+                                    `;
                             }
                         }
                         else {
@@ -236,18 +271,18 @@
 
                             for (let i = 0; i < response.data.length; i++) {
                                 studentList.innerHTML += `
-                            <div class="as-p-10px as-card as-mb-10px as-brr-5px as-flex as-align-center as-justify-between as-space-between">
-                                <div>
-                                    <div>${response.data[i].student.student_name != null ? response.data[i].student.student_name : 'Anonymous'}</div>
-                                    <div class="as-f-fade">Phone: ${response.data[i].student.student_number}</div>
-                                    <div class="as-f-fade">Registration Date: ${response.data[i].student.created_at}</div>
-                                    <div class="as-f-fade">Enrolled Course: ${response.data[i].student.student_enrolled_course}</div>
-                                </div>
-                                <div>
-                                    <span><i onclick="window.location.href='/admin/student/info/${response.data[i].student.id}'" class="fa-solid fa-eye as-app-cursor"></i></span>
-                                </div>
-                            </div>
-                        `;
+                                        <div class="as-p-10px as-card as-mb-10px as-brr-5px as-flex as-align-center as-justify-between as-space-between">
+                                            <div>
+                                                <div>${response.data[i].student.student_name != null ? response.data[i].student.student_name : 'Anonymous'}</div>
+                                                <div class="as-f-fade">Phone: ${response.data[i].student.student_number}</div>
+                                                <div class="as-f-fade">Registration Date: ${response.data[i].student.created_at}</div>
+                                                <div class="as-f-fade">Enrolled Course: ${response.data[i].student.student_enrolled_course}</div>
+                                            </div>
+                                            <div>
+                                                <span><i onclick="window.location.href='/admin/student/info/${response.data[i].student.id}'" class="fa-solid fa-eye as-app-cursor"></i></span>
+                                            </div>
+                                        </div>
+                                    `;
                             }
                         }
                     });
@@ -269,18 +304,18 @@
 
                     for (let i = 0; i < loadStudent; i++) {
                         studentList.innerHTML += `
-                        <div class="as-p-10px as-card as-mb-10px as-brr-5px as-flex as-align-center as-justify-between as-space-between">
-                            <div>
-                                <div>${response.data[i].student_name != null ? response.data[i].student_name : 'Anonymous'}</div>
-                                <div class="as-f-fade">Phone: ${response.data[i].student_number}</div>
-                                <div class="as-f-fade">Registration Date: ${response.data[i].created_at}</div>
-                                <div class="as-f-fade">Enrolled Course: ${response.data[i].student_enrolled_course}</div>
-                            </div>
-                            <div>
-                                <span><i onclick="window.location.href='/admin/student/info/${response.data[i].id}'" class="fa-solid fa-eye as-app-cursor"></i></span>
-                            </div>
-                        </div>
-                    `;
+                                    <div class="as-p-10px as-card as-mb-10px as-brr-5px as-flex as-align-center as-justify-between as-space-between">
+                                        <div>
+                                            <div>${response.data[i].student_name != null ? response.data[i].student_name : 'Anonymous'}</div>
+                                            <div class="as-f-fade">Phone: ${response.data[i].student_number}</div>
+                                            <div class="as-f-fade">Registration Date: ${response.data[i].created_at}</div>
+                                            <div class="as-f-fade">Enrolled Course: ${response.data[i].student_enrolled_course}</div>
+                                        </div>
+                                        <div>
+                                            <span><i onclick="window.location.href='/admin/student/info/${response.data[i].id}'" class="fa-solid fa-eye as-app-cursor"></i></span>
+                                        </div>
+                                    </div>
+                                `;
                     }
                 });
             }
@@ -297,18 +332,18 @@
 
                         for (let i = 0; i < response.data.length; i++) {
                             studentList.innerHTML += `
-                        <div class="as-p-10px as-card as-mb-10px as-brr-5px as-flex as-align-center as-justify-between as-space-between">
-                            <div>
-                                <div>${response.data[i].student_name}</div>
-                                <div class="as-f-fade">Phone: ${response.data[i].student_number}</div>
-                                <div class="as-f-fade">Registration Date: ${response.data[i].created_at}</div>
-                                <div class="as-f-fade">Enrolled Course: ${response.data[i].student_enrolled_course}</div>
-                            </div>
-                            <div>
-                                <span><i onclick="window.location.href='/admin/student/info/${response.data[i].id}'" class="fa-solid fa-eye as-app-cursor"></i></span>
-                            </div>
-                        </div>
-                    `;
+                                    <div class="as-p-10px as-card as-mb-10px as-brr-5px as-flex as-align-center as-justify-between as-space-between">
+                                        <div>
+                                            <div>${response.data[i].student_name}</div>
+                                            <div class="as-f-fade">Phone: ${response.data[i].student_number}</div>
+                                            <div class="as-f-fade">Registration Date: ${response.data[i].created_at}</div>
+                                            <div class="as-f-fade">Enrolled Course: ${response.data[i].student_enrolled_course}</div>
+                                        </div>
+                                        <div>
+                                            <span><i onclick="window.location.href='/admin/student/info/${response.data[i].id}'" class="fa-solid fa-eye as-app-cursor"></i></span>
+                                        </div>
+                                    </div>
+                                `;
                         }
                     });
             }
@@ -427,91 +462,91 @@
 
             if (studentDivision.value == 'Dhaka') {
                 districtDiv.innerHTML = `<option value="Dhaka">Dhaka</option>
-            <option value="Gazipur">Gazipur</option>
-            <option value="Narayanganj">Narayanganj</option>
-            <option value="Tangail">Tangail</option>
-            <option value="Manikganj">Manikganj</option>
-            <option value="Kishoreganj">Kishoreganj</option>
-            <option value="Munshiganj">Munshiganj</option>
-            <option value="Rajbari">Rajbari</option>
-            <option value="Faridpur">Faridpur</option>
-            <option value="Gopalganj">Gopalganj</option>
-            <option value="Madaripur">Madaripur</option>
-            <option value="Shariatpur">Shariatpur</option>
-            <option value="Narsingdi">Narsingdi</option>
-            `;
+                        <option value="Gazipur">Gazipur</option>
+                        <option value="Narayanganj">Narayanganj</option>
+                        <option value="Tangail">Tangail</option>
+                        <option value="Manikganj">Manikganj</option>
+                        <option value="Kishoreganj">Kishoreganj</option>
+                        <option value="Munshiganj">Munshiganj</option>
+                        <option value="Rajbari">Rajbari</option>
+                        <option value="Faridpur">Faridpur</option>
+                        <option value="Gopalganj">Gopalganj</option>
+                        <option value="Madaripur">Madaripur</option>
+                        <option value="Shariatpur">Shariatpur</option>
+                        <option value="Narsingdi">Narsingdi</option>
+                        `;
             }
             else if (studentDivision.value == 'Chittagong') {
                 districtDiv.innerHTML = `<option value="Chittagong">Chittagong</option>
-            <option value="CoxsBazar">CoxsBazar</option>
-            <option value="Comilla">Comilla</option>
-            <option value="Feni">Feni</option>
-            <option value="Brahmanbaria">Brahmanbaria</option>
-            <option value="Rangamati">Rangamati</option>
-            <option value="Noakhali">Noakhali</option>
-            <option value="Khagrachari">Khagrachari</option>
-            <option value="Lakshmipur">Lakshmipur</option>
-            <option value="Chandpur">Chandpur</option>
-            <option value="Bandarban">Bandarban</option>
-            `;
+                        <option value="CoxsBazar">CoxsBazar</option>
+                        <option value="Comilla">Comilla</option>
+                        <option value="Feni">Feni</option>
+                        <option value="Brahmanbaria">Brahmanbaria</option>
+                        <option value="Rangamati">Rangamati</option>
+                        <option value="Noakhali">Noakhali</option>
+                        <option value="Khagrachari">Khagrachari</option>
+                        <option value="Lakshmipur">Lakshmipur</option>
+                        <option value="Chandpur">Chandpur</option>
+                        <option value="Bandarban">Bandarban</option>
+                        `;
             }
             else if (studentDivision.value == 'Khulna') {
                 districtDiv.innerHTML = `<option value="Khulna">Khulna</option>
-            <option value="Bagerhat">Bagerhat</option>
-            <option value="Satkhira">Satkhira</option>
-            <option value="Jessore">Jessore</option>
-            <option value="Jhenaidah">Jhenaidah</option>
-            <option value="Magura">Magura</option>
-            <option value="Narail">Narail</option>
-            <option value="Kushtia">Kushtia</option>
-            <option value="Chuadanga">Chuadanga</option>
-            <option value="Meherpur">Meherpur</option>
-            `;
+                        <option value="Bagerhat">Bagerhat</option>
+                        <option value="Satkhira">Satkhira</option>
+                        <option value="Jessore">Jessore</option>
+                        <option value="Jhenaidah">Jhenaidah</option>
+                        <option value="Magura">Magura</option>
+                        <option value="Narail">Narail</option>
+                        <option value="Kushtia">Kushtia</option>
+                        <option value="Chuadanga">Chuadanga</option>
+                        <option value="Meherpur">Meherpur</option>
+                        `;
             }
             else if (studentDivision.value == 'Rajshahi') {
                 districtDiv.innerHTML = `<option value="Rajshahi">Rajshahi</option>
-            <option value="Pabna">Pabna</option>
-            <option value="Bogra">Bogra</option>
-            <option value="Joypurhat">Joypurhat</option>
-            <option value="Naogaon">Naogaon</option>
-            <option value="Natore">Natore</option>
-            <option value="Chapainawabganj">Chapainawabganj</option>
-            <option value="Sirajganj">Sirajganj</option>
-            `;
+                        <option value="Pabna">Pabna</option>
+                        <option value="Bogra">Bogra</option>
+                        <option value="Joypurhat">Joypurhat</option>
+                        <option value="Naogaon">Naogaon</option>
+                        <option value="Natore">Natore</option>
+                        <option value="Chapainawabganj">Chapainawabganj</option>
+                        <option value="Sirajganj">Sirajganj</option>
+                        `;
             }
             else if (studentDivision.value == 'Barishal') {
                 districtDiv.innerHTML = `<option value="Barisal">Barisal</option>
-            <option value="Patuakhali">Patuakhali</option>
-            <option value="Bhola">Bhola</option>
-            <option value="Pirojpur">Pirojpur</option>
-            <option value="Barguna">Barguna</option>
-            <option value="Jhalokathi">Jhalokathi</option>
-            `;
+                        <option value="Patuakhali">Patuakhali</option>
+                        <option value="Bhola">Bhola</option>
+                        <option value="Pirojpur">Pirojpur</option>
+                        <option value="Barguna">Barguna</option>
+                        <option value="Jhalokathi">Jhalokathi</option>
+                        `;
             }
             else if (studentDivision.value == 'Sylhet') {
                 districtDiv.innerHTML = `<option value="Sylhet">Sylhet</option>
-            <option value="Moulvibazar">Moulvibazar</option>
-            <option value="Habiganj">Habiganj</option>
-            <option value="Sunamganj">Sunamganj</option>
-            `;
+                        <option value="Moulvibazar">Moulvibazar</option>
+                        <option value="Habiganj">Habiganj</option>
+                        <option value="Sunamganj">Sunamganj</option>
+                        `;
             }
             else if (studentDivision.value == 'Rangpur') {
                 districtDiv.innerHTML = `<option value="Rangpur">Rangpur</option>
-            <option value="Dinajpur">Dinajpur</option>
-            <option value="Kurigram">Kurigram</option>
-            <option value="Lalmonirhat">Lalmonirhat</option>
-            <option value="Nilphamari">Nilphamari</option>
-            <option value="Panchagarh">Panchagarh</option>
-            <option value="Thakurgaon">Thakurgaon</option>
-            <option value="Gaibandha">Gaibandha</option>
-            `;
+                        <option value="Dinajpur">Dinajpur</option>
+                        <option value="Kurigram">Kurigram</option>
+                        <option value="Lalmonirhat">Lalmonirhat</option>
+                        <option value="Nilphamari">Nilphamari</option>
+                        <option value="Panchagarh">Panchagarh</option>
+                        <option value="Thakurgaon">Thakurgaon</option>
+                        <option value="Gaibandha">Gaibandha</option>
+                        `;
             }
             else if (studentDivision.value == 'Mymensingh') {
                 districtDiv.innerHTML = `<option value="Mymensingh">Mymensingh</option>
-            <option value="Jamalpur">Jamalpur</option>
-            <option value="Netrokona">Netrokona</option>
-            <option value="Sherpur">Sherpur</option>
-            `;
+                        <option value="Jamalpur">Jamalpur</option>
+                        <option value="Netrokona">Netrokona</option>
+                        <option value="Sherpur">Sherpur</option>
+                        `;
             }
         });
     </script>

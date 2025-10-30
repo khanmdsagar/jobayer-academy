@@ -264,8 +264,7 @@ class AdminController extends Controller
 
         if ($is_category > 0) {
             return response()->json(['status' => 404, "message" => 'Category already exists']);
-        } 
-        else {
+        } else {
             $result = DB::table('course_category')->insert([
                 'category_name' => $category_name,
                 'category_slug' => Str::slug($category_name),
@@ -275,8 +274,7 @@ class AdminController extends Controller
 
             if ($result) {
                 return response()->json(['status' => 200, "message" => 'Category added successfully']);
-            } 
-            else {
+            } else {
                 return response()->json(['status' => 404, "message" => 'Category could not be added']);
             }
         }
@@ -294,8 +292,7 @@ class AdminController extends Controller
 
         if ($result) {
             return response()->json(['status' => 200, "message" => 'Category deleted successfully']);
-        } 
-        else {
+        } else {
             return response()->json(['status' => 404, "message" => 'Category could not be deleted']);
         }
     }
@@ -314,8 +311,7 @@ class AdminController extends Controller
 
         if ($result) {
             return response()->json(['status' => 200, "message" => 'Category updated successfully']);
-        } 
-        else {
+        } else {
             return response()->json(['status' => 404, "message" => 'Category could not be updated']);
         }
     }
@@ -334,14 +330,14 @@ class AdminController extends Controller
         if (is_numeric($search_data2)) {
             $student_data = DB::table('student')->where('student_number', 'like', '%' . $search_data2 . '%')->get();
             return response()->json($student_data);
-        } 
-        else {
+        } else {
             $student_data = DB::table('student')->where('student_name', 'like', '%' . $search_data2 . '%')->get();
             return response()->json($student_data);
         }
     }
 
-    function filter_student($course_value)
+    //filter student
+    function filter_student($course_value, $filter_date_start = null, $filter_date_end = null)
     {
         if ($course_value == 'enrolled') {
             return DB::table('student')->where('student_enrolled_course', '!=', 0)->get();
@@ -349,8 +345,24 @@ class AdminController extends Controller
         else if ($course_value == 'unenrolled') {
             return DB::table('student')->where('student_enrolled_course', 0)->get();
         } 
+        else if ($course_value != '' && $filter_date_start != '' && $filter_date_end != '') {
+            $results = DB::select("
+                        SELECT enrolled_course.*, student.*
+                        FROM enrolled_course
+                        JOIN student ON student.id = enrolled_course.student_id
+                        WHERE enrolled_course.course_id = ?
+                        AND enrolled_course.enrolled_date > ?
+                        AND enrolled_course.enrolled_date < ?
+                        ORDER BY enrolled_course.id DESC
+                    ", [$course_value, $filter_date_start, $filter_date_end]);
+            return $results;
+        } 
         else {
-            return EnrolledCourse::with('student')->where('course_id', $course_value)->get();
+            try {
+                return EnrolledCourse::with('student')->where('course_id', $course_value)->orderBy('enrolled_course.id', 'DESC')->get();
+            } catch (\Exception $e) {
+                return response()->json(['status' => 404, "message" => $e->getMessage()]);
+            }
         }
     }
 
@@ -576,14 +588,13 @@ class AdminController extends Controller
     //enroll student
     function enroll_student(Request $request)
     {
-        $student_id      = strip_tags(trim($request->input('student_id')));
-        $course_id       = strip_tags(trim($request->input('course_id')));
+        $student_id = strip_tags(trim($request->input('student_id')));
+        $course_id = strip_tags(trim($request->input('course_id')));
         $enrolled_course = DB::table('enrolled_course')->where('student_id', $student_id)->where('course_id', $course_id)->count();
 
         if ($enrolled_course > 0) {
             return response()->json(['status' => 404, "message" => 'Student already enrolled']);
-        } 
-        else {
+        } else {
             try {
                 $result = DB::table('enrolled_course')->insert([
                     'student_id' => $student_id,
@@ -597,12 +608,10 @@ class AdminController extends Controller
 
                 if ($result) {
                     return response()->json(['status' => 200, "message" => 'Student enrolled successfully']);
-                } 
-                else {
+                } else {
                     return response()->json(['status' => 404, "message" => 'Student could not be enrolled']);
                 }
-            } 
-            catch (\Exception $e) {
+            } catch (\Exception $e) {
                 return response()->json(['status' => 404, "message" => $e->getMessage()]);
             }
         }
@@ -611,7 +620,7 @@ class AdminController extends Controller
     function unenroll_student(Request $request)
     {
         $enrolled_course_id = strip_tags(trim($request->input('enrolled_course_id')));
-        $student_id         = strip_tags(trim($request->input('student_id')));
+        $student_id = strip_tags(trim($request->input('student_id')));
 
         $result = DB::table('enrolled_course')->where('id', $enrolled_course_id)->delete();
 

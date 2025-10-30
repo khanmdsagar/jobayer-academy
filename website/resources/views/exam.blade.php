@@ -58,10 +58,14 @@
                 <div id="welcome-screen" class="screen active">
                     <div class="welcome-screen" id="welcome-screen1" style="display: none;">
                         <h2>কুইজ চ্যালেঞ্জে স্বাগতম</h2>
-                        <p>কুইজের মাধ্যমে আপনার জ্ঞান পরীক্ষা করুন! প্রতিটি প্রশ্নের উত্তর দিতে আপনার কাছে থাকবে
+                        <p>
+                            কুইজের মাধ্যমে আপনার জ্ঞান পরীক্ষা করুন! প্রতিটি প্রশ্নের উত্তর দিতে আপনার কাছে থাকবে
                             নির্দিষ্ট সময়, অথবা আপনি "পরবর্তী" বোতামে ক্লিক করে এগিয়ে যেতে পারেন।
-                            আপনি একবারই পরীক্ষা দিতে পারবেন। পরীক্ষায় উত্তীর্ণ হতে কমপক্ষে ৭০% মার্কস পেতে হবে।
-                            পরীক্ষা চলাকালীন সময়ে পেজ রিলোড নেয়া, অন্য ট্যাব বা অ্যাপ ওপেন করলে পরীক্ষা বাতিল হবে।</p>
+                            <div class="as-color-cancel">
+                                আপনি একবারই পরীক্ষা দিতে পারবেন। পরীক্ষায় উত্তীর্ণ হতে কমপক্ষে ৭০% মার্কস পেতে হবে।
+                                পরীক্ষা চলাকালীন সময়ে পেজ রিলোড নেয়া, অন্য ট্যাব বা অ্যাপ ওপেন করলে পরীক্ষা বাতিল হবে।
+                            </div>
+                        </p>
                         <p>মোট <span id="total-questions"></span>টি প্রশ্ন রয়েছে। শুভকামনা!</p>
                         <button id="start-btn" class="btn">কুইজ শুরু করুন</button>
                     </div>
@@ -187,7 +191,6 @@
         }
 
         .welcome-screen p {
-            color: #555;
             margin-bottom: 25px;
             line-height: 1.6;
             font-size: 1.1rem;
@@ -471,7 +474,6 @@
 
 @section('scripts')
     <script>
-
         document.addEventListener("visibilitychange", () => {
             if (document.hidden) {
                 console.log("User switched away from the page (maybe opened another app/tab)");

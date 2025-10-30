@@ -17,12 +17,7 @@ use App\Http\Controllers\admin\AdminAuthController;
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\AdminStudentController;
 use App\Http\Controllers\admin\AskedQuestionController;
-
-use App\Models\CourseChapter;
-use App\Models\ChapterTopic;
-use App\Models\StudentTopic;
-use App\Models\Course;
-use App\Models\EnrolledCourse;
+use App\Http\Controllers\admin\AdminCourseController;
 
 // bkash payment
 Route::get('/bkash/checkout', [bKashController::class, 'create'])->name('bKash-checkout');
@@ -252,7 +247,7 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
     Route::get('/admin/download-unenrolled-student-data', [AdminController::class, 'download_unenrolled_student_data']);
 
     Route::get('/admin/course/data', [AdminController::class, 'get_course_data']);
-    Route::get('/admin/filter-student/{course_value}', [AdminController::class, 'filter_student']);
+    Route::get('/admin/filter-student/{course_value}/{filter_date_start?}/{filter_date_end?}', [AdminController::class, 'filter_student']);
     Route::get('/admin/download-student-data', [AdminController::class, 'download_student_data']);
     Route::get('/admin/download-course-student-data/{course_id}', [AdminController::class, 'download_course_student_data']);
 
@@ -272,6 +267,8 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
     Route::get('/admin/course', function () {
         return view('admin.admin_course');
     });
+
+    // course management routes
     Route::post('/admin/course/add', [AdminController::class, 'add_course']);
     Route::post('/admin/course/add/thumbnail', [AdminController::class, 'add_course_thumbnail']);
     Route::get('/admin/course/get', [AdminController::class, 'get_course_data2']);
@@ -288,6 +285,12 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
     Route::post('/admin/chapter/topic/add', [AdminController::class, 'add_chapter_topic']);
     Route::post('/admin/chapter/topic/delete', [AdminController::class, 'delete_chapter_topic']);
     Route::post('/admin/chapter/topic/edit', [AdminController::class, 'edit_chapter_topic']);
+
+    // quiz management routes
+    Route::get('/admin/quiz/get/{course_id}', [AdminCourseController::class, 'get_quiz']);
+    Route::post('/admin/quiz/add', [AdminCourseController::class, 'add_quiz']);
+    Route::post('/admin/quiz/delete', [AdminCourseController::class, 'delete_quiz']);
+    Route::post('/admin/quiz/edit', [AdminCourseController::class, 'edit_quiz']);
 
     //question and answer
     Route::get('/admin/get-asked-question', [AskedQuestionController::class, 'get_asked_question']);

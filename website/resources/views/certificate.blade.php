@@ -2,7 +2,7 @@
 @section('title', 'Jobayer Academy - Certificate')
 
 @section('content')
-    <div class="as-flex as-flex-col as-align-center as-justify-center as-w-95 dt:as-mw-1280px as-m-0-auto">
+    <div class="as-flex as-flex-col as-align-center as-justify-center as-w-95 dt:as-mw-1280px as-m-0-auto" style="overflow: hidden">
         <div id="certificate-container" style="display: none; text-align: center;">
             <div id="certificate"
                 style="margin-top: 10px; width: 1124px; height: 797px; border: 1px solid #e6e6e6; padding: 30px;">
@@ -24,7 +24,7 @@
                         <div style="display: flex; flex-direction: column; align-items: center;">
                             <h1 style="margin-top: 0px">CERTIFICATE OF COMPLETION</h1>
                             <p style="margin-top: 5px">This is to certify that</p>
-                            <h1 style="font-family: 'Meow Script', cursive; margin-top: 10px; font-size: 40px;">
+                            <h1 style="font-family: 'Damion', cursive; margin-top: 10px; font-size: 40px;">
                                 {{ $student_name }}
                             </h1>
                             <div style="height: 1px; width: 400px; background-color: #303030;"></div>
@@ -43,7 +43,7 @@
                         </div>
                         <div>
                             <p><b id="issue-date">...</b></p>
-                            <p style="margin-top: 5px">Note: this certificate is issued by Jobayer Academy, a privately
+                            <p style="margin-top: 5px"><b>Note:</b> this certificate is issued by Jobayer Academy, a privately
                                 operated
                                 training institute under valid
                                 trade license in Bangladesh. This is not a government-accredited certificate.</p>
@@ -74,7 +74,7 @@
             const element = document.getElementById("certificate");
             html2canvas(element).then(canvas => {
                 const link = document.createElement("a");
-                link.download = "certificate.png";
+                link.download = "jobayer_academy_"+certificateCode+".png";
                 link.href = canvas.toDataURL();
                 link.click();
             });
