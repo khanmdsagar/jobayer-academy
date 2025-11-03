@@ -14,7 +14,7 @@
         <div>
             <div class="as-p-10px as-flex as-align-center">
                 <i onclick="toggleAdminSidebar()" class="fas fa-bars as-app-cursor as-f-20px as-mr-10px"></i>
-                <span class="as-f-bold as-f-20px">Student List</span> &nbsp; <span id="total-student-div"></span>
+                <span class="as-f-bold as-f-20px">Student List - </span> &nbsp; <span id="total-student-div" class="as-f-bold as-f-20px"></span>
             </div>
 
             <div class="as-flex as-space-between as-p-10px">
@@ -298,7 +298,7 @@
                 axios.get('/admin/student/data').then(response => {
                     const studentList = document.getElementById('student-list');
                     const totalStudentDiv = document.getElementById('total-student-div');
-                    totalStudentDiv.innerHTML = `(${response.data.length} people)`;
+                    totalStudentDiv.innerHTML = `${response.data.length} people`;
 
                     studentList.innerHTML = ``;
 

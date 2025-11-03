@@ -94,7 +94,8 @@ class AdminCourseController extends Controller
 
         if ($result) {
             return response()->json(['status' => 'success', 'message' => 'Quiz updated successfully']);
-        } else {
+        } 
+        else {
             return response()->json(['status' => 'error', 'message' => 'Failed to update quiz'], 500);
         }
     }

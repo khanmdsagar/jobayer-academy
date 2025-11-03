@@ -14,12 +14,11 @@
         <div class="as-p-10px">
             <div>
                 <i onclick="toggleAdminSidebar()" class="fas fa-bars as-app-cursor as-f-20px as-mr-10px"></i>
-                <span class="as-f-bold as-f-20px">Course</span>
+                <span class="as-f-bold as-f-20px">Course - <span id="course-count"></span></span>
             </div>
 
             <div class="actions as-flex as-justify-end">
-                <button onclick="showModal('add-course')" class="as-btn as-app-cursor"><i
-                        class="fa-solid fa-plus as-app-cursor as-f-20px"></i></button>
+                <button onclick="showModal('add-course')" class="as-btn as-app-cursor"><i class="fa-solid fa-plus as-app-cursor as-f-20px"></i></button>
             </div>
         </div>
 
@@ -238,6 +237,7 @@
 
             axios.get('/admin/course/get')
                 .then(function (response) {
+                    document.getElementById('course-count').innerText = response.data.length;
                     
                     if (response.data.length == 0) {
                         courseDataDiv.innerHTML = '<div class="as-text-center as-f-20px">No Course</div>';
@@ -248,7 +248,7 @@
                         courseDataDiv.innerHTML += `
                                 <div class="as-card as-mb-10px as-flex as-space-between as-p-10px">
                                     <div>
-                                        <div class="as-flex as-align-center">${course.course_name}</div>
+                                        <div class="as-flex as-align-center as-check-language as-f-18px">${course.course_name}</div>
                                         <div class="as-f-fade">Student: ${course.enrolled_course_count} people</div>
                                         <div class="as-f-fade">Selling fee: ৳${course.course_selling_fee}</div>
                                         <div class="as-f-fade">Status: ${course.course_status == 1 ? 'Published' : 'Unpublished'}</div>

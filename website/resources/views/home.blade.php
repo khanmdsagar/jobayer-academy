@@ -15,11 +15,29 @@
         <!-- why we us -->
         <section>
             <div class="as-w-95 as-m-0-auto">
-                <div class="as-section-title">কেনো জোবায়ের একাডেমী?</div>
+                <div class="as-section-title">
+                    কেনো জোবায়ের একাডেমী?
+                    <div>
+                        <svg style="width: 200px;" id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 299.3 30.9">
+                            <defs>
+                                <style>
+                                    .cls-1 {
+                                        fill: #c3e31f;
+                                    }
+                                </style>
+                            </defs>
+                            <g id="Layer_1-2" data-name="Layer 1">
+                                <path class="cls-1" d="M0,30.9s340.99-69.53,295.05,0c0,0,48.46-60-295.05,0Z" />
+                            </g>
+                        </svg>
+                    </div>
+                </div>
                 <div class="as-grid-250px">
                     @foreach($why_we_us as $wwu)
                         <div class="as-card as-p-20px as-text-center as-flex as-flex-center as-flex-col">
-                            <div class="as-h-50px as-w-50px as-bg-primary as-color-white as-brr-50 as-flex as-flex-center as-mb-10px">
+                            <div
+                                class="as-h-50px as-w-50px as-bg-primary as-color-white as-brr-50 as-flex as-flex-center as-mb-10px">
                                 {!! $wwu->wwu_icon !!}
                             </div>
                             <h3>{{$wwu->wwu_title}}</h3>
@@ -33,7 +51,24 @@
         <!-- Featured Courses Section -->
         <section id="featured-course">
             <div class="as-w-95 as-m-0-auto">
-                <div class="as-section-title">আমাদের কোর্স সমূহ</div>
+                <div class="as-section-title">
+                    আমাদের কোর্স সমূহ
+                    <div>
+                        <svg style="width: 200px;" id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 299.3 30.9">
+                            <defs>
+                                <style>
+                                    .cls-1 {
+                                        fill: #c3e31f;
+                                    }
+                                </style>
+                            </defs>
+                            <g id="Layer_1-2" data-name="Layer 1">
+                                <path class="cls-1" d="M0,30.9s340.99-69.53,295.05,0c0,0,48.46-60-295.05,0Z" />
+                            </g>
+                        </svg>
+                    </div>
+                </div>
 
                 @if($course->count() == 1)
                     <div class="featured-course-box">
@@ -41,7 +76,8 @@
                             <div class="as-responsive-card">
                                 <div>
                                     <a style="display: inline-block" href="/course/{{$item->course_slug}}" class="as-app-cursor">
-                                        <img class="image as-w-400px as-brr-5px as-image-fit" src="/storage/{{$item->course_thumbnail}}" alt="image">
+                                        <img class="image as-w-400px as-brr-5px as-image-fit"
+                                            src="/storage/{{$item->course_thumbnail}}" alt="image">
                                     </a>
                                 </div>
                                 <div class="as-p-10px as-flex as-flex-col as-space-between as-w-100">
@@ -49,7 +85,8 @@
                                         <div class="as-flex as-space-between as-align-center">
                                             <div>
                                                 @if($item->course_fee != $item->course_selling_fee)
-                                                    <span class="as-color-primary as-f-25px as-f-bold">৳{{$item->course_selling_fee}}</span>
+                                                    <span
+                                                        class="as-color-primary as-f-25px as-f-bold">৳{{$item->course_selling_fee}}</span>
                                                     <span class="as-f-bold"><s>৳{{$item->course_fee}}</s></span>
                                                 @else
                                                     <span class="as-color-primary as-f-25px as-f-bold">৳{{$item->course_fee}}</span>
@@ -65,12 +102,14 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <a style="display: inline-block" href="/course/{{$item->course_slug}}" class="as-app-cursor">
+                                        <a style="display: inline-block" href="/course/{{$item->course_slug}}"
+                                            class="as-app-cursor">
                                             <div class="as-lineclamp-2 as-f-20px">{{$item->course_name}}</div>
                                         </a>
                                     </div>
                                     <div class="as-text-right">
-                                        <a style="display: inline-block" href="/course/{{$item->course_slug}}" class="as-btn as-app-cursor">
+                                        <a style="display: inline-block" href="/course/{{$item->course_slug}}"
+                                            class="as-btn as-app-cursor">
                                             বিস্তারিত <i class="fas fa-arrow-right"></i>
                                         </a>
                                     </div>
@@ -84,7 +123,8 @@
                             <div class="as-card">
                                 <div>
                                     <a style="display: inline-block" href="/course/{{$item->course_slug}}" class="as-app-cursor">
-                                        <img class="image as-w-100 as-brr-5px as-image-fit" src="/storage/{{$item->course_thumbnail}}" alt="Course Image">
+                                        <img class="image as-w-100 as-brr-5px as-image-fit"
+                                            src="/storage/{{$item->course_thumbnail}}" alt="Course Image">
                                     </a>
                                 </div>
                                 <div class="as-p-10px as-flex as-flex-col as-space-between as-w-100">
@@ -92,7 +132,8 @@
                                         <div class="as-flex as-space-between as-align-center">
                                             <div>
                                                 @if($item->course_fee != $item->course_selling_fee)
-                                                    <span class="as-color-primary as-f-25px as-f-bold">৳{{$item->course_selling_fee}}</span>
+                                                    <span
+                                                        class="as-color-primary as-f-25px as-f-bold">৳{{$item->course_selling_fee}}</span>
                                                     <span class="as-f-bold"><s>৳{{$item->course_fee}}</s></span>
                                                 @else
                                                     <span class="as-color-primary as-f-25px as-f-bold">৳{{$item->course_fee}}</span>
@@ -108,12 +149,14 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <a style="display: inline-block" href="/course/{{$item->course_slug}}" class="as-app-cursor">
+                                        <a style="display: inline-block" href="/course/{{$item->course_slug}}"
+                                            class="as-app-cursor">
                                             <div class="as-lineclamp-1 as-f-20px">{{$item->course_name}}</div>
                                         </a>
                                     </div>
                                     <div class="as-text-right">
-                                        <a style="display: inline-block" href="/course/{{$item->course_slug}}" class="as-btn as-app-cursor">
+                                        <a style="display: inline-block" href="/course/{{$item->course_slug}}"
+                                            class="as-btn as-app-cursor">
                                             বিস্তারিত <i class="fas fa-arrow-right"></i>
                                         </a>
                                     </div>
@@ -128,7 +171,24 @@
         <!-- Student Reviews Section -->
         <section>
             <div class="as-w-95 as-m-0-auto">
-                <h2 class="as-section-title">শিক্ষার্থীদের মতামত</h2>
+                <div class="as-section-title">
+                    শিক্ষার্থীদের মতামত
+                    <div>
+                        <svg style="width: 200px;" id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 299.3 30.9">
+                            <defs>
+                                <style>
+                                    .cls-1 {
+                                        fill: #c3e31f;
+                                    }
+                                </style>
+                            </defs>
+                            <g id="Layer_1-2" data-name="Layer 1">
+                                <path class="cls-1" d="M0,30.9s340.99-69.53,295.05,0c0,0,48.46-60-295.05,0Z" />
+                            </g>
+                        </svg>
+                    </div>
+                </div>
 
                 <div class="splide" id="review-slider">
                     <div class="splide__track">
@@ -144,7 +204,24 @@
         <!-- Gallery Section -->
         <section>
             <div class="as-w-95 as-m-0-auto">
-                <h2 class="as-section-title">আমাদের গ্যালারি</h2>
+                <div class="as-section-title">
+                    আমাদের গ্যালারি
+                    <div>
+                        <svg style="width: 200px;" id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 299.3 30.9">
+                            <defs>
+                                <style>
+                                    .cls-1 {
+                                        fill: #c3e31f;
+                                    }
+                                </style>
+                            </defs>
+                            <g id="Layer_1-2" data-name="Layer 1">
+                                <path class="cls-1" d="M0,30.9s340.99-69.53,295.05,0c0,0,48.46-60-295.05,0Z" />
+                            </g>
+                        </svg>
+                    </div>
+                </div>
                 <div>
                     <div class="splide" id="gallery-slider">
                         <div class="splide__track">
@@ -165,7 +242,24 @@
         <!-- Blog Section -->
         <section class="as-mb-20px">
             <div class="as-w-95 as-m-0-auto">
-                <h2 class="as-section-title">নতুন ব্লগ</h2>
+                <div class="as-section-title">
+                    নতুন ব্লগ
+                    <div>
+                        <svg style="width: 200px;" id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 299.3 30.9">
+                            <defs>
+                                <style>
+                                    .cls-1 {
+                                        fill: #c3e31f;
+                                    }
+                                </style>
+                            </defs>
+                            <g id="Layer_1-2" data-name="Layer 1">
+                                <path class="cls-1" d="M0,30.9s340.99-69.53,295.05,0c0,0,48.46-60-295.05,0Z" />
+                            </g>
+                        </svg>
+                    </div>
+                </div>
                 <div class="splide" id="blog-slider">
                     <div class="splide__track">
                         <ul class="splide__list" id="splide__list3">
@@ -188,196 +282,197 @@
 @endsection
 
 @section('styles')
-<style>
-/* Loader Wrapper */
-#loader-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: white;
-    z-index: 99999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.5s ease, visibility 0.5s;
-}
+    <style>
+        /* Loader Wrapper */
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
 
-/* Hidden State */
-#loader-wrapper.hidden {
-    opacity: 0;
-    visibility: hidden;
-}
+        /* Hidden State */
+        #loader-wrapper.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
 
-.featured-course-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 15px;
-    margin: 0 auto;
-}
-.hero {
-    height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/image/other/{{$site_data[0]->site_hero_image}}');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
-}
-</style>
+        .featured-course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 15px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/image/other/{{$site_data[0]->site_hero_image}}');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+    </style>
 @endsection
 
 
 @section('scripts')
-<script>
-    window.addEventListener('load', function () {
-        const loader = document.getElementById('loader-wrapper');
-        loader.classList.add('hidden');
-    });
-</script>
+    <script>
+        window.addEventListener('load', function () {
+            const loader = document.getElementById('loader-wrapper');
+            loader.classList.add('hidden');
+        });
+    </script>
 
-<script>
-getCourseReview();
-getSiteGallery();
-getBlog();
+    <script>
+        getCourseReview();
+        getSiteGallery();
+        getBlog();
 
-function getBlog(){
-    const splideList = document.getElementById('splide__list3');
+        function getBlog() {
+            const splideList = document.getElementById('splide__list3');
 
-    axios.get('/api/get-blog')
-    .then(response => {
-        response.data.forEach(item => {
-            const slide = document.createElement('li');
-            slide.className = 'splide__slide blog-card';
+            axios.get('/api/get-blog')
+                .then(response => {
+                    response.data.forEach(item => {
+                        const slide = document.createElement('li');
+                        slide.className = 'splide__slide blog-card';
 
-            slide.innerHTML = `<article class="as-card" style="margin: 5px;">
-                        <div>
-                            <img class="as-w-100 as-brr-5px" src="/image/blog/${item.blog_thumbnail}" alt="Image">
-                        </div>
-                        <div class="as-p-10px">
-                            <div class="as-title as-lineclamp-1">${item.blog_title}</div>
-                            <div class="as-lineclamp-2">
-                                ${item.blog_detail}
-                            </div>
-                            <div class="as-mt-10px as-flex as-justify-end">
-                                <div class="as-app-cursor as-p-10px as-w-fit as-bg-primary as-brr-5px as-color-white" onclick="window.location.href='/blog/${item.blog_slug}'">
-                                    আরো পড়ুন <i class="fas fa-arrow-right"></i>
+                        slide.innerHTML = `<article class="as-card" style="margin: 5px;">
+                                        <div>
+                                            <img class="as-w-100 as-brr-5px" src="/image/blog/${item.blog_thumbnail}" alt="Image">
+                                        </div>
+                                        <div class="as-p-10px">
+                                            <div class="as-title as-lineclamp-1">${item.blog_title}</div>
+                                            <div class="as-lineclamp-2">
+                                                ${item.blog_detail}
+                                            </div>
+                                            <div class="as-mt-10px as-flex as-justify-end">
+                                                <div class="as-app-cursor as-p-10px as-w-fit as-bg-primary as-brr-5px as-color-white" onclick="window.location.href='/blog/${item.blog_slug}'">
+                                                    আরো পড়ুন <i class="fas fa-arrow-right"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>`;
+                        splideList.appendChild(slide);
+                    });
+
+                    new Splide('#blog-slider', {
+                        type: 'loop',
+                        perPage: 3,
+                        gap: '1rem',
+                        autoplay: true,
+                        pagination: false,
+                        breakpoints: {
+                            1024: {
+                                perPage: 2,
+                            },
+                            640: {
+                                perPage: 1,
+                            },
+                        },
+                    }).mount();
+                })
+        }
+
+        function getSiteGallery() {
+            const splideList = document.getElementById('splide__list2');
+
+            axios.get('/api/get-site-gallery')
+                .then(response => {
+                    response.data.forEach(item => {
+                        const slide = document.createElement('li');
+                        slide.className = 'splide__slide';
+
+                        slide.innerHTML = `<div class="as-card" style="margin: 5px;"><img class="as-w-100 as-h-240px as-brr-5px" src="/image/gallery/${item.gallery_image}" alt="Image" onclick="openLightbox(this)"></div>`;
+                        splideList.appendChild(slide);
+                    });
+
+                    new Splide('#gallery-slider', {
+                        type: 'loop',
+                        perPage: 3,
+                        gap: '1rem',
+                        autoplay: true,
+                        pagination: false,
+                        breakpoints: {
+                            1024: {
+                                perPage: 2,
+                            },
+                            640: {
+                                perPage: 1,
+                            },
+                        },
+                    }).mount();
+                })
+        }
+
+        function getCourseReview() {
+            const splideList = document.getElementById('splide__list');
+
+            axios.get('/api/get-review')
+                .then(response => {
+                    response.data.forEach(item => {
+                        const slide = document.createElement('li');
+                        slide.className = 'splide__slide review-card';
+
+                        let stars = '';
+                        for (let i = 0; i < item.review_rating; i++) {
+                            stars += '<i class="fas fa-star"></i>';
+                        }
+
+                        var studentImage = ''
+
+                        if (item.student.student_photo == '' || item.student.student_photo == null) {
+                            studentImage = 'profile_avater.webp'
+                        } else {
+                            studentImage = item.student.student_photo
+                        }
+
+                        slide.innerHTML = `
+                                <div class="as-card as-text-center as-p-10px" style="margin: 5px;">
+                                    <div class="as-mb-10px">
+                                        <img class="as-w-50px as-h-50px as-brr-50 as-mb-10px" src="${studentImage == 'profile_avater.webp' ? '/image/other/profile_avater.webp' : '/image/student/' + studentImage}" alt="Student">
+                                        <div class="">
+                                            <h3>${item.student.student_name}</h3>
+                                            <p class="as-f-fade">${item.course.course_name}</p>
+                                        </div>
+                                    </div>
+                                    <div class="as-mb-10px as-color-yellow">
+                                        ${stars}
+                                    </div>
+                                    <p class="as-lineclamp-1">${item.review}</p>
                                 </div>
-                            </div>
-                        </div>
-                    </article>`;
-            splideList.appendChild(slide);
-        });
+                            `;
+                        splideList.appendChild(slide);
+                    });
 
-        new Splide('#blog-slider', {
-            type: 'loop',
-            perPage: 3,
-            gap: '1rem',
-            autoplay: true,
-            pagination: false,
-            breakpoints: {
-                1024: {
-                    perPage: 2,
-                },
-                640: {
-                    perPage: 1,
-                },
-            },
-        }).mount();
-    })
-}
+                    new Splide('#review-slider', {
+                        type: 'loop',
+                        perPage: 3,
+                        gap: '1rem',
+                        autoplay: true,
+                        pagination: false,
+                        breakpoints: {
+                            1024: {
+                                perPage: 2,
+                            },
+                            640: {
+                                perPage: 1,
+                            },
+                        },
+                    }).mount();
+                })
+        }
 
-function getSiteGallery(){
-    const splideList = document.getElementById('splide__list2');
-
-    axios.get('/api/get-site-gallery')
-    .then(response => {
-        response.data.forEach(item => {
-            const slide = document.createElement('li');
-            slide.className = 'splide__slide';
-
-            slide.innerHTML = `<div class="as-card" style="margin: 5px;"><img class="as-w-100 as-h-240px as-brr-5px" src="/image/gallery/${item.gallery_image}" alt="Image" onclick="openLightbox(this)"></div>`;
-            splideList.appendChild(slide);
-        });
-
-        new Splide('#gallery-slider', {
-            type: 'loop',
-            perPage: 3,
-            gap: '1rem',
-            autoplay: true,
-            pagination: false,
-            breakpoints: {
-                1024: {
-                    perPage: 2,
-                },
-                640: {
-                    perPage: 1,
-                },
-            },
-        }).mount();
-    })
-}
-
-function getCourseReview(){
-    const splideList = document.getElementById('splide__list');
-
-    axios.get('/api/get-review')
-    .then(response => {
-        response.data.forEach(item => {
-            const slide = document.createElement('li');
-            slide.className = 'splide__slide review-card';
-
-            let stars = '';
-            for (let i = 0; i < item.review_rating; i++) {
-                stars += '<i class="fas fa-star"></i>';
-            }
-
-            var studentImage = ''
-
-            if(item.student.student_photo == '' || item.student.student_photo == null){
-                studentImage = 'profile_avater.webp'
-            }else{
-                studentImage = item.student.student_photo
-            }
-
-            slide.innerHTML = `
-                <div class="as-card as-text-center as-p-10px" style="margin: 5px;">
-                    <div class="as-mb-10px">
-                        <img class="as-w-50px as-h-50px as-brr-50 as-mb-10px" src="${studentImage == 'profile_avater.webp'? '/image/other/profile_avater.webp' : '/image/student/' + studentImage}" alt="Student">
-                        <div class="">
-                            <h3>${item.student.student_name}</h3>
-                            <p class="as-f-fade">${item.course.course_name}</p>
-                        </div>
-                    </div>
-                    <div class="as-mb-10px as-color-yellow">
-                        ${stars}
-                    </div>
-                    <p class="">${item.review}</p>
-                </div>
-            `;
-            splideList.appendChild(slide);
-        });
-
-        new Splide('#review-slider', {
-            type: 'loop',
-            perPage: 3,
-            gap: '1rem',
-            autoplay: true,
-            pagination: false,
-            breakpoints: {
-                1024: {
-                    perPage: 2,
-                },
-                640: {
-                    perPage: 1,
-                },
-            },
-        }).mount();
-    })
-  }
-
-</script>
+    </script>
 @endsection

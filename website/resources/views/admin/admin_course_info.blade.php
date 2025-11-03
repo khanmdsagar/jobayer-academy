@@ -23,9 +23,9 @@
             <div class="as-card as-p-10px">
                 <div><b>Id:</b> {{$course_data->id}}</div>
                 <div class="as-divider"></div>
-                <div><b>Course name:</b> {{$course_data->course_name}}</div>
+                <div><b>Course name:</b> <span class="as-check-language">{{$course_data->course_name}}</span></div>
                 <div class="as-divider"></div>
-                <div><b>Tagline:</b> {{$course_data->course_tagline}}</div>
+                <div><b>Tagline:</b> <span class="as-check-language"></span>{{$course_data->course_tagline}}</span></div>
                 <div class="as-divider"></div>
                 <div><b>Slug:</b> {{$course_data->course_slug}}</div>
                 <div class="as-divider"></div>
@@ -37,19 +37,19 @@
                 <div class="as-divider"></div>
                 <div><b>Level:</b> {{$course_data->course_level}}</div>
                 <div class="as-divider"></div>
-                <div><b>Description:</b> {!!$course_data->course_description!!}</div>
+                <div><b>Description:</b> <span class="as-check-language">{!!$course_data->course_description!!}</span></div>
                 <div class="as-divider"></div>
                 <div><b>Status:</b> {{$course_data->course_status == 1 ? 'Published' : 'Unpublished' }}</div>
                 <div class="as-divider"></div>
-                <div><b>Instructor:</b> {{$course_data->instructor->instructor_name}}</div>
+                <div><b>Instructor:</b> <span class="as-check-language">{{$course_data->instructor->instructor_name}}</span></div>
                 <div class="as-divider"></div>
-                <div><b>Category:</b> {{$course_data->course_category->category_name}}</div>
+                <div><b>Category:</b> <span class="as-check-language">{{$course_data->course_category->category_name}}</span></div>
                 <div class="as-divider"></div>
                 <div><b>Created at:</b> {{$course_data->created_at}}</div>
             </div>
 
             <div id="tab-container" class="as-mt-20px">
-                <div class="tab-buttons as-p-10px">
+                <div class="tab-buttons">
                     <button class="tab active app-cursor" onclick="showTab(event, 'tab1')">Curriculum</button>
                     <button class="tab app-cursor" onclick="showTab(event, 'tab2')">Resource</button>
                     <button class="tab app-cursor" onclick="showTab(event, 'tab3')">FAQ</button>
@@ -272,7 +272,6 @@
 
         .tab-content {
             display: none;
-            padding: 15px;
             border-radius: 4px;
         }
 
@@ -317,27 +316,28 @@
 
                     response.data.forEach(function (quiz) {
                         quizListDiv.innerHTML += `
-                                                            <div class="as-card as-mb-10px as-p-10px">
-                                                                <div>
-                                                                    <div class="as-flex as-space-between">
-                                                                        <div>
-                                                                            <div>${quiz.question}</div>
-                                                                            <div class="as-divider"></div>
-                                                                            <div>1. &nbsp${quiz.option1}</div>
-                                                                            <div>2. &nbsp${quiz.option2}</div>
-                                                                            <div>3. &nbsp${quiz.option3}</div>
-                                                                            <div>4. &nbsp${quiz.option4}</div>
-                                                                            <div>Correct &nbsp&nbsp&nbsp: &nbsp${quiz.correct}</div>
-                                                                            <div>Duration &nbsp: &nbsp${quiz.duration}sec</div>
-                                                                        </div>
-                                                                        <div>
-                                                                            <div><i onclick="showEditQuizModal(${quiz.id}, '${quiz.question}', '${quiz.option1}', '${quiz.option2}', '${quiz.option3}', '${quiz.option4}', '${quiz.correct}', ${quiz.duration})" class="fa-solid fa-edit as-app-cursor as-p-10px"></i></div>
-                                                                            <div><i onclick="deleteQuiz(${quiz.id})" class="fa-solid fa-trash as-app-cursor as-p-10px"></i></div>
+                                                                <div class="as-card as-mb-10px as-p-10px">
+                                                                    <div>
+                                                                        <div class="as-flex as-space-between">
+                                                                            <div>
+                                                                                <div class="as-check-language as-f-18px as-f-bold">${quiz.question}</div>
+                                                                                <div class="as-divider"></div>
+                                                                                <div class="as-check-language">1. &nbsp${quiz.option1}</div>
+                                                                                <div class="as-check-language">2. &nbsp${quiz.option2}</div>
+                                                                                <div class="as-check-language">3. &nbsp${quiz.option3}</div>
+                                                                                <div class="as-check-language">4. &nbsp${quiz.option4}</div>
+                                                                                <div class="as-divider"></div>
+                                                                                <div><b>Correct &nbsp&nbsp&nbsp:</b> &nbsp${quiz.correct}</div>
+                                                                                <div><b>Duration &nbsp:</b> &nbsp${quiz.duration}sec</div>
+                                                                            </div>
+                                                                            <div>
+                                                                                <div><i onclick="showEditQuizModal(${quiz.id}, '${quiz.question}', '${quiz.option1}', '${quiz.option2}', '${quiz.option3}', '${quiz.option4}', '${quiz.correct}', ${quiz.duration})" class="fa-solid fa-edit as-app-cursor as-p-10px"></i></div>
+                                                                                <div><i onclick="deleteQuiz(${quiz.id})" class="fa-solid fa-trash as-app-cursor as-p-10px"></i></div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        `;
+                                                            `;
                     });
 
                 });
@@ -545,46 +545,46 @@
                 .then(function (response) {
                     response.data.forEach(function (chapter) {
                         chapterDataDiv.innerHTML += `
-                                                                            <div class="as-card as-mb-10px as-p-10px">
-                                                                                <div>
-                                                                                    <div class="as-flex as-space-between as-align-center as-f-bold">
-                                                                                        <div>${chapter.chapter_name}</div>
-                                                                                        <div>
-                                                                                            <span><i onclick="showModal('add-topic${chapter.id}')" class="fa-solid fa-plus as-app-cursor as-p-10px"></i></span>
-                                                                                            <span><i onclick="deleteChapter(${chapter.id})" class="fa-solid fa-trash as-app-cursor as-p-10px"></i></span>
+                                                                                <div class="as-card as-mb-10px as-p-10px">
+                                                                                    <div>
+                                                                                        <div class="as-flex as-space-between as-align-center as-f-bold">
+                                                                                            <div class="as-check-language as-f-18px">${chapter.chapter_name}</div>
+                                                                                            <div>
+                                                                                                <span><i onclick="showModal('add-topic${chapter.id}')" class="fa-solid fa-plus as-app-cursor as-p-10px"></i></span>
+                                                                                                <span><i onclick="deleteChapter(${chapter.id})" class="fa-solid fa-trash as-app-cursor as-p-10px"></i></span>
+                                                                                            </div>
                                                                                         </div>
+                                                                                        <div class="as-divider"></div>
+                                                                                        <div id="chapter-topic-div${chapter.id}"></div>
                                                                                     </div>
-                                                                                    <div class="as-divider"></div>
-                                                                                    <div id="chapter-topic-div${chapter.id}"></div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="as-modal" id="add-topic${chapter.id}" style="display: none">
-                                                                                <div class="info-section as-bg-white as-shadow-lw as-p-20px as-w-50 md:as-w-90 as-mt-10px as-brr-5px">
+                                                                                <div class="as-modal" id="add-topic${chapter.id}" style="display: none">
+                                                                                    <div class="info-section as-bg-white as-shadow-lw as-p-20px as-w-50 md:as-w-90 as-mt-10px as-brr-5px">
 
-                                                                                    <div class="as-modal-child">
-                                                                                        <div class="as-mt-10px">
-                                                                                            <div class="as-mb-5px"><b>Topic name</b></div>
-                                                                                            <input type="text" id="topic-name${chapter.id}" class="as-input" placeholder="Enter Topic name">
+                                                                                        <div class="as-modal-child">
+                                                                                            <div class="as-mt-10px">
+                                                                                                <div class="as-mb-5px"><b>Topic name</b></div>
+                                                                                                <input type="text" id="topic-name${chapter.id}" class="as-input" placeholder="Enter Topic name">
+                                                                                            </div>
+                                                                                            <div class="as-mt-10px">
+                                                                                                <div class="as-mb-5px"><b>Topic Video URL</b></div>
+                                                                                                <input type="text" id="topic-video${chapter.id}" class="as-input" placeholder="Enter Topic Video URL">
+                                                                                            </div>
+                                                                                            <div class="as-mt-10px">
+                                                                                                <div class="as-mb-5px"><b>Topic Status</b></div>
+                                                                                                <select id="topic-isFree${chapter.id}" class="as-select">
+                                                                                                    <option value="0">Paid</option>
+                                                                                                    <option value="1">Free</option>
+                                                                                                </select>
+                                                                                            </div>
                                                                                         </div>
-                                                                                        <div class="as-mt-10px">
-                                                                                            <div class="as-mb-5px"><b>Topic Video URL</b></div>
-                                                                                            <input type="text" id="topic-video${chapter.id}" class="as-input" placeholder="Enter Topic Video URL">
+                                                                                        <div class="as-mt-10px as-text-right">
+                                                                                            <button class="as-btn as-app-cursor as-bg-cancel" onclick="hideModal('add-topic${chapter.id}')">Cancel</button>
+                                                                                            <button id="add-chapter-btn" class="as-btn as-app-cursor" onclick="addChapterTopic(${chapter.id})">Add</button>
                                                                                         </div>
-                                                                                        <div class="as-mt-10px">
-                                                                                            <div class="as-mb-5px"><b>Topic Status</b></div>
-                                                                                            <select id="topic-isFree${chapter.id}" class="as-select">
-                                                                                                <option value="0">Paid</option>
-                                                                                                <option value="1">Free</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="as-mt-10px as-text-right">
-                                                                                        <button class="as-btn as-app-cursor as-bg-cancel" onclick="hideModal('add-topic${chapter.id}')">Cancel</button>
-                                                                                        <button id="add-chapter-btn" class="as-btn as-app-cursor" onclick="addChapterTopic(${chapter.id})">Add</button>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        `;
+                                                                            `;
 
                         getChapterTopicData(chapter.id);
                     });
@@ -653,17 +653,17 @@
 
                     response.data.forEach(function (topic) {
                         chapterTopicDiv.innerHTML += `
-                                                                    <div class="as-flex as-align-center as-mb-5px">
-                                                                        <div class="as-flex as-space-between as-w-100">
-                                                                            <div>${topic.topic_name}</div>
-                                                                            <div>
-                                                                                <span><i onclick="showEditTopicModal(${topic.id}, '${topic.topic_name}', '${topic.topic_video}', ${topic.topic_is_free})" class="fa-solid fa-edit as-app-cursor as-p-10px"></i></span>
-                                                                                <span><i style="color: red" onclick="deleteChapterTopic(${topic.id}, ${chapterId})" class="fa-solid fa-trash as-app-cursor as-p-10px"></i></span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="as-divider"></div>
-                                                                `;
+                                                        <div class="as-flex as-align-center as-mb-5px">
+                                                            <div class="as-flex as-space-between as-w-100">
+                                                                <div class="as-check-language as-flex as-align-center">${topic.topic_name}</div>
+                                                                <div>
+                                                                    <span><i onclick="showEditTopicModal(${topic.id}, '${topic.topic_name}', '${topic.topic_video}', ${topic.topic_is_free})" class="fa-solid fa-edit as-app-cursor as-p-10px"></i></span>
+                                                                    <span><i style="color: red" onclick="deleteChapterTopic(${topic.id}, ${chapterId})" class="fa-solid fa-trash as-app-cursor as-p-10px"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="as-divider"></div>
+                                                    `;
                     });
                 });
         }

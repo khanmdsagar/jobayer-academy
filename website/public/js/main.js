@@ -73,7 +73,7 @@ function toggleAdminSidebar() {
 
 function adminLogout() {
     const logout = confirm('আপনি কি লগআউট করতে চান?');
-    if(logout) {
+    if (logout) {
         window.location.replace('/admin/logout');
     } else {
         return false;
@@ -81,18 +81,46 @@ function adminLogout() {
 }
 
 function logout() {
-        var confirmLogout = confirm('আপনি কি চাইলে লগ আউট করতে?');
+    var confirmLogout = confirm('আপনি কি চাইলে লগ আউট করতে?');
 
-        if(confirmLogout){
-            axios.get('/logout')
+    if (confirmLogout) {
+        axios.get('/logout')
             .then(response => {
-                if(response.data == "logged out"){
-                        window.location.replace('/');
+                if (response.data == "logged out") {
+                    window.location.replace('/');
                 }
-                else{
+                else {
                     window.location.replace('/');
                 }
             })
-            .catch(error => {});
+            .catch(error => { });
+    }
+}
+
+window.addEventListener('load', function () {
+    function isMostlyEnglish2(text) {
+        const englishChars = text.match(/[A-Za-z]/g) || [];
+        return englishChars.length / text.length > 0.7;
+    }
+
+    function checkLanguageAndReplaceFontFamily2() {
+        const elements = document.getElementsByClassName('as-check-language');
+
+        for (const element of elements) {
+            const text = element.innerText.trim();
+            if (text && !isMostlyEnglish2(text)) {
+                element.style.fontFamily = "'Tiro Bangla', serif";
+            }
         }
     }
+
+    // Run once at load
+    checkLanguageAndReplaceFontFamily2();
+
+    // Also watch for dynamic content changes
+    const observer = new MutationObserver(() => {
+        checkLanguageAndReplaceFontFamily2();
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+});

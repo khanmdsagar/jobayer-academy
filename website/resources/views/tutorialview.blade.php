@@ -138,8 +138,7 @@
             <h3>প্রশ্ন করুন</h3>
             <div class="as-align-end">
                 <input class="as-input" type="text" id="qsnInput" placeholder="আপনার প্রশ্ন লিখুন..." />
-                <button class="as-btn app-cursor as-bg-cancel"
-                    onclick="hideModal('ask-qsn-modal')">বাতিল</button>
+                <button class="as-btn app-cursor as-bg-cancel" onclick="hideModal('ask-qsn-modal')">বাতিল</button>
                 <button class="as-btn as-mt-10px" onclick="submitQsn()" id="submitQsn">জমা দিন</button>
             </div>
         </div>
@@ -166,6 +165,7 @@
             width: 100%;
             overflow: hidden;
             aspect-ratio: 16/9;
+            display: none;
         }
 
         .video-wrapper iframe {
@@ -237,8 +237,8 @@
         }
 
         .topic-list-active {
-            background-color: var(--primary-color);
-            color: #fff;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
         }
 
         .topic-list-active:hover {
@@ -257,7 +257,8 @@
                 }
             })
 
-        document.addEventListener('DOMContentLoaded', function () {
+        //auto play last video
+        window.addEventListener('load', function () {
             const isanytoPlayX = JSON.parse(localStorage.getItem('isanytoPlay' + {{$course_id}}));
             if (isanytoPlayX != null) {
                 axios.get(`/api/get-video-data/${isanytoPlayX.topic_id}`)
@@ -265,7 +266,16 @@
                         playVideoNow(res.data.topic_video, res.data.topic_name, res.data.id, isanytoPlayX.time);
                     })
             }
-        })
+        });
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     const isanytoPlayX = JSON.parse(localStorage.getItem('isanytoPlay' + {{$course_id}}));
+        //     if (isanytoPlayX != null) {
+        //         axios.get(`/api/get-video-data/${isanytoPlayX.topic_id}`)
+        //             .then(res => {
+        //                 playVideoNow(res.data.topic_video, res.data.topic_name, res.data.id, isanytoPlayX.time);
+        //             })
+        //     }
+        // })
 
         getResource();
         getCourseContent();
@@ -286,11 +296,10 @@
         const player = new Plyr('#videoPlayer', {
             controls: [
                 'play-large', 'play', 'progress', 'current-time',
-                'mute', // keep mute button
-                // no 'volume' here
+                'mute',
                 'settings', 'fullscreen'
             ],
-            autoplay: true, // Plyr will request autoplay
+            autoplay: true,
             muted: false,
             youtube: {
                 noCookie: true,
@@ -326,21 +335,21 @@
 
             courseContent.innerHTML = '';
             courseContent.innerHTML = `<h3 id="content-load-indicator" style="text-align: center; color: grey;">
-                                                                                                                                <i class="fas fa-spinner fa-spin"></i>
-                                                                                                                            </h3>`;
+                                                                                                                                        <i class="fas fa-spinner fa-spin"></i>
+                                                                                                                                    </h3>`;
 
             if (response.data) {
                 document.getElementById('content-load-indicator').style.display = 'none';
 
                 for (const item of response.data.course_content) {
                     courseContent.innerHTML += `
-                                                                                                        <div class="as-mb-10px">
-                                                                                                            <div class="as-flex as-space-between">
-                                                                                                                <h3 class="as-mr-5px">${item.chapter_name}</h3>
-                                                                                                                <span class="as-date as-mr-10px">বিষয়: ${convertToBengali(item.chapter_topic.length)} টি</span>
-                                                                                                            </div>
-                                                                                                            <div>
-                                                                                                                ${item.chapter_topic.map(topic => {
+                                                                                                                <div class="as-mb-10px">
+                                                                                                                    <div class="as-flex as-space-between">
+                                                                                                                        <h3 class="as-mr-5px">${item.chapter_name}</h3>
+                                                                                                                        <span class="as-date as-mr-10px">বিষয়: ${convertToBengali(item.chapter_topic.length)} টি</span>
+                                                                                                                    </div>
+                                                                                                                    <div>
+                                                                                                                        ${item.chapter_topic.map(topic => {
                         const topicKey = `${topic.id}-1`;
                         const isCompleted = topic_ids.includes(topicKey);
 
@@ -352,17 +361,17 @@
                             iconHtml = `<i class="fa-solid fa-video" style="color: grey;"></i>`;
                         }
                         return `<div id="topic-list-${topic.id}" class="completed as-mr-10px as-brr-5px as-app-cursor" onclick="playVideoNow('${topic.topic_video}', '${topic.topic_name}', '${topic.id}')">
-                                                                                                                        <div class="as-flex as-align-center as-p-7px">
-                                                                                                                            <div class="as-mr-10px">
-                                                                                                                                ${iconHtml}
+                                                                                                                                <div class="as-flex as-align-center as-p-7px">
+                                                                                                                                    <div class="as-mr-10px">
+                                                                                                                                        ${iconHtml}
+                                                                                                                                    </div>
+                                                                                                                                    <div>${topic.topic_name}</div>
+                                                                                                                                </div>
                                                                                                                             </div>
-                                                                                                                            <div>${topic.topic_name}</div>
-                                                                                                                        </div>
-                                                                                                                    </div>
-                                                                                                                `;
+                                                                                                                        `;
                     }).join('')}
-                                                                                                            </div>
-                                                                                                        </div>`;
+                                                                                                                    </div>
+                                                                                                                </div>`;
                 }
             }
         }
@@ -464,6 +473,12 @@
                     player.currentTime = playTime;
                     setTimeout(() => {
                         player.pause();
+                        setTimeout(() => {
+                            var conf = confirm('আপনি কি দেখা চালিয়ে যেতে চান?');
+                            if (conf) { 
+                                player.play();
+                            }
+                        }, 500);
                     }, 1000);
                 });
 
@@ -516,7 +531,7 @@
             axios.post('/api/mark-as-complete', {
                 topic_id: topicID,
                 course_id: {{$course_id}}
-                                                                                                })
+                                                                                                        })
                 .then(response => {
                     if (response.data.status == 'success') {
                         getCourseContent();
@@ -547,8 +562,8 @@
 
                     if (res.data.length == 0) {
                         tab2Content.innerHTML = `<h3 style="text-align: center; color: grey;">
-                                                                                                                কোন প্রশ্ন নেই!
-                                                                                                            </h3>`
+                                                                                                                        কোন প্রশ্ন নেই!
+                                                                                                                    </h3>`
                     }
                     else if (loadQsnAns >= qsnAnsLength) {
                         loadMoreQsnAns.style.display = 'none';
@@ -559,15 +574,15 @@
 
                     for (var i = 0; i < loadQsnAns; i++) {
                         tab2Content.innerHTML += `<div class="askqsn-card as-mb-10px">
-                                                                                                                        <div class="profile">
-                                                                                                                            <img src="${res.data[i].student_photo !== null && res.data[i].student_photo !== '' ? '/image/student/' + res.data[i].student_photo : '/image/other/profile_avater.webp'}" alt="Profile Picture">
-                                                                                                                            <div class="info as-w-100">
-                                                                                                                                <h3>${res.data[i].student_name}</h3>
-                                                                                                                                <p class="question"><b>প্রশ্ন: </b>${res.data[i].question}?</p>
-                                                                                                                                <p style="background-color: #f1f1f1; padding: 10px; width: 100%" class="answer as-brr-5px"><b>উত্তর: </b>${res.data[i].answer ? res.data[i].answer : '...'}</p>
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                   </div>`
+                                                                                                                                <div class="profile">
+                                                                                                                                    <img src="${res.data[i].student_photo !== null && res.data[i].student_photo !== '' ? '/image/student/' + res.data[i].student_photo : '/image/other/profile_avater.webp'}" alt="Profile Picture">
+                                                                                                                                    <div class="info as-w-100">
+                                                                                                                                        <h3>${res.data[i].student_name}</h3>
+                                                                                                                                        <p class="question"><b>প্রশ্ন: </b>${res.data[i].question}?</p>
+                                                                                                                                        <p style="background-color: #f1f1f1; padding: 10px; width: 100%" class="answer as-brr-5px"><b>উত্তর: </b>${res.data[i].answer ? res.data[i].answer : '...'}</p>
+                                                                                                                                    </div>
+                                                                                                                                </div>
+                                                                                                                           </div>`
                     }
                 })
         }
@@ -614,34 +629,34 @@
                 .then(res => {
                     if (res.data.length == 0) {
                         tab1Content.innerHTML = `<h3 style="text-align: center; color: grey;">
-                                                                                                                কোন ফাইল নেই!
-                                                                                                            </h3>`
+                                                                                                                        কোন ফাইল নেই!
+                                                                                                                    </h3>`
                     }
                     else {
                         tab1Content.innerHTML = '';
 
                         for (var i = 0; i < res.data.length; i++) {
                             tab1Content.innerHTML += `<div class="as-flex as-space-between as-br-1px as-p-10px as-mb-5px as-brr-5px">
-                                                                                                                <div class="as-flex as-align-center">
-                                                                                                                    ${res.data[i].resource_type == 'file' ?
+                                                                                                                        <div class="as-flex as-align-center">
+                                                                                                                            ${res.data[i].resource_type == 'file' ?
                                     `<div><i class="fas fa-file"></i></div>`
                                     :
                                     `<div><i class="fas fa-link"></i></div>`
                                 }
-                                                                                                                    <div class="as-ml-10px">${res.data[i].resource_name}</div>
-                                                                                                                </div>
-                                                                                                                <div class="as-flex as-align-center">
-                                                                                                                    ${res.data[i].resource_type == 'file' ?
+                                                                                                                            <div class="as-ml-10px">${res.data[i].resource_name}</div>
+                                                                                                                        </div>
+                                                                                                                        <div class="as-flex as-align-center">
+                                                                                                                            ${res.data[i].resource_type == 'file' ?
                                     `<a download rel="nofollow" href="/storage/${res.data[i].resource_url}" class="app-cursor as-btn">
-                                                                                                                            ডাউনলোড
-                                                                                                                        </a>`
+                                                                                                                                    ডাউনলোড
+                                                                                                                                </a>`
                                     :
                                     `<a download target="_blank" rel="nofollow" href="${res.data[i].resource_url}" class="app-cursor as-btn">
-                                                                                                                            ভিজিট
-                                                                                                                        </a>`
+                                                                                                                                    ভিজিট
+                                                                                                                                </a>`
                                 }
-                                                                                                                </div>
-                                                                                                            </div>`
+                                                                                                                        </div>
+                                                                                                                    </div>`
                         }
                     }
                 })

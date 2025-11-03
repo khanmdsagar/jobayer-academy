@@ -14,7 +14,7 @@
         <div class="as-p-10px">
             <div>
                 <i onclick="toggleAdminSidebar()" class="fas fa-bars as-app-cursor as-f-20px as-mr-10px"></i>
-                <span class="as-f-bold as-f-20px">Asked Question</span> <span id="total-question"></span>
+                <span class="as-f-bold as-f-20px">Asked Question - </span> <span id="total-question" class="as-f-bold as-f-20px"></span>
             </div>
         </div>
 
@@ -36,7 +36,7 @@
             axios.get('/admin/get-asked-question')
                 .then(res => {
                     questionAnswerDiv.innerHTML = '';
-                    document.getElementById('total-question').innerText = `(${res.data.length})`;
+                    document.getElementById('total-question').innerText = `${res.data.length} question(s) found`;
 
                     if (res.data.length === 0) {
                         questionAnswerDiv.innerHTML = `<h3 style="text-align: center; color: grey;">No question!</h3>`;

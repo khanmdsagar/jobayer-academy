@@ -14,7 +14,7 @@
    <div class="as-p-10px">
         <div>
             <i onclick="toggleAdminSidebar()" class="fas fa-bars as-app-cursor as-f-20px as-mr-10px"></i>
-            <span class="as-f-bold as-f-20px">Category</span>
+            <span class="as-f-bold as-f-20px">Category - <span id="category-count"></span></span>
         </div>
 
         <div class="actions as-flex as-justify-end">
@@ -79,10 +79,17 @@
 
         axios.get('/admin/category/data')
             .then(function(response){
+                document.getElementById('category-count').innerText = response.data.length;
+                categoryDataDiv.innerHTML = '';
+
+                if(response.data.length == 0){
+                    categoryDataDiv.innerHTML = '<div class="as-text-center as-f-20px">No Category</div>';
+                }
+
                 response.data.forEach(function(category){
                     categoryDataDiv.innerHTML += `
                         <div class="as-card as-mb-10px as-flex as-space-between as-p-10px">
-                            <div class="as-flex as-align-center">${category.category_name}</div>
+                            <div class="as-flex as-align-center as-check-language as-f-18px">${category.category_name}</div>
                             <div>
                                 <span><i onclick="showEditCategoryModal('${category.id}', '${category.category_name}')" class="fa-solid fa-edit as-app-cursor as-p-10px"></i></span>
                                 <span><i onclick="deleteCategory(${category.id})" class="fa-solid fa-trash as-app-cursor as-p-10px"></i></span>
