@@ -519,7 +519,7 @@ ol {
 
 /* color */
 .as-color-primary {
-    color: var(--primary-color);
+    color: var(--primary-color) !important;
 }
 
 .as-color-secondary {
@@ -555,7 +555,7 @@ ol {
 }
 
 .as-bg-secondary {
-    background-color: var(--secondary-color);
+    background-color: var(--secondary-color) !important;
 }
 
 .as-bg-text {

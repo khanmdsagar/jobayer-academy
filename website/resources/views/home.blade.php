@@ -473,6 +473,5 @@
                     }).mount();
                 })
         }
-
     </script>
 @endsection
