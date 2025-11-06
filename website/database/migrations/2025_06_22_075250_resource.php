@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('resource', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('resource_name');
-            $table->text('resource_url');
+            $table->text('resource_path');
             $table->string('resource_type');
 
             $table->unsignedBigInteger('course_id');

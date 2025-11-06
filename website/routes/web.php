@@ -292,6 +292,12 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
     Route::post('/admin/quiz/delete', [AdminCourseController::class, 'delete_quiz']);
     Route::post('/admin/quiz/edit', [AdminCourseController::class, 'edit_quiz']);
 
+    //resource management routes
+    Route::get('/admin/resource/get/{course_id}', [AdminCourseController::class, 'get_resource']);
+    Route::post('/admin/resource/add', [AdminCourseController::class, 'add_resource']);
+    Route::post('/admin/resource/add/details', [AdminCourseController::class, 'add_resource_details']);
+    Route::post('/admin/resource/delete', [AdminCourseController::class, 'delete_resource']);
+
     //question and answer
     Route::get('/admin/get-asked-question', [AskedQuestionController::class, 'get_asked_question']);
     Route::post('/admin/asked-question/delete', [AskedQuestionController::class, 'delete_asked_question']);

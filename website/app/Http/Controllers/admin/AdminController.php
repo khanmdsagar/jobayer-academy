@@ -193,7 +193,7 @@ class AdminController extends Controller
 
     function delete_course(Request $request)
     {
-        $course_id = strip_tags(trim($request->input('course_id')));
+        $course_id        = strip_tags(trim($request->input('course_id')));
         $course_thumbnail = strip_tags(trim($request->input('course_thumbnail')));
 
         $result = DB::table('course')->where('id', $course_id)->delete();

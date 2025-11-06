@@ -5,9 +5,71 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminCourseController extends Controller
 {
+    function get_resource($course_id)
+    {
+        return DB::table('resource')->where('course_id', $course_id)->orderBy('id', 'desc')->get();
+    }
+
+    function add_resource(Request $request)
+    {
+        $originalName = $request->file('resource_file')->getClientOriginalName();
+        $path = $request->file('resource_file')->storeAs('file', $originalName, 'public');
+
+        //$path = $request->file('resource_file')->store('file', 'public');
+        return $path;
+    }
+
+    function add_resource_details(Request $request)
+    {
+        $resource_name = $request->input('resource_name');
+        $resource_path = $request->input('resource_path');
+        $resource_type = $request->input('resource_type');
+        $course_id = $request->input('course_id');
+
+        $result = DB::table('resource')->insert([
+            'resource_name' => $resource_name,
+            'resource_path' => $resource_path,
+            'resource_type' => $resource_type,
+            'course_id' => $course_id,
+        ]);
+
+        if (!$result) {
+            return response()->json(['status' => 'error']);
+        } else {
+            return response()->json(['status' => 'success']);
+        }
+    }
+
+    function delete_resource(Request $request)
+    {
+        $resource_id = $request->input('resource_id');
+        $resource_type = $request->input('resource_type');
+        $resource_path = $request->input('resource_path');
+
+        if ($resource_type == 'file') {
+            try {
+                Storage::disk('public')->delete($resource_path);
+                DB::table('resource')->where('id', $resource_id)->delete();
+                return response()->json(['status' => 'success']);
+            } catch (\Exception $e) {
+                return response()->json(['status' => 'failed', 'error' => $e->getMessage()]);
+            }
+        } 
+        else {
+            try {
+                DB::table('resource')->where('id', $resource_id)->delete();
+                return response()->json(['status' => 'success']);
+            } catch (\Exception $e) {
+                return response()->json(['status' => 'failed']);
+            }
+        }
+    }
+
+    // quiz management functions
     // get quiz for a course
     public function get_quiz($course_id)
     {
@@ -94,8 +156,7 @@ class AdminCourseController extends Controller
 
         if ($result) {
             return response()->json(['status' => 'success', 'message' => 'Quiz updated successfully']);
-        } 
-        else {
+        } else {
             return response()->json(['status' => 'error', 'message' => 'Failed to update quiz'], 500);
         }
     }
