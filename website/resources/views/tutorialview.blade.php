@@ -647,11 +647,11 @@
                                                                                                                                             </div>
                                                                                                                                             <div class="as-flex as-align-center">
                                                                                                                                                 ${res.data[i].resource_type == 'file' ?
-                                    `<a download rel="nofollow" href="/storage/${res.data[i].resource_url}" class="app-cursor as-btn">
+                                    `<a download rel="nofollow" href="/storage/${res.data[i].resource_path}" class="app-cursor as-btn">
                                                                                                                                                         <i class="fa-solid fa-download"></i>
                                                                                                                                                     </a>`
                                     :
-                                    `<a download target="_blank" rel="nofollow" href="${res.data[i].resource_url}" class="app-cursor as-btn">
+                                    `<a download target="_blank" rel="nofollow" href="${res.data[i].resource_path}" class="app-cursor as-btn">
                                                                                                                                                         <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                                                                                                                                     </a>`
                                 }

@@ -25,7 +25,7 @@
                 <div class="as-divider"></div>
                 <div><b>Course name:</b> <span class="as-check-language">{{$course_data->course_name}}</span></div>
                 <div class="as-divider"></div>
-                <div><b>Tagline:</b> <span class="as-check-language"></span>{{$course_data->course_tagline}}</span></div>
+                <div><b>Tagline:</b> <span class="as-check-language">{{$course_data->course_tagline}}</span></div>
                 <div class="as-divider"></div>
                 <div><b>Slug:</b> {{$course_data->course_slug}}</div>
                 <div class="as-divider"></div>
@@ -53,10 +53,10 @@
             {{-- tab --}}
             <div id="tab-container" class="as-mt-20px">
                 <div class="tab-buttons">
-                    <button class="tab active app-cursor" onclick="showTab(event, 'tab1')">Curriculum</button>
-                    <button class="tab app-cursor" onclick="showTab(event, 'tab2')">Resource</button>
-                    <button class="tab app-cursor" onclick="showTab(event, 'tab3')">FAQ</button>
-                    <button class="tab app-cursor" onclick="showTab(event, 'tab4')">Quiz</button>
+                    <button class="tab active as-app-cursor" onclick="showTab(event, 'tab1')">Curriculum</button>
+                    <button class="tab as-app-cursor" onclick="showTab(event, 'tab2')">Resource</button>
+                    <button class="tab as-app-cursor" onclick="showTab(event, 'tab3')">FAQ</button>
+                    <button class="tab as-app-cursor" onclick="showTab(event, 'tab4')">Quiz</button>
                 </div>
 
                 <div id="tab1" class="tab-content active">
