@@ -9,6 +9,47 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminCourseController extends Controller
 {
+    //faq functions
+    function get_faq($course_id)
+    {
+        return DB::table('question_answer')->where('course_id', $course_id)->orderBy('id', 'desc')->get();
+    }
+
+    function add_faq(Request $request)
+    {
+        $course_id    = $request->input('course_id');
+        $faq_answer   = $request->input('faq_answer');
+        $faq_question = $request->input('faq_question');
+
+        $result = DB::table('question_answer')->insert([
+            'question'  => $faq_question,
+            'answer'    => $faq_answer,
+            'course_id' => $course_id,
+        ]);
+
+        if ($result) {
+            return response()->json(['status' => 'success']);
+        } 
+        else {
+            return response()->json(['status' => 'error']);
+        }
+    }
+
+    function delete_faq(Request $request){
+        $faq_id = $request->input('faq_id');
+
+        $result = DB::table('question_answer')->where('id', $faq_id)->delete();
+
+        if ($result) {
+            return response()->json(['status' => 'success']);
+        }
+        else {
+            return response()->json(['status' => 'error']);
+        }
+    }
+
+
+    //resource functions
     function get_resource($course_id)
     {
         return DB::table('resource')->where('course_id', $course_id)->orderBy('id', 'desc')->get();

@@ -298,6 +298,12 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
     Route::post('/admin/resource/add/details', [AdminCourseController::class, 'add_resource_details']);
     Route::post('/admin/resource/delete', [AdminCourseController::class, 'delete_resource']);
 
+    //faq routes
+    Route::get('/admin/faq/get/{course_id}', [AdminCourseController::class, 'get_faq']);
+    Route::post('/admin/faq/add', [AdminCourseController::class, 'add_faq']);
+    Route::post('/admin/faq/edit', [AdminCourseController::class, 'edit_faq']);
+    Route::post('/admin/faq/delete', [AdminCourseController::class, 'delete_faq']);
+
     //question and answer
     Route::get('/admin/get-asked-question', [AskedQuestionController::class, 'get_asked_question']);
     Route::post('/admin/asked-question/delete', [AskedQuestionController::class, 'delete_asked_question']);
