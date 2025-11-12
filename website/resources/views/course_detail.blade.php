@@ -9,6 +9,7 @@
 @section('og_type', 'course')
 
 @section('content')
+<section class="as-content-top-margin">
     {{--course header--}}
     <div class="as-bg-primary as-color-white as-m-b-20px">
         <div class="as-w-95 dt:as-mw-1280px as-m-0-auto as-p-t-b-40px">
@@ -169,8 +170,9 @@
             </div>
         </div>
     </div>
+</section>
 
-    @include('partials.footer')
+@include('partials.footer')
 
 @endsection
 

@@ -2,6 +2,7 @@
 @section('title', 'Jobayer Academy')
 
 @section('content')
+<section class="as-content-top-margin">
     <!-- Hero Section -->
     <section class="hero">
         <div>
@@ -270,6 +271,7 @@
             </div>
         </section>
     </section>
+</section>
 
     @include('partials.footer')
 

@@ -3,6 +3,7 @@
 @section('title', 'Jobayer Academy - Profile')
 
 @section('content')
+<section class="as-content-top-margin">
     <div class="as-flex as-space-between as-w-95 dt:as-mw-1280px as-m-0-auto">
         <!-- Sidebar -->
         <div class="as-show-desktop as-mt-15px as-w-28">
@@ -193,6 +194,7 @@
             </div>
         </div>
     </div>
+</section>
 
 @endsection
 

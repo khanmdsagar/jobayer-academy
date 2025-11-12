@@ -3,9 +3,10 @@
 @section('title', 'Jobayer Academy - Course Tutorial')
 
 @section('content')
-    <div class="as-w-95 dt:as-mw-1280px as-m-0-auto as-mb-15px">
+<section class="as-content-top-margin" id="as-content-top-margin">
+    <div class="as-w-95 dt:as-mw-1280px as-m-0-auto as-mb-15px" style="display: flow-root;">
         <!-- Course Header -->
-        <div class="as-card as-mt-15px as-mb-15px as-p-10px">
+        <div class="as-card as-p-10px as-mb-15px as-mt-15px">
             <div class="tutorialview-course-info">
                 <div class="as-f-25px as-f-bold">{{ $course_name }}</div>
                 <p>{{ $course_tagline }}</p>
@@ -24,7 +25,7 @@
             </div>
         </div>
 
-        <div class="as-flex as-space-between md:as-block as-mt-15px">
+        <div class="as-flex as-space-between md:as-block">
             <!-- Main Content Area -->
             <div class="as-card as-w-70 md:as-w-100">
                 <!-- Video Container -->
@@ -100,8 +101,8 @@
                 </div>
             </div>
         </div>
-
     </div>
+</sction>
 
     {{--Review modal--}}
     <div class="as-modal" id="review-modal" style="display: none">
@@ -144,9 +145,16 @@
         </div>
     </div>
 
-    <div id="continueOverlay"
-        style="opacity: 0; pointer-events: none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(255, 255, 255, 0.87); align-items:center; justify-content:center;">
-        <button style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" id="continueBtn" class="as-btn as-app-cursor">দেখা চালিয়ে যান</button>
+    <div id="continueOverlay" style="opacity: 0; pointer-events: none; position:fixed; top:0; left:0; width:100%; height:100%; background: #fff; align-items:center; justify-content:center;">
+        <div class="as-card as-p-15px as-flex as-flex-column as-space-between" style="width: 250px; height: 150px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <div class="as-f-18px as-text-center">
+                আপনার গত ভিডিও দেখা অসম্পূর্ন আছে।
+            </div>
+
+            <button id="continueBtn" class="as-btn as-app-cursor as-w-100">
+                দেখা চালিয়ে যান
+            </button>
+        </div>
     </div>
 
 @endsection
@@ -269,7 +277,7 @@
             if (isanytoPlayX != null) {
                 axios.get(`/api/get-video-data/${isanytoPlayX.topic_id}`)
                     .then(res => {
-                        playVideoNow(res.data.topic_video, res.data.topic_name, res.data.id, isanytoPlayX.time);
+                        playVideoNow2(res.data.topic_video, res.data.topic_name, res.data.id, isanytoPlayX.time);
                     })
             }
         });
@@ -435,7 +443,7 @@
             playVideoNow(topic.topic_video, topic.topic_name, topic.id);
         }
 
-        function playVideoNow(videoId, courseTitle, topicId, playTime = null) {
+        function playVideoNow(videoId, courseTitle, topicId) {
             var videoWrapper = document.getElementById('video-wrapper');
 
             videoWrapper.style.display = 'block';
@@ -443,7 +451,7 @@
             var videoInfoContainer = document.getElementById('video-info-container');
             videoInfoContainer.style.display = 'block';
 
-            document.getElementById('as-app-body-content-full').scrollIntoView({
+            document.getElementById('as-content-top-margin').scrollIntoView({
                 behavior: 'smooth'
             });
 
@@ -465,50 +473,18 @@
                 ],
             };
 
-            if (playTime != null) {
-                player.once('ready', () => {
-                    player.currentTime = playTime - 30;
+            //tracking current video
+            setTimeout(() => {
+                player.on('timeupdate', () => {
+                    const key = 'isanytoPlay' + {{ $course_id }};
+                    const data = {
+                        topic_id: currentTopicId,
+                        time: player.currentTime
+                    };
+
+                    localStorage.setItem(key, JSON.stringify(data));
                 });
-
-                setTimeout(() => {
-                    document.getElementById('continueOverlay').style.opacity = '1';
-                    document.getElementById('continueOverlay').style.pointerEvents = 'auto';
-                }, 1500);
-
-                document.getElementById('continueBtn').addEventListener('click', () => {
-                    document.getElementById('continueOverlay').style.display = 'none';
-                    player.pause();
-                    player.play();
-                });
-
-
-                //tracking current video
-                setTimeout(() => {
-                    player.on('timeupdate', () => {
-                        const key = 'isanytoPlay' + {{ $course_id }};
-                        const data = {
-                            topic_id: currentTopicId,
-                            time: player.currentTime
-                        };
-
-                        localStorage.setItem(key, JSON.stringify(data));
-                    });
-                }, 1000);
-            }
-            else {
-                //tracking current video
-                setTimeout(() => {
-                    player.on('timeupdate', () => {
-                        const key = 'isanytoPlay' + {{ $course_id }};
-                        const data = {
-                            topic_id: currentTopicId,
-                            time: player.currentTime
-                        };
-
-                        localStorage.setItem(key, JSON.stringify(data));
-                    });
-                }, 1000);
-            }
+            }, 1000);
 
             document.getElementById('course-title').innerHTML = courseTitle;
             topicID = topicId;
@@ -704,6 +680,79 @@
 
             event.currentTarget.classList.add('active');
             document.getElementById(tabId).classList.add('active');
+        }
+
+        function playVideoNow2(videoId, courseTitle, topicId, playTime) {
+            var videoWrapper = document.getElementById('video-wrapper');
+
+            videoWrapper.style.display = 'block';
+
+            var videoInfoContainer = document.getElementById('video-info-container');
+            videoInfoContainer.style.display = 'block';
+
+            document.getElementById('as-content-top-margin').scrollIntoView({
+                behavior: 'smooth'
+            });
+
+            axios.get('/api/topic-is-completed/' + {{$course_id}} + '/' + topicId)
+                .then(res => {
+                    currentTopicIsCompleted = res.data;
+                });
+
+            videoPlayArr.push(topicId);
+            currentTopicId = topicId;
+
+            document.getElementById('continueOverlay').style.opacity = '1';
+            document.getElementById('continueOverlay').style.pointerEvents = 'auto';
+
+            player.source = {
+                type: 'video',
+                sources: [
+                    {
+                        src: videoId,
+                        provider: 'youtube',
+                    },
+                ],
+            };
+
+            player.once('ready', () => {
+                player.currentTime = playTime - 30;
+            });
+
+            document.getElementById('continueBtn').addEventListener('click', () => {
+                document.getElementById('continueOverlay').style.display = 'none';
+                player.pause();
+                player.play();
+
+                //tracking current video
+                setTimeout(() => {
+                    player.on('timeupdate', () => {
+                        const key = 'isanytoPlay' + {{ $course_id }};
+                        const data = {
+                            topic_id: currentTopicId,
+                            time: player.currentTime
+                        };
+
+                        localStorage.setItem(key, JSON.stringify(data));
+                    });
+                }, 1000);
+            });
+            
+            document.getElementById('course-title').innerHTML = courseTitle;
+            topicID = topicId;
+
+            const tabContainer = document.getElementById('tab-container');
+
+            tabContainer.style.display = 'block';
+            markCompleteBtn.style.display = 'none';
+
+            getAskQuestion(topicID);
+
+            var currentTopic = document.getElementById('topic-list-' + topicId);
+            var previousTopic = document.getElementById('topic-list-' + videoPlayArr[videoPlayArr.length - 2]);
+
+            currentTopic.classList.add('topic-list-active');
+            previousTopic.classList.remove('topic-list-active');
         }
     </script>
 @endsection

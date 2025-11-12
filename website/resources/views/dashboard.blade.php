@@ -3,6 +3,7 @@
 @section('title', 'Jobayer Academy - Dashboard')
 
 @section('content')
+<section class="as-content-top-margin">
     <div class="as-flex as-space-between as-w-95 dt:as-mw-1280px as-m-0-auto">
         <!-- Sidebar -->
         <div class="as-show-desktop as-mt-15px as-w-28">
@@ -36,11 +37,13 @@
         <!-- Main Content -->
         <div class="as-mt-15px as-w-70 md:as-w-100">
             <div>
-                <div class="as-mb-20px">
+                <div>
                     <div class="as-f-20px as-f-bold">স্বাগতম <span
                             style="color: var(--secondary-color);">{{ $student_name }}</span></div>
                     <div class="as-f-16px">আপনার শিক্ষার প্রগতি চালিয়ে যান</div>
                 </div>
+
+                <div class="as-divider"></div>
 
                 {{-- @if($profile_percentage != 100)
                 <div
@@ -72,6 +75,7 @@
 
         </div>
     </div>
+</section>
 @endsection
 
 @section('styles')
@@ -117,7 +121,7 @@
                         courseField.innerHTML = ``;
                         courses.forEach(course => {
                             courseField.innerHTML += `
-                            <div class="dashboard-course-card as-responsive-card">
+                            <div class="dashboard-course-card as-responsive-card as-mt-10px">
                                 <div class="dashboard-course-image">
                                     <img onclick="window.location.href = '/tutorial/${course.course.id}/${course.course.course_slug}'" class="image as-app-cursor" src="/storage/${course.course.course_thumbnail}" alt="image">
                                 </div>

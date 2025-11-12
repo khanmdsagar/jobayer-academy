@@ -3,6 +3,7 @@
 @section('title', 'Jobayer Academy - Callback')
 
 @section('content')
+<section class="as-content-top-margin">
     @if($status == 'success')
         <div class="as-flex as-flex-center">
             <div class="as-card as-w-300px as-p-20px as-mt-15px as-text-center">
@@ -34,6 +35,8 @@
             </div>
         </div>
     @endif
+</section>
+    
     @include('partials.footer')
 @endsection
 

@@ -32,11 +32,13 @@ body {
     -ms-user-select: none; */
     animation: appear 0.3s ease-in;
 }
+
 @keyframes appear {
     0% {
         opacity: 0;
     }
-    100% {  
+
+    100% {
         opacity: 1;
     }
 }
@@ -82,7 +84,8 @@ input[type=number] {
 .as-app-body {
     height: 92vh;
     overflow-y: auto;
-    scroll-behavior: smooth
+    scroll-behavior: smooth;
+    background: #f5f5f5;
 }
 
 .as-app-body-content {
@@ -120,6 +123,28 @@ input[type=number] {
     box-shadow: var(--shadow);
     height: 8vh;
     overflow: hidden;
+}
+
+.as-app-navbar-free {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: var(--shadow);
+    height: 70px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.2);
+    /* semi-transparent */
+    backdrop-filter: blur(10px);
+    /* blur background behind */
+    -webkit-backdrop-filter: blur(10px);
+    /* for Safari */
+    z-index: 999;
+}
+
+.as-content-top-margin {
+    margin-top: 70px;
 }
 
 .as-app-navbar-content {
@@ -537,6 +562,7 @@ ol {
 .as-color-grey {
     color: #c5c5c5;
 }
+
 .as-color-cancel {
     color: #e63434;
 }
@@ -760,6 +786,10 @@ ol {
 }
 
 .as-flex-col {
+    flex-direction: column;
+}
+
+.as-flex-column {
     flex-direction: column;
 }
 

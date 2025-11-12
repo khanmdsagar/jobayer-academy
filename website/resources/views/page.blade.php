@@ -3,7 +3,7 @@
 @section('title', 'Jobayer Academy')
 
 @section('content')
-<section class="main-section">
+<section class="as-content-top-margin">
     <div class="as-responsive-container">
         @if (isset($page_content))
             <div class="page-content">{!!$page_content->page_content!!}</div>

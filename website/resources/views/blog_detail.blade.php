@@ -4,7 +4,7 @@
 
 @section('content')
 
-<section class="main-section">
+<section class="as-content-top-margin">
     <div class="as-responsive-container">
         <div class="as-text-center"><h1 class="as-mb-10px">{{$blog->blog_title}}</h1></div>
         <div class="blog-container">

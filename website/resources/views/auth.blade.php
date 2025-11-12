@@ -3,7 +3,7 @@
 
 @section('content')
     <!-- Auth Section -->
-    <section>
+    <section class="as-content-top-margin">
         <div class="auth-div as-absolute as-absolute-center as-w-400px md:as-w-95" id="auth-container-check"
             style="display: block">
             <div class="as-card as-p-15px ">

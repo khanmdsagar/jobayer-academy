@@ -88,9 +88,9 @@
     </div>
 
     {{--main application--}}
-    <div class="as-app-container">
+    <div class="">
         {{--navigation bar--}}
-        <div class="as-app-navbar">
+        <div class="as-app-navbar-free">
             <div class="as-app-navbar-content">
                 <div>
                     <a rel="dofollow" href="/" class="as-app-cursor as-flex as-align-center as-justify-center">
@@ -149,8 +149,8 @@
         </div>
 
         {{--content section--}}
-        <div class="as-app-body" id="as-app-body">
-            <div class="as-app-body-content-full" id="as-app-body-content-full">
+        <div class="" id="">
+            <div class="" id="">
                 @yield('content')
             </div>
         </div>

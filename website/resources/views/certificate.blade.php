@@ -2,6 +2,7 @@
 @section('title', 'Jobayer Academy - Certificate')
 
 @section('content')
+<section class="as-content-top-margin">
     <div class="as-flex as-flex-col as-align-center as-justify-center as-w-95 dt:as-mw-1280px as-m-0-auto" style="overflow: hidden">
         <div id="certificate-container" style="display: none; text-align: center;">
             <div id="certificate"
@@ -62,6 +63,7 @@
             </div>
         </div>
     </div>
+</section>
 @endsection
 
 @section('scripts')
