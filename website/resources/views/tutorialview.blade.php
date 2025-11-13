@@ -277,7 +277,7 @@
             if (isanytoPlayX != null) {
                 axios.get(`/api/get-video-data/${isanytoPlayX.topic_id}`)
                     .then(res => {
-                        playVideoNow2(res.data.topic_video, res.data.topic_name, res.data.id, isanytoPlayX.time);
+                        playVideoNow(res.data.topic_video, res.data.topic_name, res.data.id, isanytoPlayX.time);
                     })
             }
         });
@@ -680,79 +680,6 @@
 
             event.currentTarget.classList.add('active');
             document.getElementById(tabId).classList.add('active');
-        }
-
-        function playVideoNow2(videoId, courseTitle, topicId, playTime) {
-            var videoWrapper = document.getElementById('video-wrapper');
-
-            videoWrapper.style.display = 'block';
-
-            var videoInfoContainer = document.getElementById('video-info-container');
-            videoInfoContainer.style.display = 'block';
-
-            document.getElementById('as-content-top-margin').scrollIntoView({
-                behavior: 'smooth'
-            });
-
-            axios.get('/api/topic-is-completed/' + {{$course_id}} + '/' + topicId)
-                .then(res => {
-                    currentTopicIsCompleted = res.data;
-                });
-
-            videoPlayArr.push(topicId);
-            currentTopicId = topicId;
-
-            document.getElementById('continueOverlay').style.opacity = '1';
-            document.getElementById('continueOverlay').style.pointerEvents = 'auto';
-
-            player.source = {
-                type: 'video',
-                sources: [
-                    {
-                        src: videoId,
-                        provider: 'youtube',
-                    },
-                ],
-            };
-
-            player.once('ready', () => {
-                player.currentTime = playTime - 30;
-            });
-
-            document.getElementById('continueBtn').addEventListener('click', () => {
-                document.getElementById('continueOverlay').style.display = 'none';
-                player.pause();
-                player.play();
-
-                //tracking current video
-                setTimeout(() => {
-                    player.on('timeupdate', () => {
-                        const key = 'isanytoPlay' + {{ $course_id }};
-                        const data = {
-                            topic_id: currentTopicId,
-                            time: player.currentTime
-                        };
-
-                        localStorage.setItem(key, JSON.stringify(data));
-                    });
-                }, 1000);
-            });
-            
-            document.getElementById('course-title').innerHTML = courseTitle;
-            topicID = topicId;
-
-            const tabContainer = document.getElementById('tab-container');
-
-            tabContainer.style.display = 'block';
-            markCompleteBtn.style.display = 'none';
-
-            getAskQuestion(topicID);
-
-            var currentTopic = document.getElementById('topic-list-' + topicId);
-            var previousTopic = document.getElementById('topic-list-' + videoPlayArr[videoPlayArr.length - 2]);
-
-            currentTopic.classList.add('topic-list-active');
-            previousTopic.classList.remove('topic-list-active');
         }
     </script>
 @endsection
