@@ -59,11 +59,22 @@
         </svg>
         <div class="as-ml-10px">Student</div>
     </div>
+
+    <div onclick="window.location.href='/admin/comment'"
+        class="as-flex as-align-center as-list-hover as-p-10px as-app-cursor as-brr-5px">
+        <svg width="22px" xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M408 64H104a56.16 56.16 0 00-56 56v192a56.16 56.16 0 0056 56h40v80l93.72-78.14a8 8 0 015.13-1.86H408a56.16 56.16 0 0056-56V120a56.16 56.16 0 00-56-56z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"/></svg>
+        <div class="as-ml-10px">Comment</div>
+    </div>
+
+    <div onclick="window.location.href='/admin/interest'"
+        class="as-flex as-align-center as-list-hover as-p-10px as-app-cursor as-brr-5px">
+        <svg width="22px" xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M256 48v48M256 416v48M403.08 108.92l-33.94 33.94M142.86 369.14l-33.94 33.94M464 256h-48M96 256H48M403.08 403.08l-33.94-33.94M142.86 142.86l-33.94-33.94"/><circle cx="256" cy="256" r="80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32"/></svg>
+        <div class="as-ml-10px">Interset</div>
+    </div>
+
     <div onclick="adminLogout()" class="as-flex as-align-center as-list-hover as-p-10px as-app-cursor as-brr-5px">
         <svg width="22px" xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
-            <path
-                d="M304 336v40a40 40 0 01-40 40H104a40 40 0 01-40-40V136a40 40 0 0140-40h152c22.09 0 48 17.91 48 40v40M368 336l80-80-80-80M176 256h256"
-                fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" />
+            <path d="M304 336v40a40 40 0 01-40 40H104a40 40 0 01-40-40V136a40 40 0 0140-40h152c22.09 0 48 17.91 48 40v40M368 336l80-80-80-80M176 256h256" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" />
         </svg>
         <div class="as-ml-10px">Logout</div>
     </div>

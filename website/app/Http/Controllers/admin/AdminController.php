@@ -16,6 +16,42 @@ use Illuminate\Support\Facades\Crypt;
 
 class AdminController extends Controller
 {
+    //student comment operations
+    function get_student_comment_option_data()
+    {
+        return DB::table('student_comment_option')->orderBy('id', 'DESC')->get();
+    }
+
+    function add_student_comment_option(Request $request)
+    {
+        $student_comment_option_title = strip_tags(trim($request->input('student_comment_option_title')));
+
+        $result = DB::table('student_comment_option')->insert([
+            'student_comment_option_title' => $student_comment_option_title,
+        ]);
+
+        if ($result) {
+            return response()->json(['status' => 200, "message" => 'Student comment option added successfully']);
+        } 
+        else {
+            return response()->json(['status' => 404, "message" => 'Student comment option could not be added']);
+        }
+    }
+
+    function delete_student_comment_option(Request $request)
+    {
+        $id = strip_tags(trim($request->input('id')));
+
+        $result = DB::table('student_comment_option')->where('id', $id)->delete();
+
+        if ($result) {
+            return response()->json(['status' => 200, "message" => 'Student comment option deleted successfully']);
+        } 
+        else {
+            return response()->json(['status' => 404, "message" => 'Student comment option could not be deleted']);
+        }
+    }
+
     //chapter operations
     function get_chapter_topic($course_id, $chapter_id)
     {
