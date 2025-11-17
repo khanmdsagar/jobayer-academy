@@ -101,9 +101,10 @@ class DashController extends Controller
     }
 
     // get course content
-    function get_course_content($course_id)
+    function get_course_content(Request $request)
     {
         $student_id = Session::get('user_id');
+        $course_id  = strip_tags(trim($request->input('course_id')));
 
         $course_content = CourseChapter::with('chapter_topic')
             ->where('course_id', $course_id)
@@ -114,7 +115,8 @@ class DashController extends Controller
                 ->where('course_id', $course_id)
                 ->where('student_id', $student_id)
                 ->get();
-        } catch (\Exception $e) {
+        } 
+        catch (\Exception $e) {
             return $e->getMessage();
         }
 

@@ -317,7 +317,7 @@
         });
 
         async function getCourseContent() {
-            const response = await axios.get('/api/get-course-content/{{ $course_id }}');
+            const response = await axios.post('/api/get-course-content', { 'course_id': {{ $course_id }}});
             const courseContent = document.getElementById('course-content');
 
             response.data.course_content.forEach(chapter => {

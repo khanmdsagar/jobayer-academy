@@ -549,7 +549,7 @@
             startBtn.disabled = true;
             startBtn.textContent = 'ডেটা লোড হচ্ছে...';
 
-            axios.get('/api/get-exam-quiz/' + {{$course_id}})
+            axios.post('/api/get-exam-quiz', { 'course_id': {{$course_id}} })
                 .then(response => {
                     const apiData = response.data;
                     if (apiData && apiData.length > 0) {

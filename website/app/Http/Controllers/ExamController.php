@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\DB;
 class ExamController extends Controller
 {
     //quiz data for exam
-    function get_exam_quiz($course_id)
+    function get_exam_quiz(Request $request)
     {
+        $course_id = strip_tags(trim($request->input('course_id')));
         return DB::table('exam_quiz')->where('course_id', $course_id)->inRandomOrder()->get();
     }
 

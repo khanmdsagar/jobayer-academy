@@ -153,7 +153,7 @@ Route::middleware([AuthMiddleware::class])->group(function(){
 
     Route::post('/api/confirm-certificate-generation', [ExamController::class, 'confirm_certificate_generation']);
     Route::get('/api/get-course-data/{course_id}', [ExamController::class, 'get_course_data']);
-    Route::get('/api/get-exam-quiz/{course_id}', [ExamController::class, 'get_exam_quiz']);
+    Route::post('/api/get-exam-quiz', [ExamController::class, 'get_exam_quiz']);
     Route::post('/api/mark-exam-started/{course_id}', [ExamController::class, 'mark_exam_started']);
     Route::get('/api/check-exam-participation/{course_id}', [ExamController::class, 'check_exam_participation']);
     Route::post('/api/submit-exam-result/{course_id}', [ExamController::class, 'submit_exam_result']);
@@ -164,7 +164,7 @@ Route::middleware([AuthMiddleware::class])->group(function(){
 
     Route::post('/api/enroll-course', [SiteController::class, 'enrollCourse']);
     Route::get('/api/get-enrolled-course', [SiteController::class, 'getEnrolledCourse']);
-    Route::get('/api/get-course-content/{id}', [DashController::class, 'get_course_content']);
+    Route::post('/api/get-course-content', [DashController::class, 'get_course_content']);
 
     Route::get('/tutorial/{course_id}/{slug?}', [DashController::class, 'tutorial_view'])->name('tutorialview');
     Route::get('/api/get-video-data/{topic_id}', [DashController::class, 'get_video_data']);
@@ -195,9 +195,6 @@ Route::post('/api/update-payment-amount', [SiteController::class, 'update_paymen
 Route::post('/api/check-coupon', [SiteController::class, 'check_coupon']);
 Route::get('/api/get-question-answer/{course_id}', [SiteController::class, 'get_question_answer']);
 Route::post('/api/get-device-info', [AuthController::class, 'getDeviceInfo']);
-
-
-
 
 
 // admin functions
