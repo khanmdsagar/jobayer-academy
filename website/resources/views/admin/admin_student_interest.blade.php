@@ -2,18 +2,13 @@
 @section('title', 'Admin - Category')
 
 @section('content')
-<div class="as-flex">
-    <!-- sidebar -->
-    <div id="admin-sidebar" class="as-w-200px as-bg-white as-h-100vh">
-        @include('admin.sidebar')
-    </div>
-</div>
-
-<div class="as-w-100" style="overflow-y: auto; height: 100vh;">
+<div class="as-w-100">
     <!-- navbar -->
    <div class="as-p-10px">
         <div>
-            <i onclick="toggleAdminSidebar()" class="fas fa-bars as-app-cursor as-f-20px as-mr-10px"></i>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
             <span class="as-f-bold as-f-20px">Category - <span id="category-count"></span></span>
         </div>
 

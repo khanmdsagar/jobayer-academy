@@ -2,19 +2,21 @@
 @section('title', 'Admin - Asked Question')
 
 @section('content')
-    <div class="as-flex">
-        <!-- sidebar -->
-        <div id="admin-sidebar" class="as-w-200px as-bg-white as-h-100vh">
-            @include('admin.sidebar')
-        </div>
-    </div>
-
-    <div class="as-w-100" style="overflow-y: auto; height: 100vh;">
-        <!-- navbar -->
-        <div class="as-p-10px">
-            <div>
-                <i onclick="toggleAdminSidebar()" class="fas fa-bars as-app-cursor as-f-20px as-mr-10px"></i>
-                <span class="as-f-bold as-f-20px">Asked Question - </span> <span id="total-question" class="as-f-bold as-f-20px"></span>
+    <div class="as-w-100">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2>Asked Question - &nbsp;<span id="total-question" class="as-f-bold as-f-20px"></span></h2>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">AD</div>
+                <div>
+                    <div style="font-weight: 600;">{{ $admin[0]->admin_username }}</div>
+                    <div style="font-size: 12px; color: var(--gray);">{{ $admin[0]->admin_role }}</div>
+                </div>
             </div>
         </div>
 
@@ -36,7 +38,7 @@
             axios.get('/admin/get-asked-question')
                 .then(res => {
                     questionAnswerDiv.innerHTML = '';
-                    document.getElementById('total-question').innerText = `${res.data.length} question(s) found`;
+                    document.getElementById('total-question').innerText = `${res.data.length}`;
 
                     if (res.data.length === 0) {
                         questionAnswerDiv.innerHTML = `<h3 style="text-align: center; color: grey;">No question!</h3>`;

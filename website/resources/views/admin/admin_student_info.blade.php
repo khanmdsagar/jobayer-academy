@@ -2,32 +2,35 @@
 @section('title', 'Admin - student')
 
 @section('content')
-    <div class="as-flex">
-        <!-- sidebar -->
-        <div id="admin-sidebar" class="as-w-200px as-bg-white as-h-100vh">
-            @include('admin.sidebar')
-        </div>
-    </div>
-
-    <div class="as-w-100" style="overflow-y: auto; height: 100vh;">
+    <div class="as-w-100">
         <!-- navbar -->
         <div>
-            <div class="as-p-10px">
-                <i onclick="toggleAdminSidebar()" class="fas fa-bars as-app-cursor as-f-20px as-mr-10px"></i>
-                <span class="as-f-bold as-f-20px">Student Info</span>
+             <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h2>Student Information</h2>
+                </div>
+                <div class="user-info">
+                    <div class="user-avatar">AD</div>
+                    <div>
+                        <div style="font-weight: 600;">{{ $admin[0]->admin_username }}</div>
+                        <div style="font-size: 12px; color: var(--gray);">{{ $admin[0]->admin_role }}</div>
+                    </div>
+                </div>
             </div>
+
             <div class="actions as-flex as-justify-end">
-                <span class="as-p-10px as-app-cursor"><i onclick="showModal('edit-student-info-modal')"
-                        class="fa-solid fa-pen-to-square as-app-cursor as-f-20px"></i></span>
-                <span class="as-p-10px as-app-cursor"><i onclick="deleteStudent({{$student_data->id}})"
-                        class="fa-solid fa-trash as-app-cursor as-f-20px"></i></span>
-                <span class="as-p-10px as-app-cursor"><i onclick="showModal('enroll-student')"
-                        class="fa-solid fa-graduation-cap as-app-cursor as-f-20px"></i></span>
+                <span class="as-p-10px as-app-cursor"><i onclick="showModal('edit-student-info-modal')" class="fa-solid fa-pen-to-square as-app-cursor as-f-20px"></i></span>
+                <span class="as-p-10px as-app-cursor"><i onclick="deleteStudent({{$student_data->id}})" class="fa-solid fa-trash as-app-cursor as-f-20px"></i></span>
+                <span class="as-p-10px as-app-cursor"><i onclick="showModal('enroll-student')" class="fa-solid fa-graduation-cap as-app-cursor as-f-20px"></i></span>
             </div>
         </div>
 
         <!-- student list -->
-        <div id="student-list" class="as-p-10px">
+        <div id="student-list">
             <div class="as-card">
                 <div class="as-p-10px"><b>Student Id</b>: {{$student_data->id}}</div>
                 <div class="as-divider"></div>

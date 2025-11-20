@@ -15,72 +15,79 @@
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 
     <link rel="icon" href="{{ url('image/icon/favicon.png') }}" type="image/png">
-
-    <style>
-        body {
-            background: #f8f9fa;
-            font-family: 'Poppins', sans-serif;
-        }
-        button{
-            outline: none !important; 
-            font-family: 'Poppins', sans-serif; 
-            font-size: 16px !important;
-        }
-
-        #course-editor,
-        #edited-course-editor {
-            height: 250px;
-        }
-
-        #admin-sidebar {
-            transition: all 0.3s;
-            overflow: hidden;
-        }
-
-        .collapsed {
-            width: 0px;
-        }
-
-        #student-list::-webkit-scrollbar {
-            width: 5px !important;
-            height: 3px !important;
-        }
-
-        #student-list::-webkit-scrollbar-thumb {
-            background-color: var(--secondary-color) !important;
-            border-radius: 5px !important;
-        }
-
-        #student-list::-webkit-scrollbar-track {
-            background-color: var(--primary-color) !important;
-        }
-
-        @media screen and (max-width: 768px) {
-            #admin-sidebar {
-                width: 0px;
-            }
-
-            .collapsed {
-                width: 200px !important;
-            }
-
-            #add-student-button {
-                position: fixed;
-                bottom: 10px;
-                right: 10px;
-                z-index: 1000 !important;
-            }
-        }
-    </style>
-
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     @yield('styles')
 </head>
 
 <body>
     <!-- oncontextmenu="return false;" -->
-    <section class="as-flex">
-        @yield('content')
-    </section>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <h1>{{$site_data[0]->site_name}}</h1>
+            </div>
+            <ul class="nav-links">
+                <li>
+                <div class="a as-app-cursor" onclick="window.location.href='/admin/dashboard'">
+                    <i class="fas fa-home"></i> <span>Dashboard</span>
+                </div>
+                </li>
+
+                <li>
+                <div class="a as-app-cursor" onclick="window.location.href='/admin/asked-question'">
+                    <i class="fas fa-question"></i> <span>Asked Question</span>
+                </div>
+                </li>
+
+                <li>
+                <div class="a as-app-cursor" onclick="window.location.href='/admin/category'">
+                    <i class="fas fa-list"></i> <span>Category</span>
+                </div>
+                </li>
+
+                <li>
+                <div class="a as-app-cursor" onclick="window.location.href='/admin/course'">
+                    <i class="fas fa-book-open"></i> <span>Course</span>
+                </div>
+                </li>
+
+                <li>
+                <div class="a as-app-cursor" onclick="window.location.href='/admin/student'">
+                    <i class="fas fa-user-graduate"></i> <span>Student</span>
+                </div>
+                </li>
+
+                <li>
+                <div class="a as-app-cursor" onclick="window.location.href='/admin/comment'">
+                    <i class="fas fa-comments"></i> <span>Comment</span>
+                </div>
+                </li>
+
+                <li>
+                <div class="a as-app-cursor" onclick="window.location.href='/admin/interest'">
+                    <i class="fas fa-star"></i> <span>Interest</span>
+                </div>
+                </li>
+
+                <li>
+                <div class="a as-app-cursor" onclick="adminLogout()">
+                    <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+                </div>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            @yield('content')
+        </div>
+        
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
     <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
@@ -113,6 +120,7 @@
     <script src="{{ asset('js/axios.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="{{ asset('js/splide.min.js') }}"></script>
+    <script src="{{ asset('js/admin.js') }}"></script>
 
     @yield('scripts')
 </body>

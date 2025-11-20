@@ -231,13 +231,13 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
         return view('admin.admin_asked_question');
     });
 
-    Route::get('/admin/comment', function () {
-        return view('admin.admin_student_comment');
-    });
+    // Route::get('/admin/comment', function () {
+    //     return view('admin.admin_student_comment');
+    // });
 
-    Route::get('/admin/interest', function () {
-        return view('admin.admin_student_interest');
-    });
+    // Route::get('/admin/interest', function () {
+    //     return view('admin.admin_student_interest');
+    // });
 
     //student comment routes
     Route::get('/admin/student-comment-option/data', [AdminController::class, 'get_student_comment_option_data']);
