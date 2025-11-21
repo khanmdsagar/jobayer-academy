@@ -23,8 +23,6 @@
     <!-- oncontextmenu="return false;" -->
     
     <div class="dashboard-container">
-        @include('admin.sidebar')
-
         <!-- Main Content -->
         <div class="main-content" id="mainContent">
             @yield('content')

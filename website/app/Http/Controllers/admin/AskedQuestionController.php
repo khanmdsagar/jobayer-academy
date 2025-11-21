@@ -11,7 +11,7 @@ class AskedQuestionController extends Controller
 {
     function get_asked_question()
     {
-        return DB::table('ask_question')
+        $asked_questions = DB::table('ask_question')
             ->join('course', 'ask_question.course_id', '=', 'course.id')
             ->join('chapter_topic', 'ask_question.topic_id', '=', 'chapter_topic.id')
             ->join('student', 'ask_question.student_id', '=', 'student.id')
@@ -25,6 +25,13 @@ class AskedQuestionController extends Controller
             )
             ->orderBy('ask_question.id', 'DESC')
             ->get();
+
+        return response()->json([
+            'asked_questions' => $asked_questions,
+            'total_question' => DB::table('ask_question')->count(),
+            'total_answered' => DB::table('ask_question')->whereNotNull('answer')->where('answer', '!=', '')->count(),
+            'total_pending' => DB::table('ask_question')->whereNull('answer')->orWhere('answer', '=', '')->count(),
+        ]);
     }
 
     function delete_asked_question(Request $request)

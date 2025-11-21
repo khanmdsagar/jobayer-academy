@@ -356,7 +356,13 @@ class AdminController extends Controller
     function get_student_data()
     {
         $student_data = DB::table('student')->orderBy('id', 'desc')->get();
-        return response()->json($student_data);
+        $enrolled_students = DB::table('student')->where('student_enrolled_course', '>', 0)->count();
+        $unenrolled_students = DB::table('student')->where('student_enrolled_course', 0)->count();
+        return response()->json([
+            'student_data' => $student_data,
+            'enrolled_students' => $enrolled_students,
+            'unenrolled_students' => $unenrolled_students,
+        ]);
     }
 
     function search_student_data($search_data)

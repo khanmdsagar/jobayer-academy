@@ -325,3 +325,17 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
         return redirect()->route('admin');
     })->name('admin.logout');
 });
+
+Route::get('/download-database', function () {
+    $filename = 'backup-' . date('Y-m-d_H-i-s') . '.sql';
+
+    $command = "mysqldump --user=" . env('DB_USERNAME') .
+        " --password=" . env('DB_PASSWORD') .
+        " --host=" . env('DB_HOST') .
+        " " . env('DB_DATABASE') .
+        " > " . storage_path("app/$filename");
+
+    exec($command);
+
+    return response()->download(storage_path("app/$filename"))->deleteFileAfterSend(true);
+});

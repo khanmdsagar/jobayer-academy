@@ -8,8 +8,8 @@
         <!-- Header -->
         <div class="header">
             <div class="header-left">
-                <button class="sidebar-toggle" id="sidebarToggle">
-                    <i class="fas fa-bars"></i>
+                <button class="sidebar-toggle as-app-cursor as-flex as-align-center" id="sidebarToggle" style="display: inline-flex">
+                    <i style="font-size: 24px" class="fas fa-bars"></i>
                 </button>
                 <h2>Student Comment Option- <span id="student-comment-option-count"></span></h2>
             </div>

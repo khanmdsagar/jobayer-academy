@@ -8,8 +8,8 @@
              <!-- Header -->
             <div class="header">
                 <div class="header-left">
-                    <button class="sidebar-toggle" id="sidebarToggle">
-                        <i class="fas fa-bars"></i>
+                    <button class="sidebar-toggle as-app-cursor as-flex as-align-center" id="sidebarToggle" style="display: inline-flex">
+                        <i style="font-size: 24px" class="fas fa-bars"></i>
                     </button>
                     <h2>Student Information</h2>
                 </div>
@@ -22,7 +22,7 @@
                 </div>
             </div>
 
-            <div class="actions as-flex as-justify-end">
+            <div class="actions as-flex as-mb-10px">
                 <span class="as-p-10px as-app-cursor"><i onclick="showModal('edit-student-info-modal')" class="fa-solid fa-pen-to-square as-app-cursor as-f-20px"></i></span>
                 <span class="as-p-10px as-app-cursor"><i onclick="deleteStudent({{$student_data->id}})" class="fa-solid fa-trash as-app-cursor as-f-20px"></i></span>
                 <span class="as-p-10px as-app-cursor"><i onclick="showModal('enroll-student')" class="fa-solid fa-graduation-cap as-app-cursor as-f-20px"></i></span>

@@ -8,8 +8,8 @@
             <!-- Header -->
             <div class="header">
                 <div class="header-left">
-                    <button class="sidebar-toggle" id="sidebarToggle">
-                        <i class="fas fa-bars"></i>
+                    <button class="sidebar-toggle as-app-cursor as-flex as-align-center" id="sidebarToggle" style="display: inline-flex">
+                        <i style="font-size: 24px" class="fas fa-bars"></i>
                     </button>
                     <h2>Student Dashboard</h2>
                 </div>
@@ -22,11 +22,51 @@
                 </div>
             </div>
 
+            <!-- Stats Cards -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon primary">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="total-students">....</h3>
+                        <p>Total Students</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon success">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="total-enrolled-students">....</h3>
+                        <p>Total Enrolled Students</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon warning">
+                        <i class="fas fa-user-minus"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="total-unenrolled-students">....</h3>
+                        <p>Total Unenrolled Students</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon primary">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="total-payments">....</h3>
+                        <p>Total Payments</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="as-flex as-space-between as-mb-10px">
                 <div class="as-flex">
                     <input type="text" id="search-student" class="as-input as-mr-10px" placeholder="Enter name or phone">
-                    <button onclick="getStudentData()" id="search-student-button"
-                        class="as-btn as-btn-primary as-app-cursor as-mr-5px"><i class="fas fa-search"></i></button>
+                    <button onclick="getStudentData()" id="search-student-button" class="as-btn as-btn-primary as-app-cursor as-mr-5px"><i class="fas fa-search"></i></button>
+                    <button onclick="getStudentData()" class="as-btn as-btn-primary as-app-cursor as-mr-5px"><i class="fas fa-refresh"></i></button>
                 </div>
             </div>
         </div>
@@ -37,10 +77,10 @@
                 <h3>Student List</h3>
                 <div class="section-actions as-flex">
                     <div id="filter-student-button" class="as-p-10px as-app-cursor" onclick="showModal('student-filter')">
-                        <i class="fas fa-filter"></i>
+                        <i class="fas fa-filter"></i> Filter
                     </div>
                     <a id="download-student-button" class="as-p-10px as-app-cursor as-mr-10px" href="/admin/download-student-data">
-                        <i class="fas fa-download"></i>
+                        <i class="fas fa-download"></i> Download
                     </a>
                     <div id="add-student-button" onclick="showModal('student-info')" class="as-btn as-p-10px as-app-cursor">
                         <i class="fas fa-plus" style="margin-right: 5px;"></i> Add Student
@@ -238,6 +278,8 @@
                         filterButton.innerHTML = 'Filter';
                         filterButton.disabled = false;
 
+                        document.getElementById('total-students').innerText = response.data.length;
+
                         if (courseValue == 'enrolled' || courseValue == 'unenrolled') {
                             hideModal('student-filter');
 
@@ -273,10 +315,9 @@
             }
         }
 
-        var loadStudent = 7;
-        var studentData = [];
         
         // Pagination variables
+        var studentData = [];
         let currentPage = 1;
         const itemsPerPage = 10;
         let filteredData = [];
@@ -294,7 +335,10 @@
 
             if (searchStudent == '') {
                 await axios.get('/admin/student/data').then(response => {
-                    studentData = response.data;
+                    studentData = response.data.student_data;
+                    document.getElementById('total-students').innerText = response.data.student_data.length;
+                    document.getElementById('total-enrolled-students').innerText = response.data.enrolled_students;
+                    document.getElementById('total-unenrolled-students').innerText = response.data.unenrolled_students;
                     filteredData = [...studentData];
                     initializePagination();
                 });
@@ -303,7 +347,7 @@
                 await axios.get('/admin/student/search/' + searchStudent)
                     .then(response => {
                         document.getElementById('search-student').value = '';
-
+                        document.getElementById('total-students').innerText = response.data.length;
                         studentData = response.data;
                         filteredData = [...studentData];
                         initializePagination();
@@ -330,7 +374,7 @@
                     // Add your row content here based on your data structure
                     row.innerHTML = `
                         <tr>
-                            <td>${item.student_name != null ? item.student_name : 'Anonymous'}</td>
+                            <td style="white-space: nowrap;">${item.student_name != null ? item.student_name : 'Anonymous'}</td>
                             <td>${item.student_number}</td>
                             <td>${item.created_at}</td>
                             <td>${item.student_enrolled_course}</td>
@@ -349,7 +393,7 @@
                     // Add your row content here based on your data structure
                     row.innerHTML = `
                         <tr>
-                            <td>${item.student.student_name != null ? item.student.student_name : 'Anonymous'}</td>
+                            <td style="white-space: nowrap;">${item.student.student_name != null ? item.student.student_name : 'Anonymous'}</td>
                             <td>${item.student.student_number}</td>
                             <td>${item.student.created_at}</td>
                             <td>${item.student.student_enrolled_course}</td>
@@ -373,12 +417,12 @@
         // Function to setup pagination controls
         function setupPagination() {
             const paginationControls = document.getElementById('paginationControls');
-    
+
             // Clear existing pagination controls
             paginationControls.innerHTML = '';
-            
+
             const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-            
+
             // Previous button
             const prevButton = document.createElement('button');
             prevButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
@@ -391,17 +435,17 @@
                 }
             });
             paginationControls.appendChild(prevButton);
-    
+
             // Page buttons
             const maxVisiblePages = 5;
             let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
             let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-            
+
             // Adjust start page if we're near the end
             if (endPage - startPage + 1 < maxVisiblePages) {
                 startPage = Math.max(1, endPage - maxVisiblePages + 1);
             }
-            
+
             // First page button if needed
             if (startPage > 1) {
                 const firstPageButton = document.createElement('button');
@@ -412,7 +456,7 @@
                     setupPagination();
                 });
                 paginationControls.appendChild(firstPageButton);
-                
+
                 // Ellipsis if needed
                 if (startPage > 2) {
                     const ellipsis = document.createElement('button');
@@ -421,7 +465,7 @@
                     paginationControls.appendChild(ellipsis);
                 }
             }
-            
+
             // Page number buttons
             for (let i = startPage; i <= endPage; i++) {
                 const pageButton = document.createElement('button');
@@ -436,7 +480,7 @@
                 });
                 paginationControls.appendChild(pageButton);
             }
-            
+
             // Last page button if needed
             if (endPage < totalPages) {
                 // Ellipsis if needed
@@ -446,7 +490,7 @@
                     ellipsis.disabled = true;
                     paginationControls.appendChild(ellipsis);
                 }
-                
+
                 const lastPageButton = document.createElement('button');
                 lastPageButton.textContent = totalPages;
                 lastPageButton.addEventListener('click', () => {
@@ -456,7 +500,7 @@
                 });
                 paginationControls.appendChild(lastPageButton);
             }
-            
+
             // Next button
             const nextButton = document.createElement('button');
             nextButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
@@ -484,7 +528,6 @@
             resetPagination();
         }
 
-        // Function to initialize pagination
         function initializePagination(filterValue = null) {
             renderTable(filterValue);
             setupPagination();
@@ -494,18 +537,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             getStudentData();
         });
-
-        //delete student
-        function deleteStudent(studentId) {
-            var confirm = window.confirm('Do you want to delete the student?');
-            if (confirm) {
-                axios.post('/admin/student/delete', { student_id: studentId })
-                    .then(response => {
-                        alert(response.data.message);
-                        getStudentData();
-                    });
-            }
-        }
 
         //birthday select
         for (let i = 1; i <= 31; i++) {
