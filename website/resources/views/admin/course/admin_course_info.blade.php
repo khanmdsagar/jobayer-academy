@@ -21,7 +21,7 @@
         </div>
 
         <!--list-->
-        <div class="as-p-10px">
+        <div>
             <div class="as-card as-p-10px">
                 <div><b>Id:</b> {{$course_data->id}}</div>
                 <div class="as-divider"></div>
@@ -54,7 +54,7 @@
 
             {{-- tab --}}
             <div id="tab-container" class="as-mt-20px">
-                <div class="tab-buttons">
+                <div class="tab-buttons" style="flex-wrap: wrap">
                     <button class="tab active as-app-cursor" onclick="showTab(event, 'tab1')">Curriculum</button>
                     <button class="tab as-app-cursor" onclick="showTab(event, 'tab2')">Resource</button>
                     <button class="tab as-app-cursor" onclick="showTab(event, 'tab3')">FAQ</button>
@@ -964,17 +964,17 @@
 
                     response.data.forEach(function (topic) {
                         chapterTopicDiv.innerHTML += `
-                                                                                                            <div class="as-flex as-align-center as-mb-5px">
-                                                                                                                <div class="as-flex as-space-between as-w-100">
-                                                                                                                    <div class="as-check-language as-flex as-align-center">${topic.topic_name}</div>
-                                                                                                                    <div>
-                                                                                                                        <span><i onclick="showEditTopicModal(${topic.id}, '${topic.topic_name}', '${topic.topic_video}', ${topic.topic_is_free})" class="fa-solid fa-edit as-app-cursor as-p-10px"></i></span>
-                                                                                                                        <span><i style="color: red" onclick="deleteChapterTopic(${topic.id}, ${chapterId})" class="fa-solid fa-trash as-app-cursor as-p-10px"></i></span>
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                            <div class="as-divider"></div>
-                                                                                                        `;
+                        <div class="as-flex as-align-center as-mb-5px">
+                            <div class="as-flex as-space-between as-w-100">
+                                <div class="as-check-language as-flex as-align-center">${topic.topic_name}</div>
+                                <div>
+                                    <span><i onclick="showEditTopicModal(${topic.id}, '${topic.topic_name}', '${topic.topic_video}', ${topic.topic_is_free})" class="fa-solid fa-edit as-app-cursor as-p-10px"></i></span>
+                                    <span><i style="color: red" onclick="deleteChapterTopic(${topic.id}, ${chapterId})" class="fa-solid fa-trash as-app-cursor as-p-10px"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="as-divider"></div>
+                    `;
                     });
                 });
         }

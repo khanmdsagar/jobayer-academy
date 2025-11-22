@@ -164,7 +164,13 @@ class AdminController extends Controller
     function course_info($course_id)
     {
         $course_data = Course::with('course_category')->with('instructor')->where('id', $course_id)->first();
-        return view('admin.admin_course_info', compact('course_data'));
+        return view('admin.course.admin_course_info', compact('course_data'));
+    }
+
+    function course_edit_page($course_id)
+    {
+        $course_data = Course::with('course_category')->with('instructor')->where('id', $course_id)->first();
+        return view('admin.course.admin_course_edit', compact('course_data'));
     }
 
     function add_course_thumbnail(Request $request)
@@ -176,6 +182,8 @@ class AdminController extends Controller
     function add_course(Request $request)
     {
         $course_name = strip_tags(trim($request->input('course_name')));
+        $course_another_name = strip_tags(trim($request->input('course_another_name')));
+        $course_code = strip_tags(trim($request->input('course_code')));
         $course_thumbnail = strip_tags(trim($request->input('course_thumbnail')));
         $course_slug = strip_tags(trim($request->input('course_slug')));
         $course_tagline = strip_tags(trim($request->input('course_tagline')));
@@ -196,6 +204,8 @@ class AdminController extends Controller
             try {
                 $result = DB::table('course')->insert([
                     'course_name' => $course_name,
+                    'course_another_name' => $course_another_name,
+                    'course_code' => $course_code,
                     'course_slug' => $course_slug,
                     'course_status' => $course_status,
                     'category_id' => $course_category,
@@ -221,10 +231,27 @@ class AdminController extends Controller
         }
     }
 
+    function get_course_data()
+    {
+        return DB::table('course')->where('course_status', 1)->get();
+    }
+
     function get_course_data2()
     {
         return Course::with('course_category')->with('instructor')->withCount('enrolled_course')->get();
         //return EnrolledCourse::with('course')->get();
+    }
+
+    function get_course_data_number()
+    {
+        $total_courses = DB::table('course')->count();
+        $published_courses = DB::table('course')->where('course_status', 1)->count();
+        $unpublished_courses = DB::table('course')->where('course_status', 0)->count();
+        return response()->json([
+            'total_courses' => $total_courses,
+            'published_courses' => $published_courses,
+            'unpublished_courses' => $unpublished_courses,
+        ]);
     }
 
     function delete_course(Request $request)
@@ -730,10 +757,5 @@ class AdminController extends Controller
             return response()->json(['status' => 404, "message" => $e->getMessage()]);
         }
 
-    }
-
-    function get_course_data()
-    {
-        return DB::table('course')->where('course_status', 1)->get();
     }
 }

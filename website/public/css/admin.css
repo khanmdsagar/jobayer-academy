@@ -13,7 +13,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', 'Tiro Bangla',Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
@@ -30,8 +30,8 @@ body {
 }
 
 #course-editor,
-#edited-course-editor {
-    height: 250px;
+#edited-course-editor{
+    height: 350px;
 }
 
 /* Sidebar Styles */
@@ -417,6 +417,16 @@ tbody tr:hover {
 }
 
 .status-badge.pending {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+.status-badge.published {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.status-badge.unpublished {
     background-color: rgba(255, 193, 7, 0.1);
     color: #ffc107;
 }

@@ -220,11 +220,11 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
     });
 
     Route::get('/admin/category', function () {
-        return view('admin.admin_category');
+        return view('admin.course.admin_category');
     });
 
     Route::get('/admin/course', function () {
-        return view('admin.admin_course');
+        return view('admin.course.admin_course');
     });
 
     Route::get('/admin/asked-question', function () {
@@ -274,17 +274,15 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
     Route::post('/admin/instructor/delete', [AdminController::class, 'delete_instructor']);
     Route::post('/admin/instructor/edit', [AdminController::class, 'edit_instructor']);
 
-    Route::get('/admin/course', function () {
-        return view('admin.admin_course');
-    });
-
     // course management routes
     Route::post('/admin/course/add', [AdminController::class, 'add_course']);
     Route::post('/admin/course/add/thumbnail', [AdminController::class, 'add_course_thumbnail']);
     Route::get('/admin/course/get', [AdminController::class, 'get_course_data2']);
+    Route::get('/admin/course/get/number', [AdminController::class, 'get_course_data_number']);
     Route::post('/admin/course/delete', [AdminController::class, 'delete_course']);
-    Route::post('/admin/course/edit', [AdminController::class, 'edit_course']);
     Route::get('/admin/course/info/{course_id}', [AdminController::class, 'course_info']);
+    Route::get('/admin/course/edit-page/{course_id}', [AdminController::class, 'course_edit_page']);
+    Route::post('/admin/course/edit', [AdminController::class, 'edit_course']);
 
     Route::post('/admin/chapter/add', [AdminController::class, 'add_chapter']);
     Route::get('/admin/chapter/get/{course_id}', [AdminController::class, 'get_chapter']);
