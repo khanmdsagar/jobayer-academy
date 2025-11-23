@@ -64,7 +64,7 @@
 
             <div class="as-flex as-space-between as-mb-10px">
                 <div class="as-flex">
-                    <input type="text" id="search-student" class="as-input as-mr-10px" placeholder="Enter name or phone">
+                    <input type="text" id="search-value" class="as-input as-mr-10px" placeholder="Enter name or phone">
                     <button onclick="getStudentData()" id="search-student-button" class="as-btn as-btn-primary as-app-cursor as-mr-5px"><i class="fas fa-search"></i></button>
                     <button onclick="getStudentData()" class="as-btn as-btn-primary as-app-cursor as-mr-5px"><i class="fas fa-refresh"></i></button>
                 </div>
@@ -96,6 +96,7 @@
                             <th>Phone</th>
                             <th>Registration Date</th>
                             <th>Enrolled Courses</th>
+                            <th>Paid Amount</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -157,15 +158,15 @@
             <div class="as-modal-child as-p-10px">
                 <div class="as-mt-10px">
                     <div class="as-mb-5px"><b>Fullname</b></div>
-                    <input id="fullname" class="as-input" type="text">
+                    <input id="fullname" class="as-input" type="text" placeholder="Enter fullname">
                 </div>
                 <div class="as-mt-10px">
                     <div class="as-mb-5px"><b>Email</b></div>
-                    <input id="email" class="as-input" type="email">
+                    <input id="email" class="as-input" type="email" placeholder="Enter email">
                 </div>
                 <div class="as-mt-10px">
                     <div class="as-mb-5px"><b>Phone number</b></div>
-                    <input id="number" class="as-input" type="number">
+                    <input id="number" class="as-input" type="number" placeholder="Enter phone number">
                 </div>
                 <div class="as-mt-10px">
                     <div class="as-mb-5px"><b>Date of Birth</b></div>
@@ -195,19 +196,19 @@
                 </div>
                 <div class="as-mt-10px">
                     <div class="as-mb-5px"><b>Fb profile url</b></div>
-                    <input id="fb-profile-url" class="as-input" type="text">
+                    <input id="fb-profile-url" class="as-input" type="text" placeholder="Enter fb profile url">
                 </div>
                 <div class="as-mt-10px">
                     <div class="as-mb-5px"><b>Fb page url</b></div>
-                    <input id="fb-page-url" class="as-input" type="text">
+                    <input id="fb-page-url" class="as-input" type="text" placeholder="Enter fb page url">
                 </div>
                 <div class="as-mt-10px">
                     <div class="as-mb-5px"><b>Address</b></div>
-                    <input id="address" class="as-input" type="text">
+                    <input id="address" class="as-input" type="text" placeholder="Enter address">
                 </div>
                 <div class="as-mt-10px">
                     <div class="as-mb-5px"><b>Note</b></div>
-                    <input id="note" class="as-input" type="text">
+                    <input id="note" class="as-input" type="text" placeholder="Enter note">
                 </div>
                 <div class="as-mt-10px">
                     <div class="as-mb-5px"><b>Division</b></div>
@@ -231,8 +232,12 @@
                     </select>
                 </div>
                 <div class="as-mt-10px">
+                    <div class="as-mb-5px"><b>Paid Amount</b></div>
+                    <input id="paid-amount" class="as-input" type="text" placeholder="Enter paid amount">
+                </div>
+                <div class="as-mt-10px">
                     <div class="as-mb-5px"><b>Password</b></div>
-                    <input id="password" class="as-input" type="text">
+                    <input id="password" class="as-input" type="text" placeholder="Enter password">
                 </div>
             </div>
             <div class="as-mt-20px as-text-right">
@@ -323,8 +328,9 @@
         let filteredData = [];
 
         async function getStudentData() {
-            var searchStudent = document.getElementById('search-student').value;
+            var searchStudent = document.getElementById('search-value').value;
             const studentList = document.getElementById('student-list');
+
             studentList.innerHTML = `
                     <tr>
                         <td colspan="100%" style="text-align:center; padding:10px;">
@@ -339,6 +345,7 @@
                     document.getElementById('total-students').innerText = response.data.student_data.length;
                     document.getElementById('total-enrolled-students').innerText = response.data.enrolled_students;
                     document.getElementById('total-unenrolled-students').innerText = response.data.unenrolled_students;
+                    document.getElementById('total-payments').innerText = response.data.total_payments;
                     filteredData = [...studentData];
                     initializePagination();
                 });
@@ -346,11 +353,13 @@
             else {
                 await axios.get('/admin/student/search/' + searchStudent)
                     .then(response => {
-                        document.getElementById('search-student').value = '';
+                        document.getElementById('search-value').value = '';
                         document.getElementById('total-students').innerText = response.data.length;
                         studentData = response.data;
                         filteredData = [...studentData];
                         initializePagination();
+
+                        console.log(searchStudent);
                     });
             }
         }
@@ -378,6 +387,7 @@
                             <td>${item.student_number}</td>
                             <td>${item.created_at}</td>
                             <td>${item.student_enrolled_course}</td>
+                            <td>${item.student_paid_amount}</td>
                             <td><span class="status-badge ${item.student_enrolled_course == 0 ? 'not-enrolled' : 'enrolled'}">${item.student_enrolled_course == 0 ? 'UnEnrolled' : 'Enrolled'}</span></td>
                             <td>
                                 <i onclick="window.location.href='/admin/student/info/${item.id}'" class="fa-solid fa-eye as-app-cursor"></i>
@@ -397,6 +407,7 @@
                             <td>${item.student.student_number}</td>
                             <td>${item.student.created_at}</td>
                             <td>${item.student.student_enrolled_course}</td>
+                            <td>${item.student_paid_amount}</td>
                             <td><span class="status-badge ${item.student.student_enrolled_course == 0 ? 'not-enrolled' : 'enrolled'}">${item.student.student_enrolled_course == 0 ? 'UnEnrolled' : 'Enrolled'}</span></td>
                             <td>
                                 <i onclick="window.location.href='/admin/student/info/${item.student.id}'" class="fa-solid fa-eye as-app-cursor"></i>
@@ -554,22 +565,23 @@
 
         function addStudentInfo() {
             const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            var studentName = document.getElementById('fullname').value;
-            var studentEmail = document.getElementById('email').value;
-            var studentNumber = document.getElementById('number').value;
-            var studentProfession = document.getElementById('profession').value;
+            var studentName         = document.getElementById('fullname').value;
+            var studentEmail        = document.getElementById('email').value;
+            var studentNumber       = document.getElementById('number').value;
+            var studentProfession   = document.getElementById('profession').value;
             var studentFbProfileUrl = document.getElementById('fb-profile-url').value;
-            var studentFbPageUrl = document.getElementById('fb-page-url').value;
+            var studentFbPageUrl    = document.getElementById('fb-page-url').value;
 
-            var studentDaySelect = document.getElementById('daySelect').value;
-            var studentMonthSelect = document.getElementById('monthSelect').value;
-            var studentYearSelect = document.getElementById('yearSelect').value;
+            var studentDaySelect    = document.getElementById('daySelect').value;
+            var studentMonthSelect  = document.getElementById('monthSelect').value;
+            var studentYearSelect   = document.getElementById('yearSelect').value;
 
-            var studentAddress = document.getElementById('address').value;
-            var studentDivision = document.getElementById('division').value;
-            var studentDistrict = document.getElementById('district').value;
-            var studentNote = document.getElementById('note').value;
-            var studentPassword = document.getElementById('password').value;
+            var studentAddress      = document.getElementById('address').value;
+            var studentDivision     = document.getElementById('division').value;
+            var studentDistrict     = document.getElementById('district').value;
+            var studentNote         = document.getElementById('note').value;
+            var studentPaidAmount   = document.getElementById('paid-amount').value;
+            var studentPassword     = document.getElementById('password').value;
 
             if (studentName == '') {
                 alert('Enter full name');
@@ -583,26 +595,30 @@
             else if (studentNumber.length != 11) {
                 alert('Enter valid phone number');
             }
+            else if (studentPaidAmount == "") {
+                alert('Enter paid amount');
+            }
             else if (studentPassword == "") {
-                alert('Please enter a password');
+                alert('Enter a password');
             }
             else if (studentPassword.length < 6) {
                 alert('Password must be at least 6 characters long');
             }
             else {
                 var data = {
-                    student_name: studentName,
-                    student_email: studentEmail,
-                    student_number: studentNumber,
-                    student_profession: studentProfession,
-                    student_page_url: studentFbPageUrl,
-                    student_profile_url: studentFbProfileUrl,
-                    student_birthday: studentDaySelect + '-' + studentMonthSelect + '-' + studentYearSelect,
-                    student_division: studentDivision,
-                    student_district: studentDistrict,
-                    student_address: studentAddress,
-                    student_note: studentNote,
-                    student_password: studentPassword,
+                    student_name        : studentName,
+                    student_email       : studentEmail,
+                    student_number      : studentNumber,
+                    student_profession  : studentProfession,
+                    student_page_url    : studentFbPageUrl,
+                    student_profile_url : studentFbProfileUrl,
+                    student_birthday    : studentDaySelect + '-' + studentMonthSelect + '-' + studentYearSelect,
+                    student_division    : studentDivision,
+                    student_district    : studentDistrict,
+                    student_address     : studentAddress,
+                    student_note        : studentNote,
+                    student_paid_amount : studentPaidAmount,
+                    student_password    : studentPassword,
                 }
 
                 var addInfoButton = document.getElementById('add-info-button');
@@ -617,6 +633,7 @@
 
                             alert(res.data.message);
                             hideModal('student-info');
+
                             getStudentData();
                         }
                         else {
@@ -625,6 +642,7 @@
 
                             alert(res.data.message);
                             hideModal('student-info');
+
                             getStudentData();
                         }
                     });

@@ -385,10 +385,13 @@ class AdminController extends Controller
         $student_data = DB::table('student')->orderBy('id', 'desc')->get();
         $enrolled_students = DB::table('student')->where('student_enrolled_course', '>', 0)->count();
         $unenrolled_students = DB::table('student')->where('student_enrolled_course', 0)->count();
+        $total_payments = DB::table('student')->sum('student_paid_amount');
+
         return response()->json([
             'student_data' => $student_data,
             'enrolled_students' => $enrolled_students,
             'unenrolled_students' => $unenrolled_students,
+            'total_payments' => $total_payments,
         ]);
     }
 
@@ -717,35 +720,37 @@ class AdminController extends Controller
 
     function add_student_info(Request $request)
     {
-        $student_name = strip_tags(trim($request->input('student_name')));
-        $student_email = strip_tags(trim($request->input('student_email')));
-        $student_number = strip_tags(trim($request->input('student_number')));
-        $student_address = strip_tags(trim($request->input('student_address')));
-        $student_note = strip_tags(trim($request->input('student_note')));
-        $student_division = strip_tags(trim($request->input('student_division')));
-        $student_district = strip_tags(trim($request->input('student_district')));
-        $student_page_url = strip_tags(trim($request->input('student_page_url')));
-        $student_birthday = strip_tags(trim($request->input('student_birthday')));
-        $student_profession = strip_tags(trim($request->input('student_profession')));
+        $student_name        = strip_tags(trim($request->input('student_name')));
+        $student_email       = strip_tags(trim($request->input('student_email')));
+        $student_number      = strip_tags(trim($request->input('student_number')));
+        $student_address     = strip_tags(trim($request->input('student_address')));
+        $student_note        = strip_tags(trim($request->input('student_note')));
+        $student_paid_amount = strip_tags(trim($request->input('student_paid_amount')));
+        $student_division    = strip_tags(trim($request->input('student_division')));
+        $student_district    = strip_tags(trim($request->input('student_district')));
+        $student_page_url    = strip_tags(trim($request->input('student_page_url')));
+        $student_birthday    = strip_tags(trim($request->input('student_birthday')));
+        $student_profession  = strip_tags(trim($request->input('student_profession')));
         $student_profile_url = strip_tags(trim($request->input('student_profile_url')));
-        $student_password = strip_tags(trim($request->input('student_password')));
-        $encrypted_password = Crypt::encrypt($student_password);
+        $student_password    = strip_tags(trim($request->input('student_password')));
+        $encrypted_password  = Crypt::encrypt($student_password);
 
         try {
             $result = DB::table('student')->insert([
-                "student_name" => $student_name,
-                "student_email" => $student_email,
-                "student_number" => $student_number,
-                "student_address" => $student_address,
-                "student_division" => $student_division,
-                "student_page_url" => $student_page_url,
-                "student_birthday" => $student_birthday,
-                "student_profession" => $student_profession,
+                "student_name"        => $student_name,
+                "student_email"       => $student_email,
+                "student_number"      => $student_number,
+                "student_address"     => $student_address,
+                "student_division"    => $student_division,
+                "student_page_url"    => $student_page_url,
+                "student_birthday"    => $student_birthday,
+                "student_profession"  => $student_profession,
                 "student_profile_url" => $student_profile_url,
-                "student_district" => $student_district,
-                "student_note" => $student_note,
-                "student_password" => $encrypted_password,
-                "created_at" => Carbon::now(),
+                "student_district"    => $student_district,
+                "student_note"        => $student_note,
+                "student_paid_amount" => $student_paid_amount,
+                "student_password"    => $encrypted_password,
+                "created_at"          => Carbon::now(),
             ]);
 
             if ($result) {

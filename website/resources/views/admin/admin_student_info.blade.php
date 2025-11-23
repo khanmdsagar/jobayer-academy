@@ -81,6 +81,8 @@
                 </div>
                 <div class="as-divider"></div>
                 <div class="as-p-10px"><b>Enrolled Course</b>: {{$student_data->student_enrolled_course}}</div>
+                <div class="as-divider"></div>
+                <div class="as-p-10px"><b>Paid Amount</b>: {{$student_data->student_paid_amount}}</div>
             </div>
             <div class="as-card as-mt-10px">
                 <div class="as-p-10px"><b>Enrolled Course List</b></div>
@@ -213,6 +215,10 @@
                     </select>
                 </div>
                 <div class="as-mt-10px">
+                    <div class="as-mb-5px"><b>Paid Amount</b></div>
+                    <input id="paid-amount" class="as-input" type="text" placeholder="Enter paid amount" value="{{$student_data->student_paid_amount}}">
+                </div>
+                <div class="as-mt-10px">
                     <div class="as-mb-5px"><b>Password</b></div>
                     <input id="password" class="as-input" type="text">
                 </div>
@@ -288,6 +294,7 @@
             var studentDivision     = document.getElementById('division').value;
             var studentDistrict     = document.getElementById('district').value;
             var studentNote         = document.getElementById('note').value;
+            var studentPaidAmount   = document.getElementById('paid-amount').value;
             var studentPassword     = document.getElementById('password').value;
 
             if (studentName == '') {
@@ -319,6 +326,7 @@
                     student_district    : studentDistrict,
                     student_address     : studentAddress,
                     student_note        : studentNote,
+                    student_paid_amount : studentPaidAmount,
                     student_password    : studentPassword,
                 }
 

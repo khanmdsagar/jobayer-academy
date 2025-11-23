@@ -16,6 +16,10 @@
     font-family: 'Segoe UI', 'Tiro Bangla',Tahoma, Geneva, Verdana, sans-serif;
 }
 
+button {
+    font-family: 'Segoe UI', 'Tiro Bangla',Tahoma, Geneva, Verdana, sans-serif;
+}
+
 body {
     background-color: #f5f7fb;
     color: var(--dark);

@@ -26,13 +26,14 @@
             <div class="stats-container">
                 <div class="stat-card">
                     <div class="stat-icon primary">
-                        <i class="fas fa-question-circle"></i>
+                        <i class="fas fa-book-open"></i>
                     </div>
                     <div class="stat-info">
                         <h3 id="total-courses">....</h3>
                         <p>Total Courses</p>
                     </div>
                 </div>
+
                 <div class="stat-card">
                     <div class="stat-icon success">
                         <i class="fas fa-check-circle"></i>
@@ -42,9 +43,10 @@
                         <p>Published Courses</p>
                     </div>
                 </div>
+
                 <div class="stat-card">
                     <div class="stat-icon warning">
-                        <i class="fas fa-clock"></i>
+                        <i class="fas fa-hourglass-half"></i>
                     </div>
                     <div class="stat-info">
                         <h3 id="total-unpublished">....</h3>
@@ -52,6 +54,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
         
         <!-- Courses Table -->

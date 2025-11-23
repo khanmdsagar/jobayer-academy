@@ -44,6 +44,7 @@ class AdminStudentController extends Controller
         $student_number       = strip_tags(trim($request->input('student_number')));
         $student_address      = strip_tags(trim($request->input('student_address')));
         $student_note         = strip_tags(trim($request->input('student_note')));
+        $student_paid_amount  = strip_tags(trim($request->input('student_paid_amount')));
         $student_division     = strip_tags(trim($request->input('student_division')));
         $student_district     = strip_tags(trim($request->input('student_district')));
         $student_page_url     = strip_tags(trim($request->input('student_page_url')));
@@ -66,6 +67,7 @@ class AdminStudentController extends Controller
                 'student_profession'    => $student_profession,
                 'student_birthday'      => $student_birthday,
                 'student_note'          => $student_note,
+                "student_paid_amount"   => $student_paid_amount,
                 'student_password'      => $encrypted_password,
             ]);
         } 
@@ -82,6 +84,7 @@ class AdminStudentController extends Controller
                 'student_profession'    => $student_profession,
                 'student_birthday'      => $student_birthday,
                 'student_note'          => $student_note,
+                "student_paid_amount"   => $student_paid_amount,
             ]);
         }
 

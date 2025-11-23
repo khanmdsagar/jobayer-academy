@@ -118,6 +118,8 @@ class bKashController extends Controller
                 "payerAccount" => $payerAccount,
                 "statusMessage" => $statusMessage,
             ]);
+
+            
         }
     }
 
@@ -164,7 +166,8 @@ class bKashController extends Controller
 
             return view('callback', compact( 'status', 'course_id', 'combo_ids'));
 
-        }else if(isset($allRequest['status']) && $allRequest['status'] == 'cancel'){
+        }
+        else if(isset($allRequest['status']) && $allRequest['status'] == 'cancel'){
             // return view('CheckoutURL.fail')->with([
             //     'response' => 'Payment Cancell'
             // ]);
@@ -175,7 +178,8 @@ class bKashController extends Controller
             
             return view('callback', compact( 'status', 'course_id', 'combo_ids'));
 
-        }else{
+        }
+        else{
 
             $response = $this->execute($allRequest['paymentID']);
 
@@ -185,23 +189,28 @@ class bKashController extends Controller
             $course_id = Session::get('course_id');
             $combo_ids = Session::get('combo_ids');
 
+            DB::table('student')
+                ->where('id', Session::get('user_id'))
+                ->increment('student_paid_amount', Session::get('payment_amount'));
+
+
             return view('callback', compact( 'status', 'course_id', 'combo_ids'));
 
-//            if(array_key_exists("statusCode",$arr) && $arr['statusCode'] != '0000'){
-//                // return view('CheckoutURL.fail')->with([
-//                //     'statusMessage' => $arr['statusMessage'],
-//                // ]);
-//                return [["statusMessage"=>$arr['statusMessage']]];
-//
-//            }else if(array_key_exists("message",$arr)){
-//                // if Execute Api Failed to response
-//                sleep(1);
-//                $queryResponse = $this->query($allRequest['paymentID']);
-//                // return view('CheckoutURL.success')->with([
-//                //     'response' => $queryResponse
-//                // ]);
-//                return [["statusMessage"=>$queryResponse]];
-//            }
+        //    if(array_key_exists("statusCode",$arr) && $arr['statusCode'] != '0000'){
+        //        return view('CheckoutURL.fail')->with([
+        //            'statusMessage' => $arr['statusMessage'],
+        //        ]);
+        //        return [["statusMessage"=>$arr['statusMessage']]];
+
+        //    }else if(array_key_exists("message",$arr)){
+        //        // if Execute Api Failed to response
+        //        sleep(1);
+        //        $queryResponse = $this->query($allRequest['paymentID']);
+        //        return view('CheckoutURL.success')->with([
+        //            'response' => $queryResponse
+        //        ]);
+        //        return [["statusMessage"=>$queryResponse]];
+        //    }
 
             // return view('CheckoutURL.success')->with([
             //     'response' => $response

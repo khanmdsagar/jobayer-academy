@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('student_profile_url')->nullable();
             $table->integer('student_enrolled_course')->default(0);
             $table->longText('student_password')->nullable();
+            $table->integer('student_paid_amount')->default(0);
             $table->date('created_at');
         });
     }
