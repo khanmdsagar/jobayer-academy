@@ -231,18 +231,19 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
         return view('admin.admin_asked_question');
     });
 
-    // Route::get('/admin/comment', function () {
-    //     return view('admin.admin_student_comment');
-    // });
+    Route::get('/admin/comment', function () {
+        return view('admin.admin_comment');
+    });
 
     // Route::get('/admin/interest', function () {
     //     return view('admin.admin_student_interest');
     // });
 
     //student comment routes
-    Route::get('/admin/student-comment-option/data', [AdminController::class, 'get_student_comment_option_data']);
-    Route::post('/admin/student-comment-option/add', [AdminController::class, 'add_student_comment_option']);
-    Route::post('/admin/student-comment-option/delete', [AdminController::class, 'delete_student_comment_option']);
+    Route::get('/admin/comment-option/data', [AdminController::class, 'get_comment_option_data']);
+    Route::post('/admin/comment-option/add', [AdminController::class, 'add_comment_option']);
+    Route::post('/admin/comment-option/edit', [AdminController::class, 'edit_comment_option']);
+    Route::post('/admin/comment-option/delete', [AdminController::class, 'delete_comment_option']);
 
     Route::get('/admin/student/data', [AdminController::class, 'get_student_data']);
     Route::post('/admin/student/add', [AdminController::class, 'add_student_info']);

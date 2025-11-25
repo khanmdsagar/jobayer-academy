@@ -17,38 +17,56 @@ use Illuminate\Support\Facades\Crypt;
 class AdminController extends Controller
 {
     //student comment operations
-    function get_student_comment_option_data()
+    function get_comment_option_data()
     {
-        return DB::table('student_comment_option')->orderBy('id', 'DESC')->get();
+        return DB::table('comment_option')->orderBy('id', 'DESC')->get();
     }
 
-    function add_student_comment_option(Request $request)
+    function add_comment_option(Request $request)
     {
-        $student_comment_option_title = strip_tags(trim($request->input('student_comment_option_title')));
+        $comment_option_title = strip_tags(trim($request->input('comment_option_title')));
 
-        $result = DB::table('student_comment_option')->insert([
-            'student_comment_option_title' => $student_comment_option_title,
+        $result = DB::table('comment_option')->insert([
+            'comment_option_title' => $comment_option_title,
         ]);
 
         if ($result) {
-            return response()->json(['status' => 200, "message" => 'Student comment option added successfully']);
+            return response()->json(['status' => 200, "message" => 'Comment option added successfully']);
         } 
         else {
-            return response()->json(['status' => 404, "message" => 'Student comment option could not be added']);
+            return response()->json(['status' => 404, "message" => 'Comment option could not be added']);
         }
     }
 
-    function delete_student_comment_option(Request $request)
-    {
-        $id = strip_tags(trim($request->input('id')));
 
-        $result = DB::table('student_comment_option')->where('id', $id)->delete();
+    function edit_comment_option(Request $request)
+    {
+        $comment_option_id    = strip_tags(trim($request->input('comment_option_id')));
+        $comment_option_title = strip_tags(trim($request->input('comment_option_title')));
+
+        $result = DB::table('comment_option')->where('id', $comment_option_id)->update([
+            'comment_option_title' => $comment_option_title,
+        ]);
 
         if ($result) {
-            return response()->json(['status' => 200, "message" => 'Student comment option deleted successfully']);
+            return response()->json(['status' => 200, "message" => 'Comment option updated successfully']);
         } 
         else {
-            return response()->json(['status' => 404, "message" => 'Student comment option could not be deleted']);
+            return response()->json(['status' => 404, "message" => 'Comment option could not be updated']);
+        }
+    }
+
+    function delete_comment_option(Request $request)
+    {
+        $comment_option_id = strip_tags(trim($request->input('comment_option_id')));
+
+        $result = DB::table('comment_option')->where('id', $comment_option_id)->delete();
+
+        if ($result) {
+            return response()->json(['status' => 200, "message" => 'Comment option deleted successfully']);
+        } 
+        else {
+            return response()->json(['status' => 404, "message" => 'Comment option could not be deleted']);
         }
     }
 

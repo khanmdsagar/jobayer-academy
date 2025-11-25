@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('student_comment_option', function (Blueprint $table) {
+        Schema::create('comment_option', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('student_comment_option_title');
+            $table->string('comment_option_title');
         });
     }
 

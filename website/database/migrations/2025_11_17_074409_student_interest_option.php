@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('student_interest_option', function (Blueprint $table) {
+        Schema::create('interest_option', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('student_interest_option_title');
+            $table->string('interest_option_title');
         });
     }
 

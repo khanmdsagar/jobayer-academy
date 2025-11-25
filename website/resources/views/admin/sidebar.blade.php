@@ -6,58 +6,62 @@
         <h1>{{$site_data[0]->site_name}}</h1>
     </div>
     <ul class="nav-links">
+        <div style="font-weight: bold; color: rgba(255, 255, 255, 0.8);">MAIN</div>
         <li>
-        <div class="a as-app-cursor" onclick="window.location.href='/admin/dashboard'">
-            <i class="fas fa-home"></i> <span>Dashboard</span>
-        </div>
+            <div class="a as-app-cursor" onclick="window.location.href='/admin/dashboard'">
+                <i class="fas fa-home"></i> <span>Dashboard</span>
+            </div>
         </li>
 
         <li>
-        <div class="a as-app-cursor" onclick="window.location.href='/admin/asked-question'">
-            <i class="fas fa-question"></i> <span>Asked Question</span>
-        </div>
+            <div class="a as-app-cursor" onclick="window.location.href='/admin/asked-question'">
+                <i class="fas fa-question"></i> <span>Asked Question</span>
+            </div>
         </li>
 
         <li>
-        <div class="a as-app-cursor" onclick="window.location.href='/admin/category'">
-            <i class="fas fa-list"></i> <span>Category</span>
-        </div>
+            <div class="a as-app-cursor" onclick="window.location.href='/admin/student'">
+                <i class="fas fa-user-graduate"></i> <span>Student</span>
+            </div>
+        </li>
+
+        <div style="font-weight: bold; color: rgba(255, 255, 255, 0.8);">COURSE</div>
+        <li>
+            <div class="a as-app-cursor" onclick="window.location.href='/admin/category'">
+                <i class="fas fa-list"></i> <span>Category</span>
+            </div>
         </li>
 
         <li>
-        <div class="a as-app-cursor" onclick="window.location.href='/admin/course'">
-            <i class="fas fa-book-open"></i> <span>Course</span>
-        </div>
+            <div class="a as-app-cursor" onclick="window.location.href='/admin/course'">
+                <i class="fas fa-book-open"></i> <span>Course</span>
+            </div>
+        </li>
+
+        <div style="font-weight: bold; color: rgba(255, 255, 255, 0.8);">OTHER</div>
+
+        <li>
+            <div class="a as-app-cursor" onclick="window.location.href='/admin/comment'">
+                <i class="fas fa-comments"></i> <span>Comment option</span>
+            </div>
         </li>
 
         <li>
-        <div class="a as-app-cursor" onclick="window.location.href='/admin/student'">
-            <i class="fas fa-user-graduate"></i> <span>Student</span>
-        </div>
+            <div class="a as-app-cursor" onclick="window.location.href='/admin/interest'">
+                <i class="fas fa-star"></i> <span>Interest option</span>
+            </div>
         </li>
 
         <li>
-        <div class="a as-app-cursor" onclick="window.location.href='/admin/comment'">
-            <i class="fas fa-comments"></i> <span>Comment</span>
-        </div>
+            <div class="a as-app-cursor" onclick="window.location.href='/download-database'">
+                <i class="fas fa-database"></i> <span>Backup DB</span>
+            </div>
         </li>
 
         <li>
-        <div class="a as-app-cursor" onclick="window.location.href='/admin/interest'">
-            <i class="fas fa-star"></i> <span>Interest</span>
-        </div>
-        </li>
-
-        <li>
-        <div class="a as-app-cursor" onclick="window.location.href='/download-database'">
-            <i class="fas fa-database"></i> <span>Backup DB</span>
-        </div>
-        </li>
-
-        <li>
-        <div class="a as-app-cursor" onclick="adminLogout()">
-            <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
-        </div>
+            <div class="a as-app-cursor" onclick="adminLogout()">
+                <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+            </div>
         </li>
 
     </ul>
