@@ -83,6 +83,14 @@
                 <div class="as-p-10px"><b>Enrolled Course</b>: {{$student_data->student_enrolled_course}}</div>
                 <div class="as-divider"></div>
                 <div class="as-p-10px"><b>Paid Amount</b>: {{$student_data->student_paid_amount}}</div>
+                <div class="as-divider"></div>
+                <div class="as-p-10px"><b>Comment</b>:
+                    {{$student_data->student_comment == '' ? '...' : $student_data->student_comment}}
+                </div>
+                <div class="as-divider"></div>
+                <div class="as-p-10px"><b>Interest</b>:
+                    {{$student_data->student_interest == '' ? '...' : $student_data->student_interest}}
+                </div>
             </div>
             <div class="as-card as-mt-10px">
                 <div class="as-p-10px"><b>Enrolled Course List</b></div>
@@ -219,8 +227,22 @@
                     <input id="paid-amount" class="as-input" type="text" placeholder="Enter paid amount" value="{{$student_data->student_paid_amount}}">
                 </div>
                 <div class="as-mt-10px">
+                    <div class="as-mb-5px"><b>Comment</b></div>
+                    <select id="comment-option" class="as-select">
+                        <option hidden value="{{$student_data->student_comment}}" disabled selected>{{$student_data->student_comment == null ? 'Select a Comment option' : $student_data->student_comment}}</option>
+                        <optgroup id="comment-option-group"></optgroup>
+                    </select>
+                </div>
+                <div class="as-mt-10px">
+                    <div class="as-mb-5px"><b>Interest</b></div>
+                    <select id="interest-option" class="as-select">
+                        <option hidden value="{{$student_data->student_interest}}" disabled selected>{{$student_data->student_interest == null ? 'Select a Interest option' : $student_data->student_interest}}</option>
+                        <optgroup id="interest-option-group"></optgroup>
+                    </select>
+                </div>
+                <div class="as-mt-10px">
                     <div class="as-mb-5px"><b>Password</b></div>
-                    <input id="password" class="as-input" type="text">
+                    <input id="password" class="as-input" type="text" placeholder="Enter new password">
                 </div>
             </div>
             <div class="as-mt-20px as-text-right">
@@ -277,6 +299,38 @@
     </script>
 
     <script>
+        getCommentOptionData();
+        getInterestOptionData();
+
+        function getCommentOptionData(){
+            var commentOptionData = document.getElementById('comment-option-group');
+
+            axios.get('/admin/comment-option/data')
+                .then(function(response){
+                    response.data.forEach(function(item){
+                        commentOptionData.innerHTML += `
+                            <option value="${item.comment_option_title}">${item.comment_option_title}</option>
+                        `;
+                    })
+                    
+                });
+        }
+
+        function getInterestOptionData(){
+            var interestOptionData = document.getElementById('interest-option-group');
+
+            axios.get('/admin/interest-option/data')
+                .then(function(response){
+                    console.log(response.data);
+                    response.data.forEach(function(item){
+                        interestOptionData.innerHTML += `
+                            <option value="${item.interest_option_title}">${item.interest_option_title}</option>
+                        `;
+                    })
+                    
+                });
+        }
+
         function editStudentInfo(){
             const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             var studentName         = document.getElementById('fullname').value;
@@ -295,6 +349,8 @@
             var studentDistrict     = document.getElementById('district').value;
             var studentNote         = document.getElementById('note').value;
             var studentPaidAmount   = document.getElementById('paid-amount').value;
+            var studentInterest     = document.getElementById('interest-option').value;
+            var studentComment      = document.getElementById('comment-option').value;
             var studentPassword     = document.getElementById('password').value;
 
             if (studentName == '') {
@@ -327,6 +383,8 @@
                     student_address     : studentAddress,
                     student_note        : studentNote,
                     student_paid_amount : studentPaidAmount,
+                    student_interest    : studentInterest,
+                    student_comment     : studentComment,
                     student_password    : studentPassword,
                 }
 

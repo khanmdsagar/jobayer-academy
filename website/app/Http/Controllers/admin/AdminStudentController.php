@@ -52,6 +52,8 @@ class AdminStudentController extends Controller
         $student_profession   = strip_tags(trim($request->input('student_profession')));
         $student_profile_url  = strip_tags(trim($request->input('student_profile_url')));
         $student_password     = strip_tags(trim($request->input('student_password')));
+        $student_interest     = strip_tags(trim($request->input('student_interest')));
+        $student_comment      = strip_tags(trim($request->input('student_comment')));
         $encrypted_password   = Crypt::encrypt($student_password);
 
         if ($student_password != '') {
@@ -67,6 +69,8 @@ class AdminStudentController extends Controller
                 'student_profession'    => $student_profession,
                 'student_birthday'      => $student_birthday,
                 'student_note'          => $student_note,
+                "student_interest"      => $student_interest,
+                "student_comment"       => $student_comment,
                 "student_paid_amount"   => $student_paid_amount,
                 'student_password'      => $encrypted_password,
             ]);
@@ -84,6 +88,8 @@ class AdminStudentController extends Controller
                 'student_profession'    => $student_profession,
                 'student_birthday'      => $student_birthday,
                 'student_note'          => $student_note,
+                "student_interest"      => $student_interest,
+                "student_comment"       => $student_comment,
                 "student_paid_amount"   => $student_paid_amount,
             ]);
         }

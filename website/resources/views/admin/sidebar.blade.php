@@ -3,7 +3,7 @@
 <div class="sidebar" id="sidebar">
     <div class="logo">
         <i class="fas fa-graduation-cap"></i>
-        <h1>{{$site_data[0]->site_name}}</h1>
+        <a class="as-app-cursor as-color-white as-f-20px as-f-bold" href="/" target="_blank">{{$site_data[0]->site_name}}</a>
     </div>
     <ul class="nav-links">
         <div style="font-weight: bold; color: rgba(255, 255, 255, 0.8);">MAIN</div>
@@ -41,13 +41,13 @@
         <div style="font-weight: bold; color: rgba(255, 255, 255, 0.8);">OTHER</div>
 
         <li>
-            <div class="a as-app-cursor" onclick="window.location.href='/admin/comment'">
+            <div class="a as-app-cursor" onclick="window.location.href='/admin/comment-option'">
                 <i class="fas fa-comments"></i> <span>Comment option</span>
             </div>
         </li>
 
         <li>
-            <div class="a as-app-cursor" onclick="window.location.href='/admin/interest'">
+            <div class="a as-app-cursor" onclick="window.location.href='/admin/interest-option'">
                 <i class="fas fa-star"></i> <span>Interest option</span>
             </div>
         </li>
@@ -55,6 +55,12 @@
         <li>
             <div class="a as-app-cursor" onclick="window.location.href='/download-database'">
                 <i class="fas fa-database"></i> <span>Backup DB</span>
+            </div>
+        </li>
+
+        <li>
+            <div class="a as-app-cursor" onclick="window.location.href='/admin/visitor'">
+                <i class="fas fa-user"></i> <span>Visitor</span>
             </div>
         </li>
 

@@ -231,19 +231,32 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
         return view('admin.admin_asked_question');
     });
 
-    Route::get('/admin/comment', function () {
-        return view('admin.admin_comment');
+    Route::get('/admin/comment-option', function () {
+        return view('admin.admin_comment_option');
     });
 
-    // Route::get('/admin/interest', function () {
-    //     return view('admin.admin_student_interest');
-    // });
+    Route::get('/admin/interest-option', function () {
+        return view('admin.admin_interest_option');
+    });
 
-    //student comment routes
+    Route::get('/admin/visitor', function () {
+        return view('admin.admin_visitor');
+    });
+    Route::get('/admin/visitor/data', function () {
+        return DB::table('visitor')->orderBy('id', 'desc')->get();
+    });
+
+    //comment routes
     Route::get('/admin/comment-option/data', [AdminController::class, 'get_comment_option_data']);
     Route::post('/admin/comment-option/add', [AdminController::class, 'add_comment_option']);
     Route::post('/admin/comment-option/edit', [AdminController::class, 'edit_comment_option']);
     Route::post('/admin/comment-option/delete', [AdminController::class, 'delete_comment_option']);
+
+    //interest routes
+    Route::get('/admin/interest-option/data', [AdminController::class, 'get_interest_option_data']);
+    Route::post('/admin/interest-option/add', [AdminController::class, 'add_interest_option']);
+    Route::post('/admin/interest-option/edit', [AdminController::class, 'edit_interest_option']);
+    Route::post('/admin/interest-option/delete', [AdminController::class, 'delete_interest_option']);
 
     Route::get('/admin/student/data', [AdminController::class, 'get_student_data']);
     Route::post('/admin/student/add', [AdminController::class, 'add_student_info']);

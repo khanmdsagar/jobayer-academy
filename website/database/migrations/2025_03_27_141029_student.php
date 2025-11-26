@@ -28,6 +28,8 @@ return new class extends Migration
             $table->integer('student_enrolled_course')->default(0);
             $table->longText('student_password')->nullable();
             $table->integer('student_paid_amount')->default(0);
+            $table->string('student_interest')->nullable();
+            $table->string('student_comment')->nullable();
             $table->date('created_at');
         });
     }

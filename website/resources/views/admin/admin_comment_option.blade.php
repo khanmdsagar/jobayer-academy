@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('title', 'Admin - Student Comment Option')
+@section('title', 'Admin - Comment Option')
 
 @section('content')
 <div class="as-w-100">
@@ -37,7 +37,7 @@
 
    </div>
 
-   <!-- Comment option Table -->
+    <!-- Comment option Table -->
     <div class="content-section">
         <div class="section-header">
             <h3>Comment Options List</h3>
@@ -141,13 +141,13 @@
 
                 response.data.forEach(function(item){
                     commentOptionData.innerHTML += `
-                    <tr>
-                        <td>${item.comment_option_title}</td>
-                        <td>
-                            <i onclick="showEditCommentOptionModal(${item.id}, '${item.comment_option_title}')" class="fa-solid fa-edit as-app-cursor as-p-10px"></i>
-                            <i onclick="deleteCommentOption(${item.id})" class="fa-solid fa-trash as-app-cursor as-p-10px"></i>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>${item.comment_option_title}</td>
+                            <td>
+                                <i onclick="showEditCommentOptionModal(${item.id}, '${item.comment_option_title}')" class="fa-solid fa-edit as-app-cursor as-p-10px"></i>
+                                <i onclick="deleteCommentOption(${item.id})" class="fa-solid fa-trash as-app-cursor as-p-10px"></i>
+                            </td>
+                        </tr>
                     `;
                 })
                    

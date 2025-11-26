@@ -16,7 +16,66 @@ use Illuminate\Support\Facades\Crypt;
 
 class AdminController extends Controller
 {
-    //student comment operations
+    //interest operations
+    function get_interest_option_data()
+    {
+        try{
+            return DB::table('interest_option')->orderBy('id', 'DESC')->get();
+        }
+        catch(\Exception $e){
+            return response()->json(['status' => 404, "message" => $e->getMessage()]);
+        }
+    }
+
+    function add_interest_option(Request $request)
+    {
+        $interest_option_title = strip_tags(trim($request->input('interest_option_title')));
+
+        $result = DB::table('interest_option')->insert([
+            'interest_option_title' => $interest_option_title,
+        ]);
+
+        if ($result) {
+            return response()->json(['status' => 200, "message" => 'Interest option added successfully']);
+        } 
+        else {
+            return response()->json(['status' => 404, "message" => 'Interest option could not be added']);
+        }
+    }
+
+
+    function edit_interest_option(Request $request)
+    {
+        $interest_option_id    = strip_tags(trim($request->input('interest_option_id')));
+        $interest_option_title = strip_tags(trim($request->input('interest_option_title')));
+
+        $result = DB::table('interest_option')->where('id', $interest_option_id)->update([
+            'interest_option_title' => $interest_option_title,
+        ]);
+
+        if ($result) {
+            return response()->json(['status' => 200, "message" => 'Interest option updated successfully']);
+        } 
+        else {
+            return response()->json(['status' => 404, "message" => 'Interest option could not be updated']);
+        }
+    }
+
+    function delete_interest_option(Request $request)
+    {
+        $interest_option_id = strip_tags(trim($request->input('interest_option_id')));
+
+        $result = DB::table('interest_option')->where('id', $interest_option_id)->delete();
+
+        if ($result) {
+            return response()->json(['status' => 200, "message" => 'Interest option deleted successfully']);
+        } 
+        else {
+            return response()->json(['status' => 404, "message" => 'Interest option could not be deleted']);
+        }
+    }
+
+    //comment operations
     function get_comment_option_data()
     {
         return DB::table('comment_option')->orderBy('id', 'DESC')->get();
@@ -752,6 +811,8 @@ class AdminController extends Controller
         $student_profile_url = strip_tags(trim($request->input('student_profile_url')));
         $student_password    = strip_tags(trim($request->input('student_password')));
         $encrypted_password  = Crypt::encrypt($student_password);
+        $student_interest    = strip_tags(trim($request->input('student_interest')));
+        $student_comment     = strip_tags(trim($request->input('student_comment')));
 
         try {
             $result = DB::table('student')->insert([
@@ -768,6 +829,8 @@ class AdminController extends Controller
                 "student_note"        => $student_note,
                 "student_paid_amount" => $student_paid_amount,
                 "student_password"    => $encrypted_password,
+                "student_interest"    => $student_interest,
+                "student_comment"     => $student_comment,
                 "created_at"          => Carbon::now(),
             ]);
 

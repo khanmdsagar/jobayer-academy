@@ -11,7 +11,7 @@
                 <button class="sidebar-toggle as-app-cursor as-flex as-align-center" id="sidebarToggle" style="display: inline-flex">
                     <i style="font-size: 24px" class="fas fa-bars"></i>
                 </button>
-                <h2>Category - &nbsp; <span id="category-count" class="as-f-bold as-f-20px"></span></h2>
+                <h2>Category</h2>
             </div>
             <div class="user-info">
                 <div class="user-avatar">AD</div>
@@ -21,17 +21,46 @@
                 </div>
             </div>
         </div>
-
-        <div class="actions as-flex as-justify-end as-mb-10px">
-            <button class="as-btn as-app-cursor"><i onclick="showModal('add-category')" class="fa-solid fa-plus as-app-cursor as-f-20px"></i></button>
-        </div>
    </div>
 
-    <!-- category list -->
-    <div id="category-data">
-        <i style="font-size: 25px;" class="fa-solid fa-spinner fa-spin as-w-100 as-text-center"></i>
+    <!-- Stats Cards -->
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="stat-icon primary">
+                <i class="fas fa-layer-group"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="total-categories">....</h3>
+                <p>Total Categories</p>
+            </div>
+        </div>
     </div>
    
+    <!-- Category Table -->
+    <div class="content-section">
+        <div class="section-header">
+            <h3>Category List</h3>
+            <div class="actions as-flex as-justify-end">
+                <button onclick="showModal('add-category')" class="as-btn as-app-cursor" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+                    <i class="fa-solid fa-plus as-app-cursor as-f-20px"></i> Add Category
+                </button>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="category-data-table">
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <!-- add category modal -->
@@ -46,7 +75,7 @@
         </div>
         <div class="as-mt-10px as-text-right">
             <button class="as-btn as-app-cursor as-bg-cancel" onclick="hideModal('add-category')">Cancel</button>
-            <button class="as-btn as-app-cursor" onclick="addCategory()">Add</button>
+            <button id="add-category-btn" class="as-btn as-app-cursor" onclick="addCategory()">Add</button>
         </div>
     </div>
 </div>
@@ -57,10 +86,13 @@
     getCategoryData();
 
     function addCategory(){
-        var categoryName = document.getElementById('category-name').value;
+        var categoryName         = document.getElementById('category-name').value;
+        var addCategoryBtn       = document.getElementById('add-category-btn');
+        addCategoryBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+        addCategoryBtn.disabled  = true;
 
         if(categoryName == ''){
-            alert('Enter category name');
+            alert('Enter Category Name');
         }
         else{
             axios.post('/admin/category/add', {category_name: categoryName})
@@ -68,38 +100,53 @@
                     alert(response.data.message);
 
                     if(response.data.status == 200){
-                        location.reload();
+                        getCategoryData();
+                        hideModal('add-category');
+                        addCategoryBtn.innerHTML = 'Add';
+                        addCategoryBtn.disabled = false;
                     }
                     else{
                         hideModal('add-category');
+                        addCategoryBtn.innerHTML = 'Add';
+                        addCategoryBtn.disabled = false;
                     }
                 });
         }
     }
 
     function getCategoryData(){
-        var categoryDataDiv = document.getElementById('category-data');
-        categoryDataDiv.innerHTML = '';
-        categoryDataDiv.innerHTML = '<div class="as-flex as-justify-center"><div class="as-spinner"></div></div>';
+        var categoryDataTable = document.getElementById('category-data-table');
+        categoryDataTable.innerHTML = '';
+        categoryDataTable.innerHTML = `
+                    <tr>
+                        <td colspan="100%" style="text-align:center; padding:10px;">
+                            <i style="font-size:25px;" class="fa-solid fa-spinner fa-spin"></i>
+                        </td>
+                    </tr>
+                `;
 
         axios.get('/admin/category/data')
             .then(function(response){
-                document.getElementById('category-count').innerText = response.data.length;
-                categoryDataDiv.innerHTML = '';
+                document.getElementById('total-categories').innerText = response.data.length;
+                categoryDataTable.innerHTML = '';
 
                 if(response.data.length == 0){
-                    categoryDataDiv.innerHTML = '<div class="as-text-center as-f-20px">No Category</div>';
+                    categoryDataTable.innerHTML = `<tr>
+                                <td colspan="100%" style="text-align:center; padding:10px;">
+                                    No category found.
+                                </td>
+                            </tr>`;
                 }
 
                 response.data.forEach(function(category){
-                    categoryDataDiv.innerHTML += `
-                        <div class="as-card as-mb-10px as-flex as-space-between as-p-10px">
-                            <div class="as-flex as-align-center as-check-language as-f-18px">${category.category_name}</div>
-                            <div>
-                                <span><i onclick="showEditCategoryModal('${category.id}', '${category.category_name}')" class="fa-solid fa-edit as-app-cursor as-p-10px"></i></span>
-                                <span><i onclick="deleteCategory(${category.id})" class="fa-solid fa-trash as-app-cursor as-p-10px"></i></span>
-                            </div>
-                        </div>
+                    categoryDataTable.innerHTML += `
+                        <tr>
+                            <td>${category.category_name}</td>
+                            <td>
+                                <i onclick="showEditCategoryModal(${category.id}, '${category.category_name}')" class="fa-solid fa-edit as-app-cursor as-p-10px"></i>
+                                <i onclick="deleteCategory(${category.id})" class="fa-solid fa-trash as-app-cursor as-p-10px"></i>
+                            </td>
+                        </tr>
                     `;
                 })
                    

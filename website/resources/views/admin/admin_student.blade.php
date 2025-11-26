@@ -236,6 +236,18 @@
                     <input id="paid-amount" class="as-input" type="text" placeholder="Enter paid amount">
                 </div>
                 <div class="as-mt-10px">
+                    <div class="as-mb-5px"><b>Comment</b></div>
+                    <select id="comment-option" class="as-select">
+                        <option hidden value="" disabled selected>Select a Comment option</option>
+                    </select>
+                </div>
+                <div class="as-mt-10px">
+                    <div class="as-mb-5px"><b>Interest</b></div>
+                    <select id="interest-option" class="as-select">
+                        <option hidden value="" disabled selected>Select a Interest option</option>
+                    </select>
+                </div>
+                <div class="as-mt-10px">
                     <div class="as-mb-5px"><b>Password</b></div>
                     <input id="password" class="as-input" type="text" placeholder="Enter password">
                 </div>
@@ -255,12 +267,95 @@
         // document.getElementById('filter-date-start').value = filterDate;
         // document.getElementById('filter-date-end').value = filterDate;
 
+        getCommentOptionData();
+        getInterestOptionData();
+
+        function getCommentOptionData(){
+            var commentOptionData = document.getElementById('comment-option');
+
+            axios.get('/admin/comment-option/data')
+                .then(function(response){
+                    response.data.forEach(function(item){
+                        commentOptionData.innerHTML += `
+                            <option value="${item.comment_option_title}">${item.comment_option_title}</option>
+                        `;
+                    })
+                    
+                });
+        }
+
+        function getInterestOptionData(){
+            var interestOptionData = document.getElementById('interest-option');
+
+            axios.get('/admin/interest-option/data')
+                .then(function(response){
+                    response.data.forEach(function(item){
+                        interestOptionData.innerHTML += `
+                            <option value="${item.interest_option_title}">${item.interest_option_title}</option>
+                        `;
+                    })
+                    
+                });
+        }
+
         getCourseData();
+
         function getCourseData() {
             axios.get('/admin/course/data').then(response => {
                 var courseDiv = document.getElementById('course-div');
                 courseDiv.innerHTML = response.data.map(course => `<option value="${course.id}">${course.course_name}</option>`).join('');
             });
+        }
+        
+        // Pagination variables
+        var studentData = [];
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        let filteredData = [];
+        var filterValue = 0;
+
+        async function getStudentData() {
+            var searchStudent = document.getElementById('search-value').value;
+            const studentList = document.getElementById('student-list');
+
+            studentList.innerHTML = `
+                    <tr>
+                        <td colspan="100%" style="text-align:center; padding:10px;">
+                            <i style="font-size:25px;" class="fa-solid fa-spinner fa-spin"></i>
+                        </td>
+                    </tr>
+                `;
+
+            if (searchStudent == '') {
+                await axios.get('/admin/student/data').then(response => {
+                    filterValue = 0;
+
+                    studentData = response.data.student_data;
+
+                    document.getElementById('total-students').innerText = response.data.student_data.length;
+                    document.getElementById('total-enrolled-students').innerText = response.data.enrolled_students;
+                    document.getElementById('total-unenrolled-students').innerText = response.data.unenrolled_students;
+                    document.getElementById('total-payments').innerText = response.data.total_payments;
+                    
+                    filteredData = [...studentData];
+                    initializePagination();
+                });
+            }
+            else {
+                await axios.get('/admin/student/search/' + searchStudent)
+                    .then(response => {
+                        filterValue = 0;
+
+                        document.getElementById('search-value').value = '';
+                        document.getElementById('total-students').innerText = response.data.length;
+
+                        studentData = response.data;
+                        filteredData = [...studentData];
+                        initializePagination();
+
+                        console.log(searchStudent);
+                    });
+            }
         }
 
         async function filterStudent() {
@@ -286,6 +381,7 @@
                         document.getElementById('total-students').innerText = response.data.length;
 
                         if (courseValue == 'enrolled' || courseValue == 'unenrolled') {
+                            filterValue = 0;
                             hideModal('student-filter');
 
                             if (courseValue == 'unenrolled') {
@@ -300,6 +396,7 @@
                             initializePagination();
                         }
                         else if(filterDateStart != '' && filterDateEnd != ''){
+                            filterValue = 0;
                             hideModal('student-filter');
                             //document.getElementById('download-student-button').href = '/admin/download-course-student-data/' + courseValue;
                             document.getElementById('download-student-button').style.display = 'none';
@@ -309,63 +406,20 @@
                             initializePagination();
                         }
                         else {
+                            filterValue = 1;
                             hideModal('student-filter');
                             document.getElementById('download-student-button').href = '/admin/download-course-student-data/' + courseValue;
 
                             studentData = response.data;
                             filteredData = [...studentData];
-                            initializePagination(1);
+                            initializePagination();
                         }
                     });
             }
         }
 
-        
-        // Pagination variables
-        var studentData = [];
-        let currentPage = 1;
-        const itemsPerPage = 10;
-        let filteredData = [];
-
-        async function getStudentData() {
-            var searchStudent = document.getElementById('search-value').value;
-            const studentList = document.getElementById('student-list');
-
-            studentList.innerHTML = `
-                    <tr>
-                        <td colspan="100%" style="text-align:center; padding:10px;">
-                            <i style="font-size:25px;" class="fa-solid fa-spinner fa-spin"></i>
-                        </td>
-                    </tr>
-                `;
-
-            if (searchStudent == '') {
-                await axios.get('/admin/student/data').then(response => {
-                    studentData = response.data.student_data;
-                    document.getElementById('total-students').innerText = response.data.student_data.length;
-                    document.getElementById('total-enrolled-students').innerText = response.data.enrolled_students;
-                    document.getElementById('total-unenrolled-students').innerText = response.data.unenrolled_students;
-                    document.getElementById('total-payments').innerText = response.data.total_payments;
-                    filteredData = [...studentData];
-                    initializePagination();
-                });
-            }
-            else {
-                await axios.get('/admin/student/search/' + searchStudent)
-                    .then(response => {
-                        document.getElementById('search-value').value = '';
-                        document.getElementById('total-students').innerText = response.data.length;
-                        studentData = response.data;
-                        filteredData = [...studentData];
-                        initializePagination();
-
-                        console.log(searchStudent);
-                    });
-            }
-        }
-
         // Function to render the table with current page data
-        function renderTable(filterValue = null) {
+        function renderTable() {
             // Calculate start and end indices for current page
             const startIndex   = (currentPage - 1) * itemsPerPage;
             const endIndex     = Math.min(startIndex + itemsPerPage, filteredData.length);
@@ -376,8 +430,7 @@
             tableBody.innerHTML = '';
             
             // Populate the table with current page data
-
-            if(filterValue == null) {
+            if(filterValue == 0) {
                 currentItems.forEach(item => {
                     const row = document.createElement('tr');
                     // Add your row content here based on your data structure
@@ -387,7 +440,7 @@
                             <td>${item.student_number}</td>
                             <td>${item.created_at}</td>
                             <td>${item.student_enrolled_course}</td>
-                            <td>${item.student_paid_amount}</td>
+                            <td>${item.student_paid_amount != null ? item.student_paid_amount : '0'}</td>
                             <td><span class="status-badge ${item.student_enrolled_course == 0 ? 'not-enrolled' : 'enrolled'}">${item.student_enrolled_course == 0 ? 'UnEnrolled' : 'Enrolled'}</span></td>
                             <td>
                                 <i onclick="window.location.href='/admin/student/info/${item.id}'" class="fa-solid fa-eye as-app-cursor"></i>
@@ -407,7 +460,7 @@
                             <td>${item.student.student_number}</td>
                             <td>${item.student.created_at}</td>
                             <td>${item.student.student_enrolled_course}</td>
-                            <td>${item.student_paid_amount}</td>
+                            <td>${item.student_paid_amount != null ? item.student_paid_amount : '0'}</td>
                             <td><span class="status-badge ${item.student.student_enrolled_course == 0 ? 'not-enrolled' : 'enrolled'}">${item.student.student_enrolled_course == 0 ? 'UnEnrolled' : 'Enrolled'}</span></td>
                             <td>
                                 <i onclick="window.location.href='/admin/student/info/${item.student.id}'" class="fa-solid fa-eye as-app-cursor"></i>
@@ -539,8 +592,8 @@
             resetPagination();
         }
 
-        function initializePagination(filterValue = null) {
-            renderTable(filterValue);
+        function initializePagination() {
+            renderTable();
             setupPagination();
         }
 
@@ -549,6 +602,7 @@
             getStudentData();
         });
 
+        // Populate day, month, year selects
         //birthday select
         for (let i = 1; i <= 31; i++) {
             daySelect.innerHTML += `<option value="${i}">${i}</option>`;
@@ -580,6 +634,8 @@
             var studentDivision     = document.getElementById('division').value;
             var studentDistrict     = document.getElementById('district').value;
             var studentNote         = document.getElementById('note').value;
+            var studentInterest     = document.getElementById('interest-option').value;
+            var studentComment      = document.getElementById('comment-option').value;
             var studentPaidAmount   = document.getElementById('paid-amount').value;
             var studentPassword     = document.getElementById('password').value;
 
@@ -619,6 +675,8 @@
                     student_note        : studentNote,
                     student_paid_amount : studentPaidAmount,
                     student_password    : studentPassword,
+                    student_interest    : studentInterest,
+                    student_comment     : studentComment
                 }
 
                 var addInfoButton = document.getElementById('add-info-button');
