@@ -243,7 +243,32 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
         return view('admin.admin_visitor');
     });
     Route::get('/admin/visitor/data', function () {
-        return DB::table('visitor')->orderBy('id', 'desc')->get();
+        $mobile_device = DB::table('visitor')
+            ->where('user_device', 'Mobile')
+            ->count();
+
+        $desktop_device = DB::table('visitor')
+            ->where('user_device', 'Desktop')
+            ->count();
+
+        $visitor = DB::table('visitor')->orderBy('id', 'desc')->limit(50)->get();
+        $total_visitor = DB::table('visitor')->count();
+        $today_visitor = DB::table('visitor')
+            ->where('visited_at', Carbon\Carbon::now()->toDateString())
+            ->count();
+
+        $daily_visitor = DB::table('visitor')
+                    ->select(DB::raw('visited_at, COUNT(*) as total'))
+                    ->whereBetween('visited_at', [
+                        Carbon\Carbon::now()->startOfMonth(),
+                        Carbon\Carbon::now()->endOfMonth()
+                    ])
+                    ->groupBy('visited_at')
+                    ->orderBy('visited_at', 'ASC')
+                    ->get();
+
+
+        return response()->json(['daily_visitor' => $daily_visitor, 'today_visitor' => $today_visitor,'total_visitor' => $total_visitor, 'visitor' => $visitor, 'mobile_device' => $mobile_device, 'desktop_device' => $desktop_device]);
     });
 
     //comment routes

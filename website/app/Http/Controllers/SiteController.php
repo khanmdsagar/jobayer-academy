@@ -17,20 +17,16 @@ class SiteController extends Controller
 {
     // home page
     function index(Request $request){
-        //$course = DB::table('course')->where('course_status', 1)->limit(1)->get();
         $course = DB::table('course')->where('course_status', 1)->get();
 
         $userAgent = $request->header('User-Agent');
         $device    = preg_match('/mobile/i', $userAgent) ? 'Mobile' : 'Desktop';
 
-        // $location = GeoIP::getLocation();
-        // $country  = $location['country'];
-
         DB::table('visitor')->insert([
             'ip_address'  => $request->ip(),
             'user_device' => $device,
             'location'    => 'Unknown',
-            'visited_at'  => now(),
+            'visited_at'  => Carbon::now()->toDateString()
         ]);
 
         return view('home', compact('course'));
