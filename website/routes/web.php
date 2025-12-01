@@ -271,6 +271,18 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
         return response()->json(['daily_visitor' => $daily_visitor, 'today_visitor' => $today_visitor,'total_visitor' => $total_visitor, 'visitor' => $visitor, 'mobile_device' => $mobile_device, 'desktop_device' => $desktop_device]);
     });
 
+    Route::get('/admin/is-course/{filter_option}', function ($filter_option) {
+        $is_course = DB::table('course')->where('course_name', $filter_option)->count();
+
+        if($is_course > 0){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    });
+
+
     //comment routes
     Route::get('/admin/comment-option/data', [AdminController::class, 'get_comment_option_data']);
     Route::post('/admin/comment-option/add', [AdminController::class, 'add_comment_option']);

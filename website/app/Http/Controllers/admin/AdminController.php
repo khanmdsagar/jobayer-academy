@@ -486,30 +486,49 @@ class AdminController extends Controller
     }
 
     //filter student
-    function filter_student($course_value, $filter_date_start = null, $filter_date_end = null)
+    function filter_student($filter_value, $filter_date_start = null, $filter_date_end = null)
     {
-        if ($course_value == 'enrolled') {
-            return DB::table('student')->where('student_enrolled_course', '!=', 0)->get();
+        if ($filter_value == 'enrolled') {
+            return DB::table('student')->where('student_enrolled_course', '!=', 0)->orderBy('id', 'DESC')->get();
         } 
-        else if ($course_value == 'unenrolled') {
-            return DB::table('student')->where('student_enrolled_course', 0)->get();
+        else if ($filter_value == 'unenrolled') {
+            return DB::table('student')->where('student_enrolled_course', 0)->orderBy('id', 'DESC')->get();
         } 
-        else if ($course_value != '' && $filter_date_start != '' && $filter_date_end != '') {
+        else if ($filter_value != '' && $filter_date_start != '' && $filter_date_end != '') {
+            $course_id = DB::table('course')->where('course_name', $filter_value)->first()->id;
+
             $results = DB::select("
-                        SELECT enrolled_course.*, student.*
-                        FROM enrolled_course
-                        JOIN student ON student.id = enrolled_course.student_id
-                        WHERE enrolled_course.course_id = ?
-                        AND enrolled_course.enrolled_date > ?
-                        AND enrolled_course.enrolled_date < ?
-                        ORDER BY enrolled_course.id DESC
-                    ", [$course_value, $filter_date_start, $filter_date_end]);
+                SELECT enrolled_course.*, student.*
+                FROM enrolled_course
+                JOIN student ON student.id = enrolled_course.student_id
+                WHERE enrolled_course.course_id = ?
+                AND enrolled_course.enrolled_date > ?
+                AND enrolled_course.enrolled_date < ?
+                ORDER BY enrolled_course.id DESC
+            ", [$course_id, $filter_date_start, $filter_date_end]);
+
             return $results;
         } 
         else {
             try {
-                return EnrolledCourse::with('student')->where('course_id', $course_value)->orderBy('enrolled_course.id', 'DESC')->get();
-            } catch (\Exception $e) {
+                $is_course = DB::table('course')->where('course_name', $filter_value)->count();
+
+                if($is_course == 0){
+                    $is_comment =DB::table('comment_option')->where('comment_option_title', $filter_value)->count();
+
+                    if($is_comment == 0){
+                        return DB::table('student')->where('student_interest', $filter_value)->orderBy('id', 'DESC')->get();
+                    }
+                    else{
+                        return DB::table('student')->where('student_comment', $filter_value)->orderBy('id', 'DESC')->get();
+                    }
+                }
+                else{
+                    $course_id = DB::table('course')->where('course_name', $filter_value)->first()->id;
+                    return EnrolledCourse::with('student')->where('course_id', $course_id)->orderBy('enrolled_course.id', 'DESC')->get();
+                }
+            } 
+            catch (\Exception $e) {
                 return response()->json(['status' => 404, "message" => $e->getMessage()]);
             }
         }

@@ -128,12 +128,14 @@
 
             <div class="as-modal-child">
                 <div class="as-mt-10px">
-                    <div class="as-mb-5px"><b>Course</b></div>
-                    <select id="course" class="as-select">
-                        <option hidden value="" disabled selected>Seelect Course</option>
+                    <div class="as-mb-5px"><b>Filter Options</b></div>
+                    <select id="filter-option" class="as-select">
+                        <option hidden value="" disabled selected>Seelect Filter Option</option>
                         <option value="enrolled">Enrolled</option>
                         <option value="unenrolled">Unenrolled</option>
                         <optgroup id="course-div"></optgroup>
+                        <optgroup id="comment-div"></optgroup>
+                        <optgroup id="interest-div"></optgroup>
                     </select>
                     <input type="date" class="as-date-input as-mt-10px" id="filter-date-start" value="">
                     <input type="date" class="as-date-input as-mt-10px" id="filter-date-end" value="">
@@ -267,6 +269,7 @@
         // document.getElementById('filter-date-start').value = filterDate;
         // document.getElementById('filter-date-end').value = filterDate;
 
+        getCourseData();
         getCommentOptionData();
         getInterestOptionData();
 
@@ -275,6 +278,8 @@
 
             axios.get('/admin/comment-option/data')
                 .then(function(response){
+                    document.getElementById('comment-div').innerHTML  = response.data.map(item => `<option value="${item.comment_option_title}">${item.comment_option_title}</option>`).join('');
+
                     response.data.forEach(function(item){
                         commentOptionData.innerHTML += `
                             <option value="${item.comment_option_title}">${item.comment_option_title}</option>
@@ -289,6 +294,9 @@
 
             axios.get('/admin/interest-option/data')
                 .then(function(response){
+                    
+                    document.getElementById('interest-div').innerHTML = response.data.map(item => `<option value="${item.interest_option_title}">${item.interest_option_title}</option>`).join('');
+
                     response.data.forEach(function(item){
                         interestOptionData.innerHTML += `
                             <option value="${item.interest_option_title}">${item.interest_option_title}</option>
@@ -298,12 +306,10 @@
                 });
         }
 
-        getCourseData();
-
         function getCourseData() {
             axios.get('/admin/course/data').then(response => {
                 var courseDiv = document.getElementById('course-div');
-                courseDiv.innerHTML = response.data.map(course => `<option value="${course.id}">${course.course_name}</option>`).join('');
+                courseDiv.innerHTML = response.data.map(course => `<option value="${course.course_name}">${course.course_name}</option>`).join('');
             });
         }
         
@@ -359,12 +365,12 @@
         }
 
         async function filterStudent() {
-            var courseValue     = document.getElementById('course').value;
+            var filterOption    = document.getElementById('filter-option').value;
             var filterDateStart = document.getElementById('filter-date-start').value;
             var filterDateEnd   = document.getElementById('filter-date-end').value;
 
-            if (courseValue == '') {
-                alert('Select a course');
+            if (filterOption == '') {
+                alert('Select a Filter option');
             }
             else {
                 var filterButton       = document.getElementById('filter-button');
@@ -373,18 +379,18 @@
 
                 const studentList = document.getElementById('student-list');
 
-                await axios.get('/admin/filter-student/' + courseValue + '/' + filterDateStart + '/' + filterDateEnd)
+                await axios.get('/admin/filter-student/' + filterOption + '/' + filterDateStart + '/' + filterDateEnd)
                     .then(response => {
                         filterButton.innerHTML = 'Filter';
                         filterButton.disabled = false;
 
                         document.getElementById('total-students').innerText = response.data.length;
 
-                        if (courseValue == 'enrolled' || courseValue == 'unenrolled') {
+                        if (filterOption == 'enrolled' || filterOption == 'unenrolled') {
                             filterValue = 0;
                             hideModal('student-filter');
 
-                            if (courseValue == 'unenrolled') {
+                            if (filterOption == 'unenrolled') {
                                 document.getElementById('download-student-button').href = '/admin/download-unenrolled-student-data';
                             }
                             else {
@@ -396,9 +402,9 @@
                             initializePagination();
                         }
                         else if(filterDateStart != '' && filterDateEnd != ''){
-                            filterValue = 0;
+                            filterValue = 1;
                             hideModal('student-filter');
-                            //document.getElementById('download-student-button').href = '/admin/download-course-student-data/' + courseValue;
+                            //document.getElementById('download-student-button').href = '/admin/download-course-student-data/' + filterOption;
                             document.getElementById('download-student-button').style.display = 'none';
 
                             studentData = response.data;
@@ -406,13 +412,24 @@
                             initializePagination();
                         }
                         else {
-                            filterValue = 1;
-                            hideModal('student-filter');
-                            document.getElementById('download-student-button').href = '/admin/download-course-student-data/' + courseValue;
-
-                            studentData = response.data;
-                            filteredData = [...studentData];
-                            initializePagination();
+                            axios.get('/admin/is-course/' + filterOption).then(res => {
+                                if(res.data == 1){
+                                    filterValue = 1;
+                                    hideModal('student-filter');
+                                    //document.getElementById('download-student-button').href = '/admin/download-course-student-data/' + filterOption;
+                                    studentData = response.data;
+                                    filteredData = [...studentData];
+                                    initializePagination();
+                                }
+                                else{
+                                    filterValue = 0;
+                                    hideModal('student-filter');
+                                    //document.getElementById('download-student-button').href = '/admin/download-course-student-data/' + filterOption;
+                                    studentData = response.data;
+                                    filteredData = [...studentData];
+                                    initializePagination();
+                                }
+                            });
                         }
                     });
             }
@@ -693,6 +710,24 @@
                             hideModal('student-info');
 
                             getStudentData();
+                            
+                            document.getElementById('fullname').value        = '';
+                            document.getElementById('email').value           = '';
+                            document.getElementById('number').value          = '';
+                            document.getElementById('profession').value      = '';
+                            document.getElementById('fb-profile-url').value  = '';
+                            document.getElementById('fb-page-url').value     = '';
+                            document.getElementById('daySelect').value       = '';
+                            document.getElementById('monthSelect').value     = '';
+                            document.getElementById('yearSelect').value      = '';
+                            document.getElementById('address').value         = '';
+                            document.getElementById('division').value        = '';
+                            document.getElementById('district').value        = '';
+                            document.getElementById('note').value            = '';
+                            document.getElementById('interest-option').value = '';
+                            document.getElementById('comment-option').value  = '';
+                            document.getElementById('paid-amount').value     = '';
+                            document.getElementById('password').value        = '';
                         }
                         else {
                             addInfoButton.innerHTML = 'Add';
@@ -702,6 +737,24 @@
                             hideModal('student-info');
 
                             getStudentData();
+
+                            document.getElementById('fullname').value        = '';
+                            document.getElementById('email').value           = '';
+                            document.getElementById('number').value          = '';
+                            document.getElementById('profession').value      = '';
+                            document.getElementById('fb-profile-url').value  = '';
+                            document.getElementById('fb-page-url').value     = '';
+                            document.getElementById('daySelect').value       = '';
+                            document.getElementById('monthSelect').value     = '';
+                            document.getElementById('yearSelect').value      = '';
+                            document.getElementById('address').value         = '';
+                            document.getElementById('division').value        = '';
+                            document.getElementById('district').value        = '';
+                            document.getElementById('note').value            = '';
+                            document.getElementById('interest-option').value = '';
+                            document.getElementById('comment-option').value  = '';
+                            document.getElementById('paid-amount').value     = '';
+                            document.getElementById('password').value        = '';  
                         }
                     });
             }
