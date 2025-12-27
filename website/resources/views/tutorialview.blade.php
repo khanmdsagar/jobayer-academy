@@ -54,9 +54,9 @@
                 {{--tab--}}
                 <div id="tab-container">
                     <div class="tab-buttons as-p-10px">
-                        <button class="tab active app-cursor" onclick="showTab(event, 'tab1')">রিসোর্স ফাইল</button>
-                        <button class="tab app-cursor" onclick="showTab(event, 'tab2')">প্রশ্ন জিজ্ঞাসা</button>
-                        <button id="review-btn" class="tab app-cursor" onclick="showModal('review-modal')">রিভিউ
+                        <button class="tab active as-app-cursor" onclick="showTab(event, 'tab1')">রিসোর্স ফাইল</button>
+                        <button class="tab as-app-cursor" onclick="showTab(event, 'tab2')">প্রশ্ন জিজ্ঞাসা</button>
+                        <button id="review-btn" class="tab as-app-cursor" onclick="showModal('review-modal')">রিভিউ
                             দিন</button>
                     </div>
 
@@ -219,19 +219,20 @@
 
         .tab-buttons {
             display: flex;
-            gap: 5px;
             margin-bottom: 10px;
         }
 
         .tab-buttons button {
-            border: 1px solid #ddd;
+            border-top: 0px;
+            border-bottom: 2px solid var(--primary-color);
+            border-left: 0px;
+            border-right: 0px;
             outline: none !important;
             background: #fff;
         }
 
         .tab {
             padding: 10px 20px;
-            border-radius: 4px;
             transition: 0.3s;
         }
 
