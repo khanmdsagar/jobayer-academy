@@ -130,11 +130,6 @@ class AdminController extends Controller
     }
 
     //chapter operations
-    function get_chapter_topic($course_id, $chapter_id)
-    {
-        return DB::table('chapter_topic')->where('chapter_id', $chapter_id)->where('course_id', $course_id)->get();
-    }
-
     function get_chapter($course_id)
     {
         return DB::table('course_chapter')->where('course_id', $course_id)->orderBy('id', 'DESC')->get();
@@ -164,6 +159,22 @@ class AdminController extends Controller
         }
     }
 
+    function edit_chapter(Request $request)
+    {
+        $chapter_id   = strip_tags(trim($request->input('chapter_id')));
+        $chapter_name = strip_tags(trim($request->input('chapter_name')));
+
+        $result = DB::table('course_chapter')->where('id', $chapter_id)->update([
+            'chapter_name' => $chapter_name,
+        ]);
+
+        if ($result) {
+            return response()->json(['status' => 200, "message" => 'Chapter updated successfully']);
+        } else {
+            return response()->json(['status' => 404, "message" => 'Chapter could not be updated']);
+        }
+    }
+
     function delete_chapter(Request $request)
     {
         $chapter_id = strip_tags(trim($request->input('chapter_id')));
@@ -177,20 +188,31 @@ class AdminController extends Controller
     }
 
     //chapter topic operations
+    function get_chapter_topic($course_id, $chapter_id)
+    {
+        return DB::table('chapter_topic')
+        ->where('chapter_id', $chapter_id)
+        ->where('course_id', $course_id)
+        ->orderBy('topic_priority', 'ASC')
+        ->get();
+    }
+
     function add_chapter_topic(Request $request)
     {
-        $course_id = strip_tags(trim($request->input('course_id')));
-        $chapter_id = strip_tags(trim($request->input('chapter_id')));
-        $topic_name = strip_tags(trim($request->input('topic_name')));
-        $topic_video = strip_tags(trim($request->input('topic_video')));
-        $topic_is_free = strip_tags(trim($request->input('topic_is_free')));
+        $course_id      = strip_tags(trim($request->input('course_id')));
+        $chapter_id     = strip_tags(trim($request->input('chapter_id')));
+        $topic_name     = strip_tags(trim($request->input('topic_name')));
+        $topic_video    = strip_tags(trim($request->input('topic_video')));
+        $topic_is_free  = strip_tags(trim($request->input('topic_is_free')));
+        $topic_priority = DB::table('chapter_topic')->where('chapter_id', $chapter_id)->count() + 1;
 
         $result = DB::table('chapter_topic')->insert([
-            'course_id' => $course_id,
-            'chapter_id' => $chapter_id,
-            'topic_name' => $topic_name,
-            'topic_video' => $topic_video,
-            'topic_is_free' => $topic_is_free,
+            'course_id'      => $course_id,
+            'chapter_id'     => $chapter_id,
+            'topic_name'     => $topic_name,
+            'topic_video'    => $topic_video,
+            'topic_is_free'  => $topic_is_free,
+            'topic_priority' => $topic_priority
         ]);
 
         if ($result) {
@@ -234,6 +256,50 @@ class AdminController extends Controller
             }
         } catch (\Exception $e) {
             return response()->json(['status' => 404, "message" => $e->getMessage()]);
+        }
+    }
+
+    function chapter_topic_priority_upgrade(Request $request)
+    {
+        $id = (int) $request->topic_id;
+
+        $current = DB::table('chapter_topic')->where('id', $id)->first();
+        if (!$current || $current->topic_priority <= 1) return;
+
+        $above = DB::table('chapter_topic')
+            ->where('topic_priority', $current->topic_priority - 1)
+            ->first();
+
+        if ($above) {
+            DB::transaction(function () use ($current, $above) {
+                DB::table('chapter_topic')->where('id', $current->id)
+                    ->update(['topic_priority' => $current->topic_priority - 1]);
+
+                DB::table('chapter_topic')->where('id', $above->id)
+                    ->update(['topic_priority' => $above->topic_priority + 1]);
+            });
+        }
+    }
+
+    function chapter_topic_priority_downgrade(Request $request)
+    {
+        $id = (int) $request->topic_id;
+
+        $current = DB::table('chapter_topic')->where('id', $id)->first();
+        if (!$current) return;
+
+        $below = DB::table('chapter_topic')
+            ->where('topic_priority', $current->topic_priority + 1)
+            ->first();
+
+        if ($below) {
+            DB::transaction(function () use ($current, $below) {
+                DB::table('chapter_topic')->where('id', $current->id)
+                    ->update(['topic_priority' => $current->topic_priority + 1]);
+
+                DB::table('chapter_topic')->where('id', $below->id)
+                    ->update(['topic_priority' => $below->topic_priority - 1]);
+            });
         }
     }
 
@@ -808,9 +874,9 @@ class AdminController extends Controller
         $result = DB::table('student')->where('id', $student_id)->delete();
 
         if ($result) {
-            return response()->json(['status' => 200, "message" => 'শিক্ষার্থী তথ্য মুছে ফেলা হয়েছে']);
+            return response()->json(['status' => 200, "message" => 'Student information deleted successfully']);
         } else {
-            return response()->json(['status' => 404, "message" => 'শিক্ষার্থী তথ্য মুছে ফেলা যায়নি']);
+            return response()->json(['status' => 404, "message" => 'Student information could not be deleted']);
         }
     }
 

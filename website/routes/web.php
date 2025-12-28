@@ -339,6 +339,10 @@ Route::middleware([AdminAuthMiddleware::class])->group(function(){
     Route::get('/admin/chapter/get/{course_id}', [AdminController::class, 'get_chapter']);
     Route::post('/admin/chapter/delete', [AdminController::class, 'delete_chapter']);
     Route::post('/admin/chapter/edit', [AdminController::class, 'edit_chapter']);
+
+    Route::post('/admin/chapter/topic/priority/upgrade', [AdminController::class, 'chapter_topic_priority_upgrade']);
+    Route::post('/admin/chapter/topic/priority/downgrade', [AdminController::class, 'chapter_topic_priority_downgrade']);
+
     
     Route::get('/admin/chapter/topic/get/{course_id}/{chapter_id}', [AdminController::class, 'get_chapter_topic']);
     Route::post('/admin/chapter/topic/add', [AdminController::class, 'add_chapter_topic']);

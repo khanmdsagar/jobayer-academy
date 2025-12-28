@@ -95,6 +95,8 @@
                             <th>Name</th>
                             <th>Phone</th>
                             <th>Registration Date</th>
+                            <th>Interest</th>
+                            <th>Comment</th>
                             <th>Enrolled Courses</th>
                             <th>Paid Amount</th>
                             <th>Status</th>
@@ -474,6 +476,8 @@
                         <td style="white-space: nowrap;">${item.student_name != null ? item.student_name : 'Anonymous'}</td>
                         <td>${item.student_number}</td>
                         <td>${item.created_at}</td>
+                        <td>${item.student_interest == null ? '...' : item.student_comment}</td>
+                        <td>${item.student_comment == null ? '...' : item.student_comment}</td>
                         <td>${item.student_enrolled_course}</td>
                         <td>${item.student_paid_amount != null ? item.student_paid_amount : '0'}</td>
                         <td><span class="status-badge ${item.student_enrolled_course == 0 ? 'not-enrolled' : 'enrolled'}">${item.student_enrolled_course == 0 ? 'UnEnrolled' : 'Enrolled'}</span></td>

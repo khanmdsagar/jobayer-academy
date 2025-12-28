@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('topic_name');
             $table->string('topic_video');
             $table->boolean('topic_is_free')->default(false);
+            $table->integer('topic_priority')->default(0);
 
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('chapter_id');
